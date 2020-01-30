@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConnexionActivity">
+
+    <Button
+        android:id="@+id/buttonSubscribe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/buttonSubscribe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choixConnexion" />
+
+    <EditText
+        android:id="@+id/emailUser"
+        android:layout_width="213dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="155dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="LabelFor"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/passwordUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="1dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelPassword"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:id="@+id/labelEmailUser"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="@string/labelLogin"
+        app:layout_constraintBottom_toTopOf="@+id/emailUser"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/labelPassword"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="38dp"
+        android:text="@string/labelPassword"
+        app:layout_constraintBottom_toTopOf="@+id/passwordUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailUser" />
+
+    <Button
+        android:id="@+id/buttonConnexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/buttonConnexion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordUser" />
+
+    <TextView
+        android:id="@+id/choixConnexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="197dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/labelChixConnexion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonConnexion" />
+</androidx.constraintlayout.widget.ConstraintLayout>
