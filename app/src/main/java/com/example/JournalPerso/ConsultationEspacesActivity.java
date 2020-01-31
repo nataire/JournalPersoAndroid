@@ -1,6 +1,7 @@
 package com.example.JournalPerso;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,13 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ConsultationEspacesActivity extends FragmentActivity {
 
-
+    FloatingActionButton buttonSetting;
     public ConsultationEspacesActivity() {
         // Required empty public constructor
     }
@@ -31,6 +34,20 @@ public class ConsultationEspacesActivity extends FragmentActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_consultation_espaces);
+
+        buttonSetting =  findViewById(R.id.buttonChangeEspace);
+
+        buttonSetting.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent(ConsultationEspacesActivity.this, ModifyEspaceActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
 }
