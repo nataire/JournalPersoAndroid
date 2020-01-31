@@ -9,21 +9,38 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="281dp"
-        android:layout_marginTop="506dp"
+        android:layout_marginStart="312dp"
+        android:layout_marginTop="472dp"
         android:clickable="true"
         android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@color/colorAccent" />
 
-    <Button
-        android:id="@+id/buttonConsulttionEspace"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="166dp"
-        android:layout_marginTop="339dp"
-        android:text="Button"
+    <androidx.cardview.widget.CardView
+        android:layout_width="422dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Espace 1 : Faire une activité physique" />
+
+            <Button
+                android:id="@+id/buttonConsulttionEspace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consulter espace 1" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginTop="35dp"
-        android:text="Sport en salle"
+        android:text="Sport en salle ....."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titreInidicateur1" />
 
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="92dp"
         android:text="Modifier un espace"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="32dp"
         android:text="Nom de l'espace"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/editText"
@@ -152,7 +152,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginTop="44dp"
-        android:text="Aller au travail à pied"
+        android:text="Aller au travail à pied   ...."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LabelListeIndicateur" />
 
@@ -167,5 +167,29 @@
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonToutJours" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonAccepteModificationEspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="267dp"
+        android:layout_marginTop="11dp"
+        android:clickable="true"
+        android:src="@drawable/ic_done_all_black_24dp"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonChangeEspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="11dp"
+        android:clickable="true"
+        android:src="@drawable/ic_delete_black_24dp"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintStart_toEndOf="@+id/buttonAccepteModificationEspace"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,9 @@
         <item
             android:id="@+id/nav_monProfil"
             android:title="@string/menu_monProfil" />
+        <item
+            android:id="@+id/nav_deconnexion"
+            android:title="@string/menu_Deconexion" />
     </group>
 
 </menu>
