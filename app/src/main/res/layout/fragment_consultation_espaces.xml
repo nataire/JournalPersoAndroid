@@ -8,6 +8,16 @@
     tools:context=".ConsultationEspacesActivity" >
 
     <TextView
+        android:id="@+id/labelIndicateur3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="38dp"
+        android:text="Nombre de km marché"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelIndicateur2" />
+
+    <TextView
         android:id="@+id/titreActivityConsultationEspace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,9 +32,9 @@
         android:id="@+id/nomEspaceSelectionne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="41dp"
-        android:text="(Nom de l'espace)"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="44dp"
+        android:text="Faire une activité physique"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titreActivityConsultationEspace" />
 
@@ -35,6 +45,7 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="212dp"
         android:text="Indicateurs"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +56,7 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="329dp"
         android:text="Commentaire"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelSectionIndicateur" />
 
@@ -61,19 +73,19 @@
         app:layout_constraintTop_toBottomOf="@+id/Commentaire" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/buttonAccepteModificationEspace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="267dp"
         android:layout_marginTop="11dp"
         android:clickable="true"
-        android:src="@drawable/ic_add_black_24dp"
+        android:src="@drawable/ic_done_all_black_24dp"
         app:backgroundTint="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/buttonChangeEspace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -81,6 +93,49 @@
         android:clickable="true"
         android:src="@drawable/ic_perm_data_setting_black_24dp"
         app:backgroundTint="@android:color/transparent"
-        app:layout_constraintStart_toEndOf="@+id/floatingActionButton2"
+        app:layout_constraintStart_toEndOf="@+id/buttonAccepteModificationEspace"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBoxIndicateur1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="36dp"
+        android:text="Aller au travail à pied"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelSectionIndicateur" />
+
+    <EditText
+        android:id="@+id/saisieInidcateur2"
+        android:layout_width="101dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="176dp"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintStart_toEndOf="@+id/labelIndicateur2"
+        app:layout_constraintTop_toBottomOf="@+id/nomEspaceSelectionne" />
+
+    <EditText
+        android:id="@+id/saisieInidicateur3"
+        android:layout_width="104dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/labelIndicateur3"
+        app:layout_constraintTop_toBottomOf="@+id/saisieInidcateur2" />
+
+    <TextView
+        android:id="@+id/labelIndicateur2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="52dp"
+        android:text="Sport en salle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxIndicateur1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
