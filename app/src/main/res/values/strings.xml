@@ -18,6 +18,12 @@
     <string name="menu_Calendrier">Calendrier</string>
     <string name="menu_monProfil">Modifier mon profil</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="typeIndicateur">
+        <item>Case à cocher</item>
+        <item>saisie de durée</item>
+        <item>saisie de chiffre</item>
+    </string-array>
+
+
 </resources>
