@@ -1,6 +1,5 @@
 package com.example.JournalPerso.ui.espacesJour;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +9,12 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.JournalPerso.ConsultationEspacesActivity;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.InterfaceAdapter;
-import com.example.JournalPerso.model.indicateurCaseCochee;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -30,6 +29,7 @@ public class EspacesJourFragment extends Fragment {
     private EspacesJourModel espacesJourModel;
     Button monBouton;
     private Vector<Espace> mesEspaces;
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,7 +41,7 @@ public class EspacesJourFragment extends Fragment {
         monBouton = root.findViewById(R.id.buttonConsulttionEspace);
 
 
-        monBouton.setOnClickListener(new View.OnClickListener() {
+        /*monBouton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -50,13 +50,13 @@ public class EspacesJourFragment extends Fragment {
                 startActivity(intent);
 
             }
-        });
+        });*/
 
 
         mesEspaces = new Vector<>();
         recuperationEspacesMemoire();
 
-
+        /*
         Espace monespace = new Espace();
 
         monespace.setNomEspace("cocuou");
@@ -86,6 +86,21 @@ public class EspacesJourFragment extends Fragment {
 
 
         ecrireFichier();
+
+         */
+
+
+        recyclerView = root.findViewById(R.id.recyclerView);
+
+        //définit l'agencement des cellules, ici de façon verticale, comme une ListView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //pour adapter en grille comme une RecyclerView, avec 2 cellules par ligne
+        //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
+        //puis créer un MyAdapter, lui fournir notre liste de villes.
+        //cet adapter servira à remplir notre recyclerview
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces));
 
         return root;
     }

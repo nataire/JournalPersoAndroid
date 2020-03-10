@@ -1,10 +1,11 @@
 package com.example.JournalPerso.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Vector;
 
-public class Espace {
+public class Espace implements Serializable {
     private String nomEspace;
     private Vector<Date> datesEspace;
 
