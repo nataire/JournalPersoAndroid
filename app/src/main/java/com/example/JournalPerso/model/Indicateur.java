@@ -4,4 +4,5 @@ abstract class Indicateur {
     protected String nomIndicateur;
     protected String typeIndicateur;
 
+
 }

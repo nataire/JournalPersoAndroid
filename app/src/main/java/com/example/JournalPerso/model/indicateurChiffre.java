@@ -6,9 +6,13 @@ public class indicateurChiffre extends Indicateur {
 
     //region constructor
 
+
+    public indicateurChiffre() {
+    }
+
     public indicateurChiffre(String nomIndicateur, String chiffreSaisie, String objectifChiffre) {
         this.nomIndicateur = nomIndicateur;
-        this.typeIndicateur = "chiffre";
+        this.typeIndicateur = "Chiffre";
         this.chiffreSaisie = chiffreSaisie;
         this.objectifChiffre = objectifChiffre;
     }

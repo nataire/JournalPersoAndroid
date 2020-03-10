@@ -7,6 +7,7 @@ import java.util.Vector;
 public class Espace {
     private String nomEspace;
     private Vector<Date> datesEspace;
+
     private Vector<Indicateur> listeIndicateur;
 
     //region Constructeurs

@@ -7,9 +7,13 @@ public class indicateurCaseCochee extends Indicateur {
 
     //region constructor
 
+
+    public indicateurCaseCochee() {
+    }
+
     public indicateurCaseCochee(String nomIndicateur, boolean etatBoutonSaisie, boolean objectifCaseCochee) {
         this.nomIndicateur = nomIndicateur;
-        this.typeIndicateur = "caseCochee";
+        this.typeIndicateur = "CaseCochee";
         this.etatBoutonSaisie = etatBoutonSaisie;
         this.objectifCaseCochee = objectifCaseCochee;
     }
