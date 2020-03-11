@@ -1,11 +1,14 @@
 package com.example.JournalPerso.ui.espacesJour;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.JournalPerso.ConsultationEspacesActivity;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.indicateurCaseCochee;
@@ -19,6 +22,7 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
     private Button buttonEspaceView;
 
     private Espace monEspace;
+    private Context contextActivity;
 
     //itemView est la vue correspondante à 1 cellule
     public ViewHolderEspace(View itemView) {
@@ -33,9 +37,11 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
     }
 
     //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
-    public void bind(Object myObject) {
+    public void bind(Object myObject, Context _context) {
 
         monEspace = new Espace();
+
+        contextActivity = _context;
         LinkedTreeMap<String, Object> espace = (LinkedTreeMap) myObject;
 
         monEspace.setNomEspace(espace.get("nomEspace").toString());
@@ -66,9 +72,9 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
         buttonEspaceView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent espaceSelect = new Intent( (), menuActivity.class);
 
-                //startActivity(espaceJour);
+                Intent intent = new Intent(contextActivity, ConsultationEspacesActivity.class);
+                contextActivity.startActivity(intent);
             }
         });
 

@@ -1,5 +1,6 @@
 package com.example.JournalPerso.ui.espacesJour;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import java.util.Vector;
 public class MyAdapterEspace extends RecyclerView.Adapter<ViewHolderEspace> {
 
     Vector<Espace> list;
+    Context context;
 
     //ajouter un constructeur prenant en entrée une liste
-    public MyAdapterEspace(Vector<Espace> list) {
+    public MyAdapterEspace(Vector<Espace> list, Context _context) {
+        context = _context;
         this.list = list;
     }
 
@@ -35,7 +38,7 @@ public class MyAdapterEspace extends RecyclerView.Adapter<ViewHolderEspace> {
 
         for (int a = 0; a < this.list.size(); a++) {
             //Object getrow = this.list.get(a);
-            myViewHolder.bind(this.list.get(a));
+            myViewHolder.bind(this.list.get(a), context);
         }
 
 

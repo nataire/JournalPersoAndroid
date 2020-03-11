@@ -100,7 +100,7 @@ public class EspacesJourFragment extends Fragment {
 
         //puis créer un MyAdapter, lui fournir notre liste de villes.
         //cet adapter servira à remplir notre recyclerview
-        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces));
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces, getContext()));
 
         return root;
     }
