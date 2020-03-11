@@ -152,6 +152,7 @@ public class EspacesJourFragment extends Fragment {
 
             monFichier.close();
 
+
             Vector<Espace> test = gson.fromJson(sJsonLu, Vector.class);
             this.mesEspaces = test;
 

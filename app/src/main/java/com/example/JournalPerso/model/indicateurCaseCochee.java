@@ -36,6 +36,8 @@ public class indicateurCaseCochee extends Indicateur {
     public void setObjectifCaseCochee(boolean objectifCaseCochee) {
         this.objectifCaseCochee = objectifCaseCochee;
     }
+
+
     //endregion
 
 

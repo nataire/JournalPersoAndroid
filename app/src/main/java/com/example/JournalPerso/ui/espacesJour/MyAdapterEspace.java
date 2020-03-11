@@ -32,11 +32,10 @@ public class MyAdapterEspace extends RecyclerView.Adapter<ViewHolderEspace> {
     @Override
     public void onBindViewHolder(ViewHolderEspace myViewHolder, int position) {
 
-        //String test = list.get(position).getNomEspace();
 
         for (int a = 0; a < this.list.size(); a++) {
-            Object getrow = this.list.get(a);
-            myViewHolder.bind(getrow);
+            //Object getrow = this.list.get(a);
+            myViewHolder.bind(this.list.get(a));
         }
 
 
