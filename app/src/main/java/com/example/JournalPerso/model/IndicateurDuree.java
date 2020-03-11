@@ -1,16 +1,16 @@
 package com.example.JournalPerso.model;
 
-public class indicateurDuree extends Indicateur {
+public class IndicateurDuree extends Indicateur {
     private String dureeSaisie;
     private String objectifDuree;
 
     //region constructor
 
 
-    public indicateurDuree() {
+    public IndicateurDuree() {
     }
 
-    public indicateurDuree(String nomIndicateur, String chiffreSaisie, String objectifChiffre) {
+    public IndicateurDuree(String nomIndicateur, String chiffreSaisie, String objectifChiffre) {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "Duree";
         this.dureeSaisie = chiffreSaisie;

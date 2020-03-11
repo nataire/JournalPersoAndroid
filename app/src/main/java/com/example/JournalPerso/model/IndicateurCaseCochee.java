@@ -1,6 +1,6 @@
 package com.example.JournalPerso.model;
 
-public class indicateurCaseCochee extends Indicateur {
+public class IndicateurCaseCochee extends Indicateur {
     private boolean etatBoutonSaisie;
     private boolean objectifCaseCochee;
 
@@ -8,10 +8,10 @@ public class indicateurCaseCochee extends Indicateur {
     //region constructor
 
 
-    public indicateurCaseCochee() {
+    public IndicateurCaseCochee() {
     }
 
-    public indicateurCaseCochee(String nomIndicateur, boolean etatBoutonSaisie, boolean objectifCaseCochee) {
+    public IndicateurCaseCochee(String nomIndicateur, boolean etatBoutonSaisie, boolean objectifCaseCochee) {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "CaseCochee";
         this.etatBoutonSaisie = etatBoutonSaisie;

@@ -1,4 +1,4 @@
-package com.example.JournalPerso.ui.espacesJour;
+package com.example.JournalPerso.menu.espacesJour;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,10 +8,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.JournalPerso.ConsultationEspacesActivity;
 import com.example.JournalPerso.R;
+import com.example.JournalPerso.consultationEspace.ConsultationEspacesActivity;
 import com.example.JournalPerso.model.Espace;
-import com.example.JournalPerso.model.indicateurCaseCochee;
+import com.example.JournalPerso.model.IndicateurCaseCochee;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
             String typeIndicateur = indicateur.get("typeIndicateur").toString();
             if (typeIndicateur.equals("CaseCochee")) ;
             {
-                indicateurCaseCochee monIndicateur = new indicateurCaseCochee();
+                IndicateurCaseCochee monIndicateur = new IndicateurCaseCochee();
                 monIndicateur.setEtatBoutonSaisie((boolean) indicateur.get("etatBoutonSaisie"));
                 monIndicateur.setObjectifCaseCochee((boolean) indicateur.get("objectifCaseCochee"));
 
@@ -74,6 +74,7 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
             public void onClick(View v) {
 
                 Intent intent = new Intent(contextActivity, ConsultationEspacesActivity.class);
+                intent.putExtra("espace", monEspace);
                 contextActivity.startActivity(intent);
             }
         });

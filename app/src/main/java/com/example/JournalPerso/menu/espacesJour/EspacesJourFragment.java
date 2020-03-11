@@ -1,4 +1,4 @@
-package com.example.JournalPerso.ui.espacesJour;
+package com.example.JournalPerso.menu.espacesJour;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -56,14 +56,14 @@ public class EspacesJourFragment extends Fragment {
         mesEspaces = new Vector<>();
         recuperationEspacesMemoire();
 
-        /*
-        Espace monespace = new Espace();
 
-        monespace.setNomEspace("cocuou");
-        indicateurCaseCochee monIndicateur1 = new indicateurCaseCochee("inidcatuer1",
+        /*Espace monespace = new Espace();
+
+        monespace.setNomEspace("cocuou1");
+        IndicateurCaseCochee monIndicateur1 = new IndicateurCaseCochee("inidcateur1",
                 false, true);
 
-        indicateurCaseCochee monIndicateur2 = new indicateurCaseCochee("indicateu2",
+        IndicateurCaseCochee monIndicateur2 = new IndicateurCaseCochee("indicateur2",
                 false, false);
 
         monespace.addIndicateur(monIndicateur1);
@@ -73,11 +73,11 @@ public class EspacesJourFragment extends Fragment {
 
         Espace monespace2 = new Espace();
 
-        monespace2.setNomEspace("cocuou");
-        indicateurCaseCochee monIndicateur3 = new indicateurCaseCochee("inidcatuer3",
+        monespace2.setNomEspace("coucou2");
+        IndicateurCaseCochee monIndicateur3 = new IndicateurCaseCochee("inidcateur3",
                 false, true);
 
-        indicateurCaseCochee monIndicateur4 = new indicateurCaseCochee("indicateu4",
+        IndicateurCaseCochee monIndicateur4 = new IndicateurCaseCochee("indicateur4",
                 false, false);
 
         monespace2.addIndicateur(monIndicateur3);
@@ -85,9 +85,9 @@ public class EspacesJourFragment extends Fragment {
         mesEspaces.addElement(monespace2);
 
 
-        ecrireFichier();
+        ecrireFichier();*/
 
-         */
+
 
 
         recyclerView = root.findViewById(R.id.recyclerView);

@@ -1,28 +1,26 @@
-package com.example.JournalPerso.ui.calendrier;
+package com.example.JournalPerso.menu.modifierProfil;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.JournalPerso.R;
 
-public class CalendrierFragment extends Fragment {
+public class ModifierProfilFragment extends Fragment {
 
-    private CalendrierViewModel calendrierViewModel;
+    private ModifierProfilModel modifierProfilModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        calendrierViewModel =
-                ViewModelProviders.of(this).get(CalendrierViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_calendrier, container, false);
+
+        modifierProfilModel =
+                ViewModelProviders.of(this).get(ModifierProfilModel.class);
+        View root = inflater.inflate(R.layout.fragment_espaces_jour, container, false);
 
         return root;
     }

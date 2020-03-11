@@ -46,7 +46,7 @@ public class InterfaceAdapter implements JsonSerializer<Indicateur>, JsonDeseria
 
 
                         if (jsonObjectIndicateur.get("typeIndicateur").getAsString().equals("CaseCochee")) {
-                            indicateurCaseCochee monIndicateur = new indicateurCaseCochee();
+                            IndicateurCaseCochee monIndicateur = new IndicateurCaseCochee();
 
                             monIndicateur.nomIndicateur = jsonObjectIndicateur.get("nomIndicateur").getAsString();
                             monIndicateur.typeIndicateur = jsonObjectIndicateur.get("typeIndicateur").getAsString();

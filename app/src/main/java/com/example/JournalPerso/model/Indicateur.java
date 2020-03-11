@@ -2,7 +2,7 @@ package com.example.JournalPerso.model;
 
 import java.io.Serializable;
 
-abstract class Indicateur implements Serializable {
+public abstract class Indicateur implements Serializable {
     protected String nomIndicateur;
     protected String typeIndicateur;
 

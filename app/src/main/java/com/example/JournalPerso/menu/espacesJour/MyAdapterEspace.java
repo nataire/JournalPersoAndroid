@@ -1,4 +1,4 @@
-package com.example.JournalPerso.ui.espacesJour;
+package com.example.JournalPerso.menu.espacesJour;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -35,13 +35,7 @@ public class MyAdapterEspace extends RecyclerView.Adapter<ViewHolderEspace> {
     @Override
     public void onBindViewHolder(ViewHolderEspace myViewHolder, int position) {
 
-
-        for (int a = 0; a < this.list.size(); a++) {
-            //Object getrow = this.list.get(a);
-            myViewHolder.bind(this.list.get(a), context);
-        }
-
-
+        myViewHolder.bind(this.list.get(position), context);
     }
 
     @Override

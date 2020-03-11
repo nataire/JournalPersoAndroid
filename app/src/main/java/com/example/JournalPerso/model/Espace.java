@@ -41,6 +41,13 @@ public class Espace implements Serializable {
         this.datesEspace = datesEspace;
     }
 
+    public Vector<Indicateur> getListeIndicateur() {
+        return listeIndicateur;
+    }
+
+    public void setListeIndicateur(Vector<Indicateur> listeIndicateur) {
+        this.listeIndicateur = listeIndicateur;
+    }
 
     //endregion
 

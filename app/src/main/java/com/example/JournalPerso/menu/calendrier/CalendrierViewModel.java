@@ -1,4 +1,4 @@
-package com.example.JournalPerso.ui.calendrier;
+package com.example.JournalPerso.menu.calendrier;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

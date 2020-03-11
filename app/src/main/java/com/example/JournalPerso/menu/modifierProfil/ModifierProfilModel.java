@@ -1,16 +1,16 @@
-package com.example.JournalPerso.ui.espacesJour;
+package com.example.JournalPerso.menu.modifierProfil;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class EspacesJourModel extends ViewModel {
+public class ModifierProfilModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public EspacesJourModel() {
+    public ModifierProfilModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is slideshow fragment");
     }
 
     public LiveData<String> getText() {

@@ -17,7 +17,7 @@
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".InscriptionActivity" />
-        <activity android:name=".ConsultationEspacesActivity" />
+        <activity android:name=".consultationEspace.ConsultationEspacesActivity" />
         <activity android:name=".ConnexionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
