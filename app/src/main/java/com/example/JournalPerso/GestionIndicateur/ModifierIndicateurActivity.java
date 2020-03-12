@@ -1,12 +1,10 @@
-package com.example.JournalPerso;
+package com.example.JournalPerso.GestionIndicateur;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+
 import androidx.fragment.app.FragmentActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import com.example.JournalPerso.R;
 
 public class ModifierIndicateurActivity extends FragmentActivity {
 

@@ -42,7 +42,7 @@ public class EspacesJourFragment extends Fragment {
 
 
 
-       /* Espace monespace = new Espace();
+       /*Espace monespace = new Espace();
 
         monespace.setNomEspace("cocuou1");
         IndicateurCaseCochee monIndicateur1 = new IndicateurCaseCochee("inidcateur1",

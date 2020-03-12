@@ -1,4 +1,4 @@
-package com.example.JournalPerso.consultationEspace;
+package com.example.JournalPerso.GestionEspace;
 
 
 import android.content.Intent;
@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.JournalPerso.ModifyEspaceActivity;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
@@ -21,9 +19,6 @@ import com.example.JournalPerso.model.Indicateur;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ConsultationEspacesActivity extends FragmentActivity implements IndicateurAdapter.OnImageClickListener {
 
     private FloatingActionButton buttonSetting;
@@ -88,6 +83,8 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Ind
 
                 mesData.recuperationEspacesMemoire();
 
+
+                mEspace.setCommentaireEspace(textCommentaire.getText().toString());
                 mesData.modifierListeEspace(mEspace, positionListeEspace);
 
                 finish();
@@ -106,6 +103,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Ind
 
     @Override
     public void onImageClick(Indicateur indicateurModifie, int positionIndicateur) {
+
         this.mEspace.getListeIndicateur().setElementAt(indicateurModifie, positionIndicateur);
     }
 }

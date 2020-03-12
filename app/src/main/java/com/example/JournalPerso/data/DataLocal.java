@@ -3,17 +3,21 @@ package com.example.JournalPerso.data;
 import android.content.Context;
 
 import com.example.JournalPerso.model.Espace;
+import com.example.JournalPerso.model.IndicateurCaseCochee;
 import com.example.JournalPerso.model.InterfaceAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class DataLocal {
+    private Vector<Espace> mesEspacesLus;
     private Vector<Espace> mesEspaces;
     private Context monContext;
     //private Activity monActivity;
@@ -62,6 +66,10 @@ public class DataLocal {
                 .create();
 
 
+        for (int a = 0; a < listeEspace.size(); a++) {
+            if (listeEspace.get(a).getCommentaireEspace().isEmpty())
+                listeEspace.get(a).setCommentaireEspace(" ");
+        }
         String fileContents = gson.toJson(listeEspace);
         FileOutputStream monFichier;
 
@@ -95,7 +103,9 @@ public class DataLocal {
             monFichier.close();
 
             Vector<Espace> test = gson.fromJson(sJsonLu, Vector.class);
-            this.mesEspaces = test;
+            this.mesEspacesLus = test;
+
+            conversionLecture();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -111,5 +121,51 @@ public class DataLocal {
         ecrireFichier(this.mesEspaces);
     }
 
+
+    public void conversionLecture() {
+
+        mesEspaces = new Vector<>();
+        for (int a = 0; a < mesEspacesLus.size(); a++) {
+
+            Object objectBrut = mesEspacesLus.get(a);
+            LinkedTreeMap<String, Object> espaceBrut = (LinkedTreeMap) objectBrut;
+
+            Espace monEspace = new Espace();
+
+            monEspace.setNomEspace(espaceBrut.get("nomEspace").toString());
+
+            String testChamp = espaceBrut.get("commentaireEspace").toString();
+            if (testChamp.equals(" ")) {
+                monEspace.setCommentaireEspace("");
+            } else {
+                monEspace.setCommentaireEspace(testChamp);
+            }
+
+            ArrayList<Object> test = (ArrayList<Object>) espaceBrut.get("listeIndicateur");
+
+            for (int i = 0; i < test.size(); i++) {
+
+                LinkedTreeMap<Object, Object> indicateur = (LinkedTreeMap) test.get(i);
+                String typeIndicateur = indicateur.get("typeIndicateur").toString();
+                if (typeIndicateur.equals("CaseCochee")) ;
+                {
+                    IndicateurCaseCochee monIndicateur = new IndicateurCaseCochee();
+                    monIndicateur.setEtatBoutonSaisie((boolean) indicateur.get("etatBoutonSaisie"));
+                    monIndicateur.setObjectifCaseCochee((boolean) indicateur.get("objectifCaseCochee"));
+
+                    monIndicateur.setNomIndicateur(indicateur.get("nomIndicateur").toString());
+
+                    monIndicateur.setTypeIndicateur(indicateur.get("typeIndicateur").toString());
+
+                    monEspace.addIndicateur(monIndicateur);
+
+                }
+            }
+            this.mesEspaces.addElement(monEspace);
+        }
+
+
+        //textTitreEspace.setText(monEspace.getNomEspace());
+    }
 
 }

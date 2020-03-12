@@ -1,4 +1,4 @@
-package com.example.JournalPerso.consultationEspace;
+package com.example.JournalPerso.GestionEspace;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,11 +1,12 @@
-package com.example.JournalPerso;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
+package com.example.JournalPerso.GestionIndicateur;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import androidx.fragment.app.FragmentActivity;
+
+import com.example.JournalPerso.R;
 
 public class createIndicateurActivity extends FragmentActivity {
 
@@ -14,7 +15,7 @@ public class createIndicateurActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_indicateur);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerTypeIndicateur);
+        Spinner spinner = findViewById(R.id.spinnerTypeIndicateur);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.typeIndicateur, android.R.layout.simple_spinner_item);

@@ -5,17 +5,12 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.JournalPerso.GestionEspace.ConsultationEspacesActivity;
 import com.example.JournalPerso.R;
-import com.example.JournalPerso.consultationEspace.ConsultationEspacesActivity;
 import com.example.JournalPerso.model.Espace;
-import com.example.JournalPerso.model.IndicateurCaseCochee;
-import com.google.gson.internal.LinkedTreeMap;
-
-import java.util.ArrayList;
 
 public class ViewHolderEspace extends RecyclerView.ViewHolder {
 
@@ -40,20 +35,29 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
     }
 
     //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
-    public void bind(Object myObject, Context _context, int positionEspace) {
+    public void bind(Espace myObject, Context _context, int positionEspace) {
 
-        monEspace = new Espace();
+
+        monEspace = myObject;
+        contextActivity = _context;
+        /*monEspace = new Espace();
 
         this.positionEspace2 = positionEspace;
-        contextActivity = _context;
+
         LinkedTreeMap<String, Object> espace = (LinkedTreeMap) myObject;
 
         monEspace.setNomEspace(espace.get("nomEspace").toString());
 
-        boolean testChamp = espace.containsKey("commentaireEspace");
-        if (testChamp) {
-            monEspace.setCommentaireEspace("vide");
+        String testChamp = espace.get("commentaireEspace").toString();
+        if(testChamp.equals(" "))
+        {
+            monEspace.setCommentaireEspace("");
         }
+        else
+        {
+            monEspace.setCommentaireEspace(testChamp);
+        }
+
 
 
 
@@ -76,8 +80,18 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
                 monEspace.addIndicateur(monIndicateur);
 
             }
-        }
+        }*/
 
+
+        /*String testChamp = espace.get("commentaireEspace").toString();
+        if(testChamp.equals(" "))
+        {
+            monEspace.setCommentaireEspace("");
+        }
+        else
+        {
+            monEspace.setCommentaireEspace(testChamp);
+        }*/
 
         textTitreEspace.setText(monEspace.getNomEspace());
 
@@ -94,8 +108,6 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
                 intent.putExtra("positionListeEspace", positionEspace2);
                 contextActivity.startActivity(intent);
 
-                Toast toast = Toast.makeText(contextActivity, "position : " + positionEspace2, Toast.LENGTH_SHORT);
-                toast.show();
             }
         });
 

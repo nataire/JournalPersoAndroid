@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ModifierIndicateurActivity"></activity>
-        <activity android:name=".createIndicateurActivity" />
-        <activity android:name=".ModifyEspaceActivity" />
+        <activity android:name=".GestionIndicateur.ModifierIndicateurActivity"></activity>
+        <activity android:name=".GestionIndicateur.createIndicateurActivity" />
+        <activity android:name=".GestionEspace.ModifyEspaceActivity" />
         <activity
             android:name=".menuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".InscriptionActivity" />
-        <activity android:name=".consultationEspace.ConsultationEspacesActivity" />
+        <activity android:name=".GestionEspace.ConsultationEspacesActivity" />
         <activity android:name=".ConnexionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

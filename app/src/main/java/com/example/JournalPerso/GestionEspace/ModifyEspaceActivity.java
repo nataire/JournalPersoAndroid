@@ -1,14 +1,15 @@
-package com.example.JournalPerso;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
+package com.example.JournalPerso.GestionEspace;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+
+import com.example.JournalPerso.GestionIndicateur.ModifierIndicateurActivity;
+import com.example.JournalPerso.GestionIndicateur.createIndicateurActivity;
+import com.example.JournalPerso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ModifyEspaceActivity extends FragmentActivity {

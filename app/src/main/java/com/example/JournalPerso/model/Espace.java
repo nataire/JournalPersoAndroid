@@ -2,6 +2,8 @@ package com.example.JournalPerso.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -11,15 +13,20 @@ public class Espace implements Serializable {
     private Vector<Indicateur> listeIndicateur;
     private String commentaireEspace;
 
+    private Map<String, Boolean> detailJour;
+
     //region Constructeurs
     public Espace() {
         this.listeIndicateur = new Vector<>();
+        this.commentaireEspace = "";
     }
 
     public Espace(String nomEspace, Vector<Date> datesEspace) {
         this.nomEspace = nomEspace;
         this.datesEspace = datesEspace;
         this.listeIndicateur = new Vector<>();
+        this.detailJour = new HashMap<>();
+        this.commentaireEspace = "";
     }
     //endregion
 
@@ -55,6 +62,14 @@ public class Espace implements Serializable {
 
     public void setCommentaireEspace(String commentaireEspace) {
         this.commentaireEspace = commentaireEspace;
+    }
+
+    public Map<String, Boolean> getDetailJour() {
+        return detailJour;
+    }
+
+    public void setDetailJour(Map<String, Boolean> detailJour) {
+        this.detailJour = detailJour;
     }
 
     //endregion
