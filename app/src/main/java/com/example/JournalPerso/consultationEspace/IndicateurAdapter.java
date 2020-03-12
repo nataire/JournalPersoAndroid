@@ -19,8 +19,22 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
     private Vector<Indicateur> listeIndicateur;
 
 
-    public IndicateurAdapter(Vector<Indicateur> list) {
+    private OnImageClickListener onImageClickListener;
+
+
+    public IndicateurAdapter(Vector<Indicateur> list, OnImageClickListener callback) {
         this.listeIndicateur = list;
+        this.onImageClickListener = callback;
+    }
+
+    //c'est ici que nous allons remplir notre cellule avec le texte/image de chaque MyObjects
+    @Override
+    public void onBindViewHolder(ViewHolderIndicateur myViewHolder, int position) {
+
+
+        myViewHolder.bind(this.listeIndicateur.get(position), position);
+
+
     }
 
 
@@ -31,11 +45,8 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
     }
 
 
-    //c'est ici que nous allons remplir notre cellule avec le texte/image de chaque MyObjects
-    @Override
-    public void onBindViewHolder(ViewHolderIndicateur myViewHolder, int position) {
-
-        myViewHolder.bind(this.listeIndicateur.get(position));
+    public interface OnImageClickListener {
+        void onImageClick(Indicateur indicateurModifie, int positionIndicateur);
     }
 
 
@@ -49,6 +60,10 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
 
         public CheckBox checkBoxIndicateur;
         IndicateurCaseCochee monIndicateurCaseCochee;
+        int positionListe;
+
+
+
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -62,8 +77,9 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
         }
 
 
-        public void bind(Indicateur indicateur) {
-            //monIndicateur = indicateur;
+        public void bind(Indicateur indicateur, int position) {
+
+            positionListe = position;
 
             if (indicateur.getTypeIndicateur().equals("CaseCochee")) {
                 monIndicateurCaseCochee = (IndicateurCaseCochee) indicateur;
@@ -71,12 +87,19 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
                 checkBoxIndicateur.setText(monIndicateurCaseCochee.getNomIndicateur());
 
                 checkBoxIndicateur.setChecked(monIndicateurCaseCochee.isEtatBoutonSaisie());
-
-                //textCommentaire.setText();
-
             }
 
 
+            checkBoxIndicateur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    monIndicateurCaseCochee.setEtatBoutonSaisie(checkBoxIndicateur.isChecked());
+                    onImageClickListener.onImageClick(monIndicateurCaseCochee, positionListe);
+                }
+            });
+
+
         }
+
     }
 }

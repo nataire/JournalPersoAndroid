@@ -17,6 +17,7 @@ public class MyAdapterEspace extends RecyclerView.Adapter<ViewHolderEspace> {
     Vector<Espace> list;
     Context context;
 
+
     //ajouter un constructeur prenant en entrée une liste
     public MyAdapterEspace(Vector<Espace> list, Context _context) {
         context = _context;
@@ -35,7 +36,7 @@ public class MyAdapterEspace extends RecyclerView.Adapter<ViewHolderEspace> {
     @Override
     public void onBindViewHolder(ViewHolderEspace myViewHolder, int position) {
 
-        myViewHolder.bind(this.list.get(position), context);
+        myViewHolder.bind(this.list.get(position), context, position);
     }
 
     @Override

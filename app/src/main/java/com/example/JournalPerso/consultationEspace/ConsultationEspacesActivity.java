@@ -15,22 +15,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.JournalPerso.ModifyEspaceActivity;
 import com.example.JournalPerso.R;
+import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
+import com.example.JournalPerso.model.Indicateur;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ConsultationEspacesActivity extends FragmentActivity {
+public class ConsultationEspacesActivity extends FragmentActivity implements IndicateurAdapter.OnImageClickListener {
 
-    FloatingActionButton buttonSetting;
+    private FloatingActionButton buttonSetting;
+    private FloatingActionButton buttonAccept;
     private TextView nomEspace;
-
     private Espace mEspace;
     private TextView textCommentaire;
-
     private RecyclerView recyclerView;
+    private int positionListeEspace;
+
     public ConsultationEspacesActivity() {
         // Required empty public constructor
     }
@@ -48,6 +51,8 @@ public class ConsultationEspacesActivity extends FragmentActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
+
+            positionListeEspace = intent.getIntExtra("positionListeEspace", 0);
             mEspace = (Espace) intent.getSerializableExtra("espace");
 
             nomEspace = findViewById(R.id.nomEspaceSelectionne);
@@ -66,26 +71,41 @@ public class ConsultationEspacesActivity extends FragmentActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent(ConsultationEspacesActivity.this, ModifyEspaceActivity.class);
                 startActivity(intent);
 
             }
         });
 
+        buttonAccept = findViewById((R.id.buttonAccepteModificationEspace));
+
+        buttonAccept.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                DataLocal mesData = new DataLocal(getApplicationContext());
+
+                mesData.recuperationEspacesMemoire();
+
+                mesData.modifierListeEspace(mEspace, positionListeEspace);
+
+                finish();
+            }
+        });
+
 
         recyclerView = findViewById(R.id.recyclerViewIndicateur);
 
-        //définit l'agencement des cellules, ici de façon verticale, comme une ListView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //pour adapter en grille comme une RecyclerView, avec 2 cellules par ligne
-        //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-
-        //puis créer un MyAdapter, lui fournir notre liste de villes.
-        //cet adapter servira à remplir notre recyclerview
-        recyclerView.setAdapter(new IndicateurAdapter(this.mEspace.getListeIndicateur()));
+        recyclerView.setAdapter(new IndicateurAdapter(this.mEspace.getListeIndicateur(), this));
 
     }
 
+
+    @Override
+    public void onImageClick(Indicateur indicateurModifie, int positionIndicateur) {
+        this.mEspace.getListeIndicateur().setElementAt(indicateurModifie, positionIndicateur);
+    }
 }

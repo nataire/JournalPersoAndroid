@@ -1,6 +1,5 @@
 package com.example.JournalPerso.data;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.example.JournalPerso.model.Espace;
@@ -17,20 +16,14 @@ import java.util.Vector;
 public class DataLocal {
     private Vector<Espace> mesEspaces;
     private Context monContext;
-    private Activity monActivity;
+    //private Activity monActivity;
     private String filename = "monFichier_json2";
 
 
     //region COnstructor
-    public DataLocal(Vector<Espace> mesEspaces, Context monContext) {
-        this.mesEspaces = mesEspaces;
-        this.monContext = monContext;
 
-    }
-
-    public DataLocal(Context monContext, Activity monActivity) {
+    public DataLocal(Context monContext) {
         this.monContext = monContext;
-        this.monActivity = monActivity;
     }
     //endregion
 
@@ -83,7 +76,7 @@ public class DataLocal {
         }
     }
 
-    public Vector<Espace> recuperationEspacesMemoire() {
+    public void recuperationEspacesMemoire() {
 
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Espace.class, new InterfaceAdapter());
@@ -94,7 +87,7 @@ public class DataLocal {
 
         String sJsonLu = "";
         try {
-            monFichier = monActivity.openFileInput(filename);
+            monFichier = monContext.openFileInput(filename);
             int content;
             while ((content = monFichier.read()) != -1) {
                 sJsonLu = sJsonLu + (char) content;
@@ -110,9 +103,12 @@ public class DataLocal {
             e.printStackTrace();
         }
 
-        return mesEspaces;
 
+    }
 
+    public void modifierListeEspace(Espace espaceModifie, int position) {
+        mesEspaces.setElementAt(espaceModifie, position);
+        ecrireFichier(this.mesEspaces);
     }
 
 

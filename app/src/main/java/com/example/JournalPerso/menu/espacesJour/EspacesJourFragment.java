@@ -36,21 +36,10 @@ public class EspacesJourFragment extends Fragment {
         monBouton = root.findViewById(R.id.buttonConsulttionEspace);
 
 
-        /*monBouton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent(getActivity(), ConsultationEspacesActivity.class);
-                startActivity(intent);
-
-            }
-        });*/
-
-        mesDataLocal = new DataLocal(getContext(), getActivity());
+        mesDataLocal = new DataLocal(getContext());
 
         mesEspaces = new Vector<>();
-        mesEspaces = mesDataLocal.recuperationEspacesMemoire();
+
 
 
        /* Espace monespace = new Espace();
@@ -88,16 +77,22 @@ public class EspacesJourFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.recyclerView);
 
-        //définit l'agencement des cellules, ici de façon verticale, comme une ListView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //pour adapter en grille comme une RecyclerView, avec 2 cellules par ligne
-        //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-
-        //puis créer un MyAdapter, lui fournir notre liste de villes.
-        //cet adapter servira à remplir notre recyclerview
-        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces, getContext()));
-
         return root;
     }
+
+    public void onStart() {
+
+
+        super.onStart();
+
+        mesDataLocal.recuperationEspacesMemoire();
+
+        mesEspaces = mesDataLocal.getMesEspaces();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces, getContext()));
+    }
+
+
+
 }

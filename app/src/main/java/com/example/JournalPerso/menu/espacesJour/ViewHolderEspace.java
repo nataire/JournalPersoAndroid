@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
     private TextView textTitreEspace;
     private Button buttonEspaceView;
 
+    private int positionEspace2;
 
     private Espace monEspace;
     private Context contextActivity;
@@ -38,10 +40,11 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
     }
 
     //puis ajouter une fonction pour remplir la cellule en fonction d'un MyObject
-    public void bind(Object myObject, Context _context) {
+    public void bind(Object myObject, Context _context, int positionEspace) {
 
         monEspace = new Espace();
 
+        this.positionEspace2 = positionEspace;
         contextActivity = _context;
         LinkedTreeMap<String, Object> espace = (LinkedTreeMap) myObject;
 
@@ -51,6 +54,7 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
         if (testChamp) {
             monEspace.setCommentaireEspace("vide");
         }
+
 
 
         ArrayList<Object> test = (ArrayList<Object>) espace.get("listeIndicateur");
@@ -70,6 +74,7 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
                 monIndicateur.setTypeIndicateur(indicateur.get("typeIndicateur").toString());
 
                 monEspace.addIndicateur(monIndicateur);
+
             }
         }
 
@@ -83,9 +88,14 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
 
+
                 Intent intent = new Intent(contextActivity, ConsultationEspacesActivity.class);
                 intent.putExtra("espace", monEspace);
+                intent.putExtra("positionListeEspace", positionEspace2);
                 contextActivity.startActivity(intent);
+
+                Toast toast = Toast.makeText(contextActivity, "position : " + positionEspace2, Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 
