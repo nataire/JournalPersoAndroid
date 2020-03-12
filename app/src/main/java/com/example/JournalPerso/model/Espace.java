@@ -8,8 +8,8 @@ import java.util.Vector;
 public class Espace implements Serializable {
     private String nomEspace;
     private Vector<Date> datesEspace;
-
     private Vector<Indicateur> listeIndicateur;
+    private String commentaireEspace;
 
     //region Constructeurs
     public Espace() {
@@ -47,6 +47,14 @@ public class Espace implements Serializable {
 
     public void setListeIndicateur(Vector<Indicateur> listeIndicateur) {
         this.listeIndicateur = listeIndicateur;
+    }
+
+    public String getCommentaireEspace() {
+        return commentaireEspace;
+    }
+
+    public void setCommentaireEspace(String commentaireEspace) {
+        this.commentaireEspace = commentaireEspace;
     }
 
     //endregion

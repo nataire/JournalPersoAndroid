@@ -49,7 +49,7 @@ public class ConsultationEspacesActivity extends FragmentActivity {
         if (intent != null) {
             mEspace = (Espace) intent.getSerializableExtra("espace");
 
-            nomEspace = findViewById(R.id.titreActivityConsultationEspace);
+            nomEspace = findViewById(R.id.nomEspaceSelectionne);
 
             nomEspace.setText(mEspace.getNomEspace());
         }

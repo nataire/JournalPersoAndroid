@@ -47,7 +47,7 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
     public class ViewHolderIndicateur extends RecyclerView.ViewHolder {
 
 
-        public CheckBox nameTextView;
+        public CheckBox checkBoxIndicateur;
         IndicateurCaseCochee monIndicateurCaseCochee;
 
         // We also create a constructor that accepts the entire item row
@@ -57,7 +57,7 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            nameTextView = itemView.findViewById(R.id.indicateurCaseCochee);
+            checkBoxIndicateur = itemView.findViewById(R.id.indicateurCaseCochee);
         }
 
 
@@ -67,7 +67,9 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
             if (indicateur.getTypeIndicateur().equals("CaseCochee")) {
                 monIndicateurCaseCochee = (IndicateurCaseCochee) indicateur;
 
-                nameTextView.setText(monIndicateurCaseCochee.getNomIndicateur());
+                checkBoxIndicateur.setText(monIndicateurCaseCochee.getNomIndicateur());
+
+                checkBoxIndicateur.setChecked(monIndicateurCaseCochee.isEtatBoutonSaisie());
             }
 
 
