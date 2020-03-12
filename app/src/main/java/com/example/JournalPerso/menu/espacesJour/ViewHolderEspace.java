@@ -18,8 +18,9 @@ import java.util.ArrayList;
 
 public class ViewHolderEspace extends RecyclerView.ViewHolder {
 
-    private TextView textViewView;
+    private TextView textTitreEspace;
     private Button buttonEspaceView;
+
 
     private Espace monEspace;
     private Context contextActivity;
@@ -30,7 +31,7 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
 
         //c'est ici que l'on fait nos findView
 
-        textViewView = itemView.findViewById(R.id.titreEspace);
+        textTitreEspace = itemView.findViewById(R.id.titreEspace);
         buttonEspaceView = itemView.findViewById(R.id.buttonConsultationEspace);
 
         //imageView = (ImageView) itemView.findViewById(R.id.image);
@@ -45,6 +46,12 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
         LinkedTreeMap<String, Object> espace = (LinkedTreeMap) myObject;
 
         monEspace.setNomEspace(espace.get("nomEspace").toString());
+
+        boolean testChamp = espace.containsKey("commentaireEspace");
+        if (testChamp) {
+            monEspace.setCommentaireEspace("vide");
+        }
+
 
         ArrayList<Object> test = (ArrayList<Object>) espace.get("listeIndicateur");
 
@@ -67,7 +74,10 @@ public class ViewHolderEspace extends RecyclerView.ViewHolder {
         }
 
 
-        textViewView.setText(espace.get("nomEspace").toString());
+        textTitreEspace.setText(monEspace.getNomEspace());
+
+
+
 
         buttonEspaceView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -28,6 +28,7 @@ public class ConsultationEspacesActivity extends FragmentActivity {
     private TextView nomEspace;
 
     private Espace mEspace;
+    private TextView textCommentaire;
 
     private RecyclerView recyclerView;
     public ConsultationEspacesActivity() {
@@ -50,8 +51,11 @@ public class ConsultationEspacesActivity extends FragmentActivity {
             mEspace = (Espace) intent.getSerializableExtra("espace");
 
             nomEspace = findViewById(R.id.nomEspaceSelectionne);
+            textCommentaire = findViewById(R.id.EditTextCommentaire);
 
             nomEspace.setText(mEspace.getNomEspace());
+
+            textCommentaire.setText(mEspace.getCommentaireEspace());
         }
 
 

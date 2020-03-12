@@ -58,6 +58,7 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
             super(itemView);
 
             checkBoxIndicateur = itemView.findViewById(R.id.indicateurCaseCochee);
+
         }
 
 
@@ -70,6 +71,9 @@ public class IndicateurAdapter extends RecyclerView.Adapter<IndicateurAdapter.Vi
                 checkBoxIndicateur.setText(monIndicateurCaseCochee.getNomIndicateur());
 
                 checkBoxIndicateur.setChecked(monIndicateurCaseCochee.isEtatBoutonSaisie());
+
+                //textCommentaire.setText();
+
             }
 
 
