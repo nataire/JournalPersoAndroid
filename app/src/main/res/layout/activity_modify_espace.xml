@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".GestionEspace.ModifyEspaceActivity">
 
-    <TextView
-        android:id="@+id/titreInidicateur2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="35dp"
-        android:text="Sport en salle ....."
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titreInidicateur1" />
-
     <Button
         android:id="@+id/buttonSamedi"
         android:layout_width="45dp"
@@ -46,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextTitreEspace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
@@ -65,7 +55,7 @@
         android:layout_marginTop="32dp"
         android:text="Nom de l'espace"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTitreEspace"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TitreModifierEspaceActivite" />
 
@@ -116,7 +106,7 @@
         app:layout_constraintTop_toBottomOf="@+id/labelChoixJour" />
 
     <Button
-        android:id="@+id/buttonToutJours"
+        android:id="@+id/buttonAllDays"
         android:layout_width="315dp"
         android:layout_height="45dp"
         android:layout_marginStart="55dp"
@@ -133,43 +123,33 @@
         android:text="Quand réaliser l'espace"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTitreEspace" />
 
     <TextView
         android:id="@+id/LabelListeIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:text="Indicateurs"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonToutJours" />
-
-    <TextView
-        android:id="@+id/titreInidicateur1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="44dp"
-        android:text="Aller au travail à pied   ...."
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LabelListeIndicateur" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAllDays" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonAjoutIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="294dp"
-        android:layout_marginTop="226dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="244dp"
         android:clickable="true"
         android:src="@drawable/ic_add_black_24dp"
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonToutJours" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonAllDays" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonAccepteModificationEspace"
+        android:id="@+id/buttonSaveEspace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="267dp"
@@ -181,7 +161,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonChangeEspace"
+        android:id="@+id/buttonDeleteEspace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -189,7 +169,16 @@
         android:clickable="true"
         android:src="@drawable/ic_delete_black_24dp"
         app:backgroundTint="@android:color/transparent"
-        app:layout_constraintStart_toEndOf="@+id/buttonAccepteModificationEspace"
+        app:layout_constraintStart_toEndOf="@+id/buttonSaveEspace"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewListeIndicateurModifierEspace"
+        android:layout_width="292dp"
+        android:layout_height="271dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LabelListeIndicateur" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

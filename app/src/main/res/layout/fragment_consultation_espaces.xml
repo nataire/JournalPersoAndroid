@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Commentaire" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonAccepteModificationEspace"
+        android:id="@+id/buttonSaveEspace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="267dp"
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonChangeEspace"
+        android:id="@+id/buttonDeleteEspace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -82,7 +82,7 @@
         android:clickable="true"
         android:src="@drawable/ic_perm_data_setting_black_24dp"
         app:backgroundTint="@android:color/transparent"
-        app:layout_constraintStart_toEndOf="@+id/buttonAccepteModificationEspace"
+        app:layout_constraintStart_toEndOf="@+id/buttonSaveEspace"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView

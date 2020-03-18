@@ -19,7 +19,7 @@ import com.example.JournalPerso.model.Indicateur;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-public class ConsultationEspacesActivity extends FragmentActivity implements IndicateurAdapter.OnImageClickListener {
+public class ConsultationEspacesActivity extends FragmentActivity implements ConsultationEspaceIndicateurAdapter.onButtonClickListener {
 
     private FloatingActionButton buttonSetting;
     private FloatingActionButton buttonAccept;
@@ -59,20 +59,21 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Ind
         }
 
 
-
-        buttonSetting =  findViewById(R.id.buttonChangeEspace);
+        buttonSetting = findViewById(R.id.buttonDeleteEspace);
 
         buttonSetting.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ConsultationEspacesActivity.this, ModifyEspaceActivity.class);
+                intent.putExtra("monEspace", mEspace);
+                intent.putExtra("positionListeEspace", positionListeEspace);
                 startActivity(intent);
 
             }
         });
 
-        buttonAccept = findViewById((R.id.buttonAccepteModificationEspace));
+        buttonAccept = findViewById((R.id.buttonSaveEspace));
 
         buttonAccept.setOnClickListener(new View.OnClickListener() {
 
@@ -96,14 +97,13 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Ind
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setAdapter(new IndicateurAdapter(this.mEspace.getListeIndicateur(), this));
+        recyclerView.setAdapter(new ConsultationEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), this));
 
     }
 
 
     @Override
-    public void onImageClick(Indicateur indicateurModifie, int positionIndicateur) {
-
+    public void onClick(Indicateur indicateurModifie, int positionIndicateur) {
         this.mEspace.getListeIndicateur().setElementAt(indicateurModifie, positionIndicateur);
     }
 }

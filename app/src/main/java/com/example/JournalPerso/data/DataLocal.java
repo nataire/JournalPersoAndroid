@@ -117,7 +117,12 @@ public class DataLocal {
     }
 
     public void modifierListeEspace(Espace espaceModifie, int position) {
-        mesEspaces.setElementAt(espaceModifie, position);
+        boolean done = false;
+        for (int a = 0; a < mesEspaces.size() && !false; a++) {
+            if (espaceModifie.equals(mesEspaces.get(a)))
+                mesEspaces.setElementAt(espaceModifie, position);
+        }
+        //mesEspaces.setElementAt(espaceModifie, position);
         ecrireFichier(this.mesEspaces);
     }
 

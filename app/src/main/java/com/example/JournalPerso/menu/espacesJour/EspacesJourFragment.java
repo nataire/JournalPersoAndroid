@@ -91,6 +91,8 @@ public class EspacesJourFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces, getContext()));
+
+
     }
 
 
