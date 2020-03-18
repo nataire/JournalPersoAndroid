@@ -1,5 +1,6 @@
 package com.example.JournalPerso.menu.espacesJour;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.JournalPerso.GestionEspace.ConsultationEspacesActivity;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
 
 import java.util.Vector;
 
-public class EspacesJourFragment extends Fragment {
+public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onClickEspace {
 
     private EspacesJourModel espacesJourModel;
     Button monBouton;
@@ -36,7 +38,7 @@ public class EspacesJourFragment extends Fragment {
         monBouton = root.findViewById(R.id.buttonConsulttionEspace);
 
 
-        mesDataLocal = new DataLocal(getContext());
+        mesDataLocal = new DataLocal();
 
         mesEspaces = new Vector<>();
 
@@ -85,16 +87,23 @@ public class EspacesJourFragment extends Fragment {
 
         super.onStart();
 
-        mesDataLocal.recuperationEspacesMemoire();
+        mesDataLocal.recuperationEspacesMemoire(getContext());
 
         mesEspaces = mesDataLocal.getMesEspaces();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces, getContext()));
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces, getContext(), this));
 
 
     }
 
 
-
+    @Override
+    public void onClickTest(Espace espace) {
+        Intent intent = new Intent(getContext(), ConsultationEspacesActivity.class);
+        intent.putExtra("espace", espace);
+        intent.putExtra("data", mesDataLocal);
+        //intent.putExtra("positionListeEspace", position);
+        startActivity(intent);
+    }
 }

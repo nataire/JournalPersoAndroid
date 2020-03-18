@@ -1,5 +1,6 @@
 package com.example.JournalPerso.GestionEspace;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -48,6 +49,13 @@ public class ModifyEspaceActivity extends FragmentActivity {
 
         detailJour = new HashMap<>();
 
+       /* detailJour.put("lundi", mEspace.getDetailJour().get("lundi"));
+        detailJour.put("mardi", mEspace.getDetailJour().get("mardi"));
+        detailJour.put("mercredi", mEspace.getDetailJour().get("mercredi"));
+        detailJour.put("jeudi", mEspace.getDetailJour().get("jeudi"));
+        detailJour.put("vendredi", mEspace.getDetailJour().get("vendredi"));
+        detailJour.put("samedi", mEspace.getDetailJour().get("samedi"));
+        detailJour.put("dimanche", mEspace.getDetailJour().get("dimanche"));*/
         detailJour.put("lundi", false);
         detailJour.put("mardi", false);
         detailJour.put("mercredi", false);
@@ -57,6 +65,20 @@ public class ModifyEspaceActivity extends FragmentActivity {
         detailJour.put("dimanche", false);
 
 
+        textViewTitreEspace = findViewById(R.id.editTextTitreEspace);
+        buttonDelete = findViewById(R.id.buttonDeleteEspace);
+        buttonAccept = findViewById(R.id.buttonSaveEspace);
+
+        boutonLundi = findViewById(R.id.buttonLundi);
+        boutonMardi = findViewById(R.id.buttonMardi);
+        boutonMercredi = findViewById(R.id.buttonMercredi);
+        boutonJeudi = findViewById(R.id.buttonJeudi);
+        boutonVendredi = findViewById(R.id.buttonVendredi);
+        boutonSamedi = findViewById(R.id.buttonSamedi);
+        boutonDimanche = findViewById(R.id.buttonDimanche);
+        boutonAllDays = findViewById(R.id.buttonAllDays);
+        buttonAjoutIndicateur = findViewById(R.id.buttonAjoutIndicateur);
+
         //txtIndicateur = findViewById(R.id.titreInidicateur1);
 
         Intent intent = getIntent();
@@ -65,23 +87,7 @@ public class ModifyEspaceActivity extends FragmentActivity {
             positionListeEspace = intent.getIntExtra("positionListeEspace", 0);
             mEspace = (Espace) intent.getSerializableExtra("monEspace");
 
-            textViewTitreEspace = findViewById(R.id.editTextTitreEspace);
-            buttonDelete = findViewById(R.id.buttonDeleteEspace);
-            buttonAccept = findViewById(R.id.buttonSaveEspace);
-
-            boutonLundi = findViewById(R.id.buttonLundi);
-            boutonMardi = findViewById(R.id.buttonMardi);
-            boutonMercredi = findViewById(R.id.buttonMercredi);
-            boutonJeudi = findViewById(R.id.buttonJeudi);
-            boutonVendredi = findViewById(R.id.buttonVendredi);
-            boutonSamedi = findViewById(R.id.buttonSamedi);
-            boutonDimanche = findViewById(R.id.buttonDimanche);
-            boutonAllDays = findViewById(R.id.buttonAllDays);
-            buttonAjoutIndicateur = findViewById(R.id.buttonAjoutIndicateur);
-
-
             textViewTitreEspace.setText(mEspace.getNomEspace());
-
 
             recyclerView = findViewById(R.id.recyclerViewListeIndicateurModifierEspace);
 
@@ -92,6 +98,16 @@ public class ModifyEspaceActivity extends FragmentActivity {
         }
 
 
+        buttonAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEspace.setNomEspace(textViewTitreEspace.getText().toString());
+                mEspace.setDetailJour(detailJour);
+                setResult(Activity.RESULT_OK,
+                        new Intent().putExtra("espace", mEspace));
+                finish();
+            }
+        });
         buttonAjoutIndicateur.setOnClickListener(new View.OnClickListener() {
 
             @Override

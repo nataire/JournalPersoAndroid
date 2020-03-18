@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Vector;
 
 public class Espace implements Serializable {
+    private int idEspace;
     private String nomEspace;
     private Vector<Date> datesEspace;
     private Vector<Indicateur> listeIndicateur;
@@ -19,6 +20,7 @@ public class Espace implements Serializable {
     public Espace() {
         this.listeIndicateur = new Vector<>();
         this.commentaireEspace = "";
+        this.idEspace = java.lang.System.identityHashCode(this);
     }
 
     public Espace(String nomEspace, Vector<Date> datesEspace) {
@@ -27,6 +29,7 @@ public class Espace implements Serializable {
         this.listeIndicateur = new Vector<>();
         this.detailJour = new HashMap<>();
         this.commentaireEspace = "";
+        this.idEspace = java.lang.System.identityHashCode(this);
     }
     //endregion
 
@@ -72,7 +75,14 @@ public class Espace implements Serializable {
         this.detailJour = detailJour;
     }
 
-    //endregion
+    public int getIdEspace() {
+        return idEspace;
+    }
+
+    public void setIdEspace(int idEspace) {
+        this.idEspace = idEspace;
+    }
+//endregion
 
     //region equals hashcode
 

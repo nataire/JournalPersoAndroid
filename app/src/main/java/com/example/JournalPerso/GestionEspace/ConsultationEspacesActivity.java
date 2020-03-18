@@ -1,6 +1,7 @@
 package com.example.JournalPerso.GestionEspace;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
     private TextView textCommentaire;
     private RecyclerView recyclerView;
     private int positionListeEspace;
+    private int test = 0;
+    private DataLocal mesData;
 
     public ConsultationEspacesActivity() {
         // Required empty public constructor
@@ -49,6 +52,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
 
             positionListeEspace = intent.getIntExtra("positionListeEspace", 0);
             mEspace = (Espace) intent.getSerializableExtra("espace");
+            mesData = (DataLocal) intent.getSerializableExtra("data");
 
             nomEspace = findViewById(R.id.nomEspaceSelectionne);
             textCommentaire = findViewById(R.id.EditTextCommentaire);
@@ -68,7 +72,9 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                 Intent intent = new Intent(ConsultationEspacesActivity.this, ModifyEspaceActivity.class);
                 intent.putExtra("monEspace", mEspace);
                 intent.putExtra("positionListeEspace", positionListeEspace);
-                startActivity(intent);
+
+                startActivityForResult(intent, test);
+                //startActivity(intent);
 
             }
         });
@@ -80,14 +86,11 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
             @Override
             public void onClick(View v) {
 
-                DataLocal mesData = new DataLocal(getApplicationContext());
-
-                mesData.recuperationEspacesMemoire();
 
 
                 mEspace.setCommentaireEspace(textCommentaire.getText().toString());
                 mesData.modifierListeEspace(mEspace, positionListeEspace);
-
+                mesData.ecrireFichier(mesData.getMesEspaces(), getApplicationContext());
                 finish();
             }
         });
@@ -106,4 +109,24 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
     public void onClick(Indicateur indicateurModifie, int positionIndicateur) {
         this.mEspace.getListeIndicateur().setElementAt(indicateurModifie, positionIndicateur);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == test && resultCode == Activity.RESULT_OK) {
+            Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
+
+
+            nomEspace.setText(mEspaceTemp.getNomEspace());
+            recyclerView.setAdapter(new ConsultationEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), this));
+
+
+            mEspace.setNomEspace(mEspaceTemp.getNomEspace());
+            mEspace.setListeIndicateur(mEspaceTemp.getListeIndicateur());
+            mEspace.setDetailJour(mEspaceTemp.getDetailJour());
+
+
+        }
+    }
+
 }

@@ -13,21 +13,26 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class DataLocal {
+public class DataLocal implements Serializable {
     private Vector<Espace> mesEspacesLus;
     private Vector<Espace> mesEspaces;
-    private Context monContext;
+    //private Context monContext;
     //private Activity monActivity;
     private String filename = "monFichier_json2";
 
 
     //region COnstructor
 
-    public DataLocal(Context monContext) {
+   /* public DataLocal(Context monContext) {
         this.monContext = monContext;
+    }*/
+
+    public DataLocal() {
+
     }
     //endregion
 
@@ -41,13 +46,6 @@ public class DataLocal {
         this.mesEspaces = mesEspaces;
     }
 
-    public Context getMonContext() {
-        return monContext;
-    }
-
-    public void setMonContext(Context monContext) {
-        this.monContext = monContext;
-    }
 
     public String getFilename() {
         return filename;
@@ -58,7 +56,7 @@ public class DataLocal {
     }
 
     //endregion
-    public void ecrireFichier(Vector<Espace> listeEspace) {
+    public void ecrireFichier(Vector<Espace> listeEspace, Context monContext) {
         Gson gson = new GsonBuilder()
                 .serializeNulls()
                 .disableHtmlEscaping()
@@ -84,7 +82,7 @@ public class DataLocal {
         }
     }
 
-    public void recuperationEspacesMemoire() {
+    public void recuperationEspacesMemoire(Context monContext) {
 
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Espace.class, new InterfaceAdapter());
@@ -119,11 +117,11 @@ public class DataLocal {
     public void modifierListeEspace(Espace espaceModifie, int position) {
         boolean done = false;
         for (int a = 0; a < mesEspaces.size() && !false; a++) {
-            if (espaceModifie.equals(mesEspaces.get(a)))
-                mesEspaces.setElementAt(espaceModifie, position);
+            if (espaceModifie.getIdEspace() == mesEspaces.get((a)).getIdEspace())
+                mesEspaces.setElementAt(espaceModifie, a);
         }
         //mesEspaces.setElementAt(espaceModifie, position);
-        ecrireFichier(this.mesEspaces);
+        //ecrireFichier(this.mesEspaces);
     }
 
 
