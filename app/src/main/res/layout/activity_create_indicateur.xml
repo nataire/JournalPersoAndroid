@@ -26,7 +26,7 @@
         android:text="Type de l'indicateur"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomIndicateur" />
+        app:layout_constraintTop_toBottomOf="@+id/nomIndicateurModifier" />
 
     <TextView
         android:id="@+id/titreModifierIndicateurActivity"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/titreModifierIndicateurActivity" />
 
     <EditText
-        android:id="@+id/nomIndicateur"
+        android:id="@+id/nomIndicateurModifier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/labelObjectif">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioButtonObjectifCochee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
@@ -90,13 +90,13 @@
             app:layout_constraintTop_toBottomOf="@+id/labelObjectif" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioButtonObjectifDecochee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="31dp"
             android:text="Indicateur décoché"
-            app:layout_constraintStart_toEndOf="@+id/radioButton"
+            app:layout_constraintStart_toEndOf="@+id/radioButtonObjectifCochee"
             app:layout_constraintTop_toBottomOf="@+id/labelObjectif" />
     </RadioGroup>
 

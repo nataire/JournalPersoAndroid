@@ -44,7 +44,15 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
 
 
-       /*Espace monespace = new Espace();
+        /*Map<String, Boolean> temp = new HashMap<>();
+        temp.put("lundi",false);
+        temp.put("mardi",false);
+        temp.put("mercredi",false);
+        temp.put("jeudi",false);
+        temp.put("vendredi",false);
+        temp.put("samedi",false);
+        temp.put("dimanche",false);
+       Espace monespace = new Espace();
 
         monespace.setNomEspace("cocuou1");
         IndicateurCaseCochee monIndicateur1 = new IndicateurCaseCochee("inidcateur1",
@@ -55,6 +63,7 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
         monespace.addIndicateur(monIndicateur1);
         monespace.addIndicateur(monIndicateur2);
+        monespace.setDetailJour(temp);
         mesEspaces.addElement(monespace);
 
 
@@ -69,10 +78,11 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
         monespace2.addIndicateur(monIndicateur3);
         monespace2.addIndicateur(monIndicateur4);
+        monespace2.setDetailJour(temp);
         mesEspaces.addElement(monespace2);
 
 
-        mesDataLocal.ecrireFichier(mesEspaces);*/
+        mesDataLocal.ecrireFichier(mesEspaces,getContext());*/
 
 
 

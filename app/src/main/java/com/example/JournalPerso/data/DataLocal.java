@@ -15,6 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class DataLocal implements Serializable {
@@ -144,11 +146,23 @@ public class DataLocal implements Serializable {
                 monEspace.setCommentaireEspace(testChamp);
             }
 
-            ArrayList<Object> test = (ArrayList<Object>) espaceBrut.get("listeIndicateur");
+            LinkedTreeMap<Object, Object> detailJour = (LinkedTreeMap) espaceBrut.get("detailJour");
+            Map<String, Boolean> temp = new HashMap<>();
+            temp.put("lundi", (boolean) detailJour.get("lundi"));
+            temp.put("mardi", (boolean) detailJour.get("mardi"));
+            temp.put("mercredi", (boolean) detailJour.get("mercredi"));
+            temp.put("jeudi", (boolean) detailJour.get("jeudi"));
+            temp.put("vendredi", (boolean) detailJour.get("vendredi"));
+            temp.put("samedi", (boolean) detailJour.get("samedi"));
+            temp.put("dimanche", (boolean) detailJour.get("dimanche"));
 
-            for (int i = 0; i < test.size(); i++) {
+            monEspace.setDetailJour(temp);
 
-                LinkedTreeMap<Object, Object> indicateur = (LinkedTreeMap) test.get(i);
+            ArrayList<Object> listeIndicateur = (ArrayList<Object>) espaceBrut.get("listeIndicateur");
+
+            for (int i = 0; i < listeIndicateur.size(); i++) {
+
+                LinkedTreeMap<Object, Object> indicateur = (LinkedTreeMap) listeIndicateur.get(i);
                 String typeIndicateur = indicateur.get("typeIndicateur").toString();
                 if (typeIndicateur.equals("CaseCochee")) ;
                 {

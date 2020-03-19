@@ -21,11 +21,14 @@ public class ModifierEspaceIndicateurAdapter extends RecyclerView.Adapter<Modifi
 
     private Vector<Indicateur> listeIndicateur;
     private Context context;
+
+    private onClickPopupMenuListener onClickPopupMenuListener;
     //private ConsultationEspaceIndicateurAdapter.onButtonClickListener onButtonClickListener;
 
-    public ModifierEspaceIndicateurAdapter(Vector<Indicateur> list, Context context /*, ConsultationEspaceIndicateurAdapter.onButtonClickListener callback*/) {
+    public ModifierEspaceIndicateurAdapter(Vector<Indicateur> list, Context context, ModifierEspaceIndicateurAdapter.onClickPopupMenuListener callback) {
         this.listeIndicateur = list;
         this.context = context;
+        this.onClickPopupMenuListener = callback;
         //this.onButtonClickListener = callback;
     }
 
@@ -40,23 +43,23 @@ public class ModifierEspaceIndicateurAdapter extends RecyclerView.Adapter<Modifi
         return new ModifierEspaceIndicateurAdapter.ViewHolderIndicateur(view);
     }
 
+    public interface onClickPopupMenuListener {
+        void onClickPopUpMenu(MenuItem item, Indicateur indicateur);
+    }
+
     @Override
     public int getItemCount() {
         return listeIndicateur.size();
     }
 
 
-    public interface onButtonClickListener {
-        void onClick(Indicateur indicateurModifie, int positionIndicateur);
-    }
-
     public class ViewHolderIndicateur extends RecyclerView.ViewHolder {
 
         Button boutonDetail;
         private TextView titreIndicateur;
+        private Indicateur mIndicateur;
         private Context context;
-        //IndicateurCaseCochee monIndicateurCaseCochee;
-        //int positionListe;
+
 
 
         public ViewHolderIndicateur(View itemView) {
@@ -72,6 +75,8 @@ public class ModifierEspaceIndicateurAdapter extends RecyclerView.Adapter<Modifi
 
             //positionListe = position;
             this.context = contextAppli;
+
+            this.mIndicateur = indicateur;
             titreIndicateur.setText(indicateur.getNomIndicateur());
 
 
@@ -89,9 +94,12 @@ public class ModifierEspaceIndicateurAdapter extends RecyclerView.Adapter<Modifi
                         public boolean onMenuItemClick(MenuItem item) {
                             Toast.makeText(
                                     context,
-                                    "You Clicked : " + item.getTitle(),
+                                    "You Clicked : " + item,
                                     Toast.LENGTH_SHORT
                             ).show();
+
+                            //monIndicateurCaseCochee.setEtatBoutonSaisie(checkBoxIndicateur.isChecked());
+                            onClickPopupMenuListener.onClickPopUpMenu(item, mIndicateur);
                             return true;
                         }
                     });
@@ -99,16 +107,6 @@ public class ModifierEspaceIndicateurAdapter extends RecyclerView.Adapter<Modifi
                     popup.show(); //showing popup menu
                 }
             });
-
-            /*checkBoxIndicateur.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    monIndicateurCaseCochee.setEtatBoutonSaisie(checkBoxIndicateur.isChecked());
-                   // onButtonClickListener.onClick(monIndicateurCaseCochee, positionListe);
-                }
-            });*/
-
-
         }
 
     }

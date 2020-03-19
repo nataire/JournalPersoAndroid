@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,22 +13,25 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.JournalPerso.GestionIndicateur.ModifierIndicateurActivity;
 import com.example.JournalPerso.GestionIndicateur.createIndicateurActivity;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.model.Espace;
+import com.example.JournalPerso.model.Indicateur;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ModifyEspaceActivity extends FragmentActivity {
+public class ModifyEspaceActivity extends FragmentActivity implements ModifierEspaceIndicateurAdapter.onClickPopupMenuListener {
 
     private TextView txtIndicateur;
     private TextView textViewTitreEspace;
     private FloatingActionButton buttonAjoutIndicateur;
     private FloatingActionButton buttonDelete;
     private FloatingActionButton buttonAccept;
-    private Button boutonLundi;
+    private String[] nomJour = {"lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"};
+    private Button[] boutonJour = new Button[7];
     private Button boutonMardi;
     private Button boutonMercredi;
     private Button boutonJeudi;
@@ -49,33 +53,20 @@ public class ModifyEspaceActivity extends FragmentActivity {
 
         detailJour = new HashMap<>();
 
-       /* detailJour.put("lundi", mEspace.getDetailJour().get("lundi"));
-        detailJour.put("mardi", mEspace.getDetailJour().get("mardi"));
-        detailJour.put("mercredi", mEspace.getDetailJour().get("mercredi"));
-        detailJour.put("jeudi", mEspace.getDetailJour().get("jeudi"));
-        detailJour.put("vendredi", mEspace.getDetailJour().get("vendredi"));
-        detailJour.put("samedi", mEspace.getDetailJour().get("samedi"));
-        detailJour.put("dimanche", mEspace.getDetailJour().get("dimanche"));*/
-        detailJour.put("lundi", false);
-        detailJour.put("mardi", false);
-        detailJour.put("mercredi", false);
-        detailJour.put("jeudi", false);
-        detailJour.put("vendredi", false);
-        detailJour.put("samedi", false);
-        detailJour.put("dimanche", false);
-
-
         textViewTitreEspace = findViewById(R.id.editTextTitreEspace);
         buttonDelete = findViewById(R.id.buttonDeleteEspace);
         buttonAccept = findViewById(R.id.buttonSaveEspace);
 
-        boutonLundi = findViewById(R.id.buttonLundi);
-        boutonMardi = findViewById(R.id.buttonMardi);
-        boutonMercredi = findViewById(R.id.buttonMercredi);
-        boutonJeudi = findViewById(R.id.buttonJeudi);
-        boutonVendredi = findViewById(R.id.buttonVendredi);
-        boutonSamedi = findViewById(R.id.buttonSamedi);
-        boutonDimanche = findViewById(R.id.buttonDimanche);
+
+        //boutonJour[0] = findViewById(R.id.buttonLundi); // remplie le tableau avec les valeurs de 0 à nb-1
+
+        boutonJour[0] = findViewById(R.id.buttonLundi);
+        boutonJour[1] = findViewById(R.id.buttonMardi);
+        boutonJour[2] = findViewById(R.id.buttonMercredi);
+        boutonJour[3] = findViewById(R.id.buttonJeudi);
+        boutonJour[4] = findViewById(R.id.buttonVendredi);
+        boutonJour[5] = findViewById(R.id.buttonSamedi);
+        boutonJour[6] = findViewById(R.id.buttonDimanche);
         boutonAllDays = findViewById(R.id.buttonAllDays);
         buttonAjoutIndicateur = findViewById(R.id.buttonAjoutIndicateur);
 
@@ -93,7 +84,29 @@ public class ModifyEspaceActivity extends FragmentActivity {
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext()/*, this*/));
+            recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
+
+            detailJour = mEspace.getDetailJour();
+
+            for (int a = 0; a < boutonJour.length; a++) {
+
+                if (detailJour.get(nomJour[a]))
+                    boutonJour[a].setBackgroundResource(R.color.colorPrimary);
+                else
+                    boutonJour[a].setBackgroundColor(Color.argb(255, 224, 224, 224));
+
+
+                final int index = a;
+                boutonJour[a].setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        cliqueBoutonJour(nomJour[index], boutonJour[index]);
+                    }
+                });
+            }
+
+
 
         }
 
@@ -119,55 +132,6 @@ public class ModifyEspaceActivity extends FragmentActivity {
             }
         });
 
-        boutonLundi.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cliqueBoutonJour("lundi", boutonLundi);
-            }
-        });
-        boutonMardi.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cliqueBoutonJour("mardi", boutonMardi);
-            }
-        });
-        boutonMercredi.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cliqueBoutonJour("mercredi", boutonMercredi);
-            }
-        });
-        boutonJeudi.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cliqueBoutonJour("jeudi", boutonJeudi);
-            }
-        });
-        boutonVendredi.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cliqueBoutonJour("vendredi", boutonVendredi);
-            }
-        });
-        boutonSamedi.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cliqueBoutonJour("samedi", boutonSamedi);
-            }
-        });
-        boutonDimanche.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cliqueBoutonJour("dimanche", boutonDimanche);
-            }
-        });
     }
 
 
@@ -182,6 +146,16 @@ public class ModifyEspaceActivity extends FragmentActivity {
             test.setBackgroundResource(R.color.colorPrimary);
             //ViewCompat.setBackgroundTintList(boutonLundi, getResources().getColorStateList(R.color.design_default_color_primary));
             //ViewCompat.setBackgroundTintList(boutonLundi, getResources().getColorStateList(android.R.color.background_light));
+        }
+
+    }
+
+    @Override
+    public void onClickPopUpMenu(MenuItem item, Indicateur indicateur) {
+        if (item.getTitle().toString().equals("Modifier")) {
+            Intent intent = new Intent(ModifyEspaceActivity.this, ModifierIndicateurActivity.class);
+            intent.putExtra("monIndicateur", indicateur);
+            startActivity(intent);
         }
 
     }

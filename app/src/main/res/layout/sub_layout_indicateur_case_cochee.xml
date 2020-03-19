@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/radioGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:orientation="horizontal"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/labelObjectif">
+
+    <RadioButton
+        android:id="@+id/radioButtonObjectifCochee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="31dp"
+        android:checked="true"
+        android:text="Indicateur coché"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelObjectif" />
+
+    <RadioButton
+        android:id="@+id/radioButtonObjectifDecochee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="31dp"
+        android:text="Indicateur décoché"
+        app:layout_constraintStart_toEndOf="@+id/radioButtonObjectifCochee"
+        app:layout_constraintTop_toBottomOf="@+id/labelObjectif" />
+</RadioGroup>
