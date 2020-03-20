@@ -42,6 +42,7 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
     private int positionListeEspace;
     private Espace mEspace;
     private Map<String, Boolean> detailJour;
+    private int test = 0;
 
     private RecyclerView recyclerView;
 
@@ -155,8 +156,33 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
         if (item.getTitle().toString().equals("Modifier")) {
             Intent intent = new Intent(ModifyEspaceActivity.this, ModifierIndicateurActivity.class);
             intent.putExtra("monIndicateur", indicateur);
-            startActivity(intent);
+            startActivityForResult(intent, test);
+        } else {
+            for (int a = 0; a < mEspace.getListeIndicateur().size(); a++) {
+                if (indicateur.getIdIndicateur() == mEspace.getListeIndicateur().get(a).getIdIndicateur())
+                    mEspace.getListeIndicateur().remove(a);
+            }
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == test && resultCode == Activity.RESULT_OK) {
+
+            Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
+
+
+            for (int a = 0; a < mEspace.getListeIndicateur().size(); a++) {
+                if (mIndicateurTemp.getIdIndicateur() == mEspace.getListeIndicateur().get(a).getIdIndicateur())
+                    mEspace.getListeIndicateur().setElementAt(mIndicateurTemp, a);
+            }
+
+
+            recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
+
+
+        }
     }
 }

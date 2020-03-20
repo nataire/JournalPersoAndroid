@@ -5,17 +5,17 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/saisieObjectifDuree"
+        android:id="@+id/saisieObjectifNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
         android:ems="10"
         android:inputType="numberSigned"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titreDureeObjectifIndicateur" />
+        app:layout_constraintTop_toBottomOf="@+id/titreNombreObjectifIndicateur" />
 
     <TextView
-        android:id="@+id/titreDureeObjectifIndicateur"
+        android:id="@+id/titreNombreObjectifIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre"

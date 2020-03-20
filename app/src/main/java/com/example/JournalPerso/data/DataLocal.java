@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.IndicateurCaseCochee;
+import com.example.JournalPerso.model.IndicateurChiffre;
+import com.example.JournalPerso.model.IndicateurDuree;
 import com.example.JournalPerso.model.InterfaceAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -146,6 +148,7 @@ public class DataLocal implements Serializable {
                 monEspace.setCommentaireEspace(testChamp);
             }
 
+            monEspace.setIdEspace(((Double) espaceBrut.get("idEspace")).intValue());
             LinkedTreeMap<Object, Object> detailJour = (LinkedTreeMap) espaceBrut.get("detailJour");
             Map<String, Boolean> temp = new HashMap<>();
             temp.put("lundi", (boolean) detailJour.get("lundi"));
@@ -164,7 +167,7 @@ public class DataLocal implements Serializable {
 
                 LinkedTreeMap<Object, Object> indicateur = (LinkedTreeMap) listeIndicateur.get(i);
                 String typeIndicateur = indicateur.get("typeIndicateur").toString();
-                if (typeIndicateur.equals("CaseCochee")) ;
+                if (typeIndicateur.equals("CaseCochee"))
                 {
                     IndicateurCaseCochee monIndicateur = new IndicateurCaseCochee();
                     monIndicateur.setEtatBoutonSaisie((boolean) indicateur.get("etatBoutonSaisie"));
@@ -174,9 +177,39 @@ public class DataLocal implements Serializable {
 
                     monIndicateur.setTypeIndicateur(indicateur.get("typeIndicateur").toString());
 
+                    monIndicateur.setIdIndicateur(((Double) indicateur.get("idIndicateur")).intValue());
+
                     monEspace.addIndicateur(monIndicateur);
 
+                } else if (typeIndicateur.equals("Chiffre")) {
+                    IndicateurChiffre monIndicateur = new IndicateurChiffre();
+                    monIndicateur.setChiffreSaisie(indicateur.get("chiffreSaisie").toString());
+
+                    monIndicateur.setObjectifChiffre(indicateur.get("objectifChiffre").toString());
+
+                    monIndicateur.setNomIndicateur(indicateur.get("nomIndicateur").toString());
+
+                    monIndicateur.setTypeIndicateur(indicateur.get("typeIndicateur").toString());
+
+                    monIndicateur.setIdIndicateur(((Double) indicateur.get("idIndicateur")).intValue());
+
+                    monEspace.addIndicateur(monIndicateur);
+                } else {
+                    IndicateurDuree monIndicateur = new IndicateurDuree();
+                    monIndicateur.setDureeSaisie(indicateur.get("dureeSaisie").toString());
+
+                    monIndicateur.setObjectifDuree(indicateur.get("objectifDuree").toString());
+
+                    monIndicateur.setNomIndicateur(indicateur.get("nomIndicateur").toString());
+
+                    monIndicateur.setTypeIndicateur(indicateur.get("typeIndicateur").toString());
+
+                    monIndicateur.setIdIndicateur(((Double) indicateur.get("idIndicateur")).intValue());
+
+                    monEspace.addIndicateur(monIndicateur);
                 }
+
+
             }
             this.mesEspaces.addElement(monEspace);
         }

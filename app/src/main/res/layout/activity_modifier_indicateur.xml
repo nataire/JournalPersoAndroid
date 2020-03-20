@@ -73,10 +73,10 @@
         android:spinnerMode="dropdown" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonSaveEspace"
+        android:id="@+id/buttonSaveIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/buttonDeleteEspace"
+        android:layout_alignEnd="@+id/buttonDeleteIndicateur"
         android:layout_alignParentTop="true"
         android:layout_marginStart="267dp"
         android:layout_marginTop="41dp"
@@ -86,7 +86,7 @@
         app:backgroundTint="@android:color/transparent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonDeleteEspace"
+        android:id="@+id/buttonDeleteIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

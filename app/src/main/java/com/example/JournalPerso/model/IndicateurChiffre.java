@@ -8,13 +8,15 @@ public class IndicateurChiffre extends Indicateur {
 
 
     public IndicateurChiffre() {
+        this.idIndicateur = java.lang.System.identityHashCode(this);
     }
 
-    public IndicateurChiffre(String nomIndicateur, String chiffreSaisie, String objectifChiffre) {
+    public IndicateurChiffre(String nomIndicateur, String chiffreSaisie, String objectifChiffre, int idIndicateur) {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "Chiffre";
         this.chiffreSaisie = chiffreSaisie;
         this.objectifChiffre = objectifChiffre;
+        this.idIndicateur = idIndicateur;
     }
 
     //endregion

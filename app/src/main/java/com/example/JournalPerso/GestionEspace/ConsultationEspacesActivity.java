@@ -63,7 +63,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
         }
 
 
-        buttonSetting = findViewById(R.id.buttonDeleteEspace);
+        buttonSetting = findViewById(R.id.buttonSettingEspace);
 
         buttonSetting.setOnClickListener(new View.OnClickListener() {
 
@@ -113,18 +113,15 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == test && resultCode == Activity.RESULT_OK) {
             Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
-
-
-            nomEspace.setText(mEspaceTemp.getNomEspace());
-            recyclerView.setAdapter(new ConsultationEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), this));
-
 
             mEspace.setNomEspace(mEspaceTemp.getNomEspace());
             mEspace.setListeIndicateur(mEspaceTemp.getListeIndicateur());
             mEspace.setDetailJour(mEspaceTemp.getDetailJour());
-
+            nomEspace.setText(mEspaceTemp.getNomEspace());
+            recyclerView.setAdapter(new ConsultationEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), this));
 
         }
     }

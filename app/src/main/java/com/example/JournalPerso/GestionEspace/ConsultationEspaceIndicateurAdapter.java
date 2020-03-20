@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.model.Indicateur;
 import com.example.JournalPerso.model.IndicateurCaseCochee;
+import com.example.JournalPerso.model.IndicateurChiffre;
+import com.example.JournalPerso.model.IndicateurDuree;
 
 import java.util.Vector;
 
@@ -51,6 +53,8 @@ public class ConsultationEspaceIndicateurAdapter extends RecyclerView.Adapter<Co
 
         public CheckBox checkBoxIndicateur;
         IndicateurCaseCochee monIndicateurCaseCochee;
+        IndicateurDuree monIndicateurDuree;
+        IndicateurChiffre monIndicateurChiffre;
         int positionListe;
 
 
@@ -71,7 +75,21 @@ public class ConsultationEspaceIndicateurAdapter extends RecyclerView.Adapter<Co
                 monIndicateurCaseCochee = (IndicateurCaseCochee) indicateur;
                 checkBoxIndicateur.setText(monIndicateurCaseCochee.getNomIndicateur());
                 checkBoxIndicateur.setChecked(monIndicateurCaseCochee.isEtatBoutonSaisie());
+            } else if (indicateur.getTypeIndicateur().equals("Duree")) {
+                monIndicateurDuree = (IndicateurDuree) indicateur;
+
+                checkBoxIndicateur.setText(monIndicateurDuree.getNomIndicateur());
+                checkBoxIndicateur.setChecked(true);
+                //checkBoxIndicateur.setChecked(monIndicateurCaseCochee.isEtatBoutonSaisie());
+            } else {
+                monIndicateurChiffre = (IndicateurChiffre) indicateur;
+
+                checkBoxIndicateur.setText(monIndicateurChiffre.getNomIndicateur());
+                checkBoxIndicateur.setChecked(true);
+
+
             }
+
 
             checkBoxIndicateur.setOnClickListener(new View.OnClickListener() {
                 @Override
