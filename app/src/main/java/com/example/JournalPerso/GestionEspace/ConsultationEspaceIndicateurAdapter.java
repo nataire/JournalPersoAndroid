@@ -1,9 +1,14 @@
 package com.example.JournalPerso.GestionEspace;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +25,12 @@ public class ConsultationEspaceIndicateurAdapter extends RecyclerView.Adapter<Co
 
     private Vector<Indicateur> listeIndicateur;
     private onButtonClickListener onButtonClickListener;
+    private LinearLayout groupeIndicateurDuree;
+    private LinearLayout groupeIndicateurNombre;
+    private TextView titreIndicateurDuree;
+    private TextView titreIndicateurNombre;
+    private EditText valeurIndicateurDuree;
+    private EditText valeurIndicateurNombre;
 
     public ConsultationEspaceIndicateurAdapter(Vector<Indicateur> list, onButtonClickListener callback) {
         this.listeIndicateur = list;
@@ -63,6 +74,14 @@ public class ConsultationEspaceIndicateurAdapter extends RecyclerView.Adapter<Co
 
             checkBoxIndicateur = itemView.findViewById(R.id.indicateurCaseCochee);
 
+            groupeIndicateurDuree = itemView.findViewById(R.id.groupeIndicateurDuree);
+            titreIndicateurDuree = itemView.findViewById(R.id.titreIndicateurDuree);
+            valeurIndicateurDuree = itemView.findViewById(R.id.valeurIndicateurDuree);
+
+
+            groupeIndicateurNombre = itemView.findViewById(R.id.groupeIndicateurNombre);
+            titreIndicateurNombre = itemView.findViewById(R.id.titreIndicateurNombre);
+            valeurIndicateurNombre = itemView.findViewById(R.id.valeurIndicateurNombre);
 
         }
 
@@ -73,20 +92,31 @@ public class ConsultationEspaceIndicateurAdapter extends RecyclerView.Adapter<Co
 
             if (indicateur.getTypeIndicateur().equals("CaseCochee")) {
                 monIndicateurCaseCochee = (IndicateurCaseCochee) indicateur;
+
                 checkBoxIndicateur.setText(monIndicateurCaseCochee.getNomIndicateur());
                 checkBoxIndicateur.setChecked(monIndicateurCaseCochee.isEtatBoutonSaisie());
+
+                groupeIndicateurDuree.setVisibility(LinearLayout.GONE);
+                groupeIndicateurNombre.setVisibility(LinearLayout.GONE);
+
+
             } else if (indicateur.getTypeIndicateur().equals("Duree")) {
                 monIndicateurDuree = (IndicateurDuree) indicateur;
 
-                checkBoxIndicateur.setText(monIndicateurDuree.getNomIndicateur());
-                checkBoxIndicateur.setChecked(true);
-                //checkBoxIndicateur.setChecked(monIndicateurCaseCochee.isEtatBoutonSaisie());
+                titreIndicateurDuree.setText(monIndicateurDuree.getNomIndicateur());
+                valeurIndicateurDuree.setText(monIndicateurDuree.getDureeSaisie());
+
+                checkBoxIndicateur.setVisibility(LinearLayout.GONE);
+                groupeIndicateurNombre.setVisibility(LinearLayout.GONE);
+
             } else {
                 monIndicateurChiffre = (IndicateurChiffre) indicateur;
 
-                checkBoxIndicateur.setText(monIndicateurChiffre.getNomIndicateur());
-                checkBoxIndicateur.setChecked(true);
+                titreIndicateurNombre.setText(monIndicateurChiffre.getNomIndicateur());
+                valeurIndicateurNombre.setText(monIndicateurChiffre.getChiffreSaisie());
 
+                checkBoxIndicateur.setVisibility(LinearLayout.GONE);
+                groupeIndicateurDuree.setVisibility(LinearLayout.GONE);
 
             }
 
@@ -96,6 +126,34 @@ public class ConsultationEspaceIndicateurAdapter extends RecyclerView.Adapter<Co
                 public void onClick(View v) {
                     monIndicateurCaseCochee.setEtatBoutonSaisie(checkBoxIndicateur.isChecked());
                     onButtonClickListener.onClick(monIndicateurCaseCochee, positionListe);
+                }
+            });
+
+            valeurIndicateurDuree.addTextChangedListener(new TextWatcher() {
+
+                public void afterTextChanged(Editable s) {
+                    monIndicateurDuree.setDureeSaisie(s.toString());
+                    onButtonClickListener.onClick(monIndicateurDuree, positionListe);
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+            });
+
+            valeurIndicateurNombre.addTextChangedListener(new TextWatcher() {
+
+                public void afterTextChanged(Editable s) {
+                    monIndicateurChiffre.setChiffreSaisie(s.toString());
+                    onButtonClickListener.onClick(monIndicateurChiffre, positionListe);
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
                 }
             });
 

@@ -74,8 +74,6 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                 intent.putExtra("positionListeEspace", positionListeEspace);
 
                 startActivityForResult(intent, test);
-                //startActivity(intent);
-
             }
         });
 
@@ -86,10 +84,8 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
             @Override
             public void onClick(View v) {
 
-
-
                 mEspace.setCommentaireEspace(textCommentaire.getText().toString());
-                mesData.modifierListeEspace(mEspace, positionListeEspace);
+                mesData.modifierListeEspace(mEspace);
                 mesData.ecrireFichier(mesData.getMesEspaces(), getApplicationContext());
                 finish();
             }

@@ -118,14 +118,11 @@ public class DataLocal implements Serializable {
 
     }
 
-    public void modifierListeEspace(Espace espaceModifie, int position) {
-        boolean done = false;
+    public void modifierListeEspace(Espace espaceModifie) {
         for (int a = 0; a < mesEspaces.size() && !false; a++) {
             if (espaceModifie.getIdEspace() == mesEspaces.get((a)).getIdEspace())
                 mesEspaces.setElementAt(espaceModifie, a);
         }
-        //mesEspaces.setElementAt(espaceModifie, position);
-        //ecrireFichier(this.mesEspaces);
     }
 
 
