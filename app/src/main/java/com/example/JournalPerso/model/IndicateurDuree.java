@@ -19,6 +19,14 @@ public class IndicateurDuree extends Indicateur {
         this.idIndicateur = idIndicateur;
     }
 
+    public IndicateurDuree(String nomIndicateur, String dureeSaisie, String objectifChiffre) {
+        this.nomIndicateur = nomIndicateur;
+        this.typeIndicateur = "Duree";
+        this.dureeSaisie = dureeSaisie;
+        this.objectifDuree = objectifChiffre;
+        this.idIndicateur = java.lang.System.identityHashCode(this);
+    }
+
     //endregion
 
     //region getter setter

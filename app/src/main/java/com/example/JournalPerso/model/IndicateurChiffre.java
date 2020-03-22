@@ -19,6 +19,14 @@ public class IndicateurChiffre extends Indicateur {
         this.idIndicateur = idIndicateur;
     }
 
+    public IndicateurChiffre(String nomIndicateur, String chiffreSaisie, String objectifChiffre) {
+        this.nomIndicateur = nomIndicateur;
+        this.typeIndicateur = "Chiffre";
+        this.chiffreSaisie = chiffreSaisie;
+        this.objectifChiffre = objectifChiffre;
+        this.idIndicateur = java.lang.System.identityHashCode(this);
+    }
+
     //endregion
     //region getter setter
     public String getChiffreSaisie() {

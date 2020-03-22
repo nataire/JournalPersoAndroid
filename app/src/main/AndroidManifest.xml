@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GestionIndicateur.ModifierIndicateurActivity"></activity>
+        <activity android:name=".GestionEspace.CreerEspaceActivity"></activity>
+        <activity android:name=".GestionIndicateur.ModifierIndicateurActivity" />
         <activity android:name=".GestionIndicateur.createIndicateurActivity" />
         <activity android:name=".GestionEspace.ModifyEspaceActivity" />
         <activity

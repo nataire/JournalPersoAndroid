@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".GestionIndicateur.createIndicateurActivity">
 
+    <LinearLayout
+        android:id="@+id/layoutDyamic"
+        android:layout_width="match_parent"
+        android:layout_height="252dp"
+        android:layout_below="@+id/labelObjectif"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/labelObjectif"
+        tools:layout_editor_absoluteX="-16dp"></LinearLayout>
+
     <TextView
         android:id="@+id/labelObjectif"
         android:layout_width="wrap_content"
@@ -57,7 +66,6 @@
         android:layout_marginStart="44dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Nom de l'indicateur...."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LabelNomIndicateur" />
 
@@ -70,38 +78,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelTypeIndicateur" />
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelObjectif">
-
-        <RadioButton
-            android:id="@+id/radioButtonObjectifCochee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="31dp"
-            android:checked="true"
-            android:text="Indicateur coché"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelObjectif" />
-
-        <RadioButton
-            android:id="@+id/radioButtonObjectifDecochee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="31dp"
-            android:text="Indicateur décoché"
-            app:layout_constraintStart_toEndOf="@+id/radioButtonObjectifCochee"
-            app:layout_constraintTop_toBottomOf="@+id/labelObjectif" />
-    </RadioGroup>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/buttonSaveIndicateur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="38dp"

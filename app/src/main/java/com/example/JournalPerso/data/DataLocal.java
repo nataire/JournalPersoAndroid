@@ -125,6 +125,9 @@ public class DataLocal implements Serializable {
         }
     }
 
+    public void ajoutListeEspace(Espace newEspace) {
+        mesEspaces.add(newEspace);
+    }
 
     public void conversionLecture() {
 

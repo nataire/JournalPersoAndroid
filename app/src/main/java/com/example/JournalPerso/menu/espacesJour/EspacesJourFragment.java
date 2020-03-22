@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.JournalPerso.GestionEspace.ConsultationEspacesActivity;
+import com.example.JournalPerso.GestionEspace.CreerEspaceActivity;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Vector;
 
@@ -27,6 +29,9 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
     private Vector<Espace> mesEspaces;
     private RecyclerView recyclerView;
     private DataLocal mesDataLocal;
+
+    private FloatingActionButton buttonAddEspace;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,6 +46,17 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
         mesDataLocal = new DataLocal();
 
         mesEspaces = new Vector<>();
+
+        buttonAddEspace = root.findViewById(R.id.buttonAddEspace);
+        buttonAddEspace.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CreerEspaceActivity.class);
+                intent.putExtra("data", mesDataLocal);
+                startActivity(intent);
+            }
+        });
 
 
 

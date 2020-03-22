@@ -91,7 +91,6 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
             }
         });
 
-
         recyclerView = findViewById(R.id.recyclerViewIndicateur);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -110,6 +109,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == test && resultCode == Activity.RESULT_OK) {
             Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
 

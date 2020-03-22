@@ -20,6 +20,14 @@ public class IndicateurCaseCochee extends Indicateur {
         this.idIndicateur = idIndicateur;
     }
 
+    public IndicateurCaseCochee(String nomIndicateur, boolean etatBoutonSaisie, boolean objectifCaseCochee) {
+        this.nomIndicateur = nomIndicateur;
+        this.typeIndicateur = "CaseCochee";
+        this.etatBoutonSaisie = etatBoutonSaisie;
+        this.objectifCaseCochee = objectifCaseCochee;
+        this.idIndicateur = java.lang.System.identityHashCode(this);
+    }
+
     //endregion
 
     //region getter setter
