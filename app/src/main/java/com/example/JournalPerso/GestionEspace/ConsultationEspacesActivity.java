@@ -112,7 +112,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
 
         if (requestCode == test && resultCode == Activity.RESULT_OK) {
 
-            if (data.getStringExtra("typeRetour").equals("Creation")) {
+            if (data.getStringExtra("typeRetour").equals("Modification  ")) {
                 Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
 
                 mEspace.setNomEspace(mEspaceTemp.getNomEspace());
