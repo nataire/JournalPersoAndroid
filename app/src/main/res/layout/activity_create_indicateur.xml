@@ -55,6 +55,7 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="69dp"
         android:text="Nom de l'indicateur"
+        app:errorEnabled="true"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titreModifierIndicateurActivity" />

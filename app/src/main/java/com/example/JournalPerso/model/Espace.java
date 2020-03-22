@@ -105,4 +105,17 @@ public class Espace implements Serializable {
     public void addIndicateur(Indicateur newIndicateur) {
         this.listeIndicateur.addElement(newIndicateur);
     }
+
+    public void modfifyIndicateur(Indicateur newIndicateur) {
+        boolean done = false;
+        for (int a = 0; a < this.listeIndicateur.size() && done == false; a++) {
+            if (newIndicateur.getIdIndicateur() == this.listeIndicateur.get(a).getIdIndicateur()) {
+                this.listeIndicateur.setElementAt(newIndicateur, a);
+                done = true;
+            }
+
+        }
+
+
+    }
 }

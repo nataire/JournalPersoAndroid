@@ -175,6 +175,8 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                 if (indicateur.getIdIndicateur() == mEspace.getListeIndicateur().get(a).getIdIndicateur())
                     mEspace.getListeIndicateur().remove(a);
             }
+            recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
+
         }
 
     }
@@ -184,9 +186,15 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == test && resultCode == Activity.RESULT_OK) {
 
-            Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
+            if (data.getStringExtra("typeRetour").equals("Creation")) {
+                Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
 
-            mEspace.addIndicateur(mIndicateurTemp);
+                mEspace.addIndicateur(mIndicateurTemp);
+            } else if (data.getStringExtra("typeRetour").equals("Modification")) {
+                Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
+
+                mEspace.modfifyIndicateur(mIndicateurTemp);
+            }
 
             recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
 

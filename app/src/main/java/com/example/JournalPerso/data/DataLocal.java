@@ -119,9 +119,13 @@ public class DataLocal implements Serializable {
     }
 
     public void modifierListeEspace(Espace espaceModifie) {
-        for (int a = 0; a < mesEspaces.size() && !false; a++) {
-            if (espaceModifie.getIdEspace() == mesEspaces.get((a)).getIdEspace())
+        boolean done = false;
+        for (int a = 0; a < mesEspaces.size() && !done; a++) {
+            if (espaceModifie.getIdEspace() == mesEspaces.get((a)).getIdEspace()) {
                 mesEspaces.setElementAt(espaceModifie, a);
+                done = true;
+            }
+
         }
     }
 
@@ -216,6 +220,16 @@ public class DataLocal implements Serializable {
 
 
         //textTitreEspace.setText(monEspace.getNomEspace());
+    }
+
+    public void deleteEspace(Espace espace) {
+        boolean done = false;
+        for (int a = 0; a < mesEspaces.size() && !done; a++) {
+            if (espace.getIdEspace() == mesEspaces.get((a)).getIdEspace()) {
+                mesEspaces.remove(a);
+                done = true;
+            }
+        }
     }
 
 }

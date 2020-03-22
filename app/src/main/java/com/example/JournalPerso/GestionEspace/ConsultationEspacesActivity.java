@@ -111,13 +111,23 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == test && resultCode == Activity.RESULT_OK) {
-            Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
 
-            mEspace.setNomEspace(mEspaceTemp.getNomEspace());
-            mEspace.setListeIndicateur(mEspaceTemp.getListeIndicateur());
-            mEspace.setDetailJour(mEspaceTemp.getDetailJour());
-            nomEspace.setText(mEspaceTemp.getNomEspace());
-            recyclerView.setAdapter(new ConsultationEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), this));
+            if (data.getStringExtra("typeRetour").equals("Creation")) {
+                Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
+
+                mEspace.setNomEspace(mEspaceTemp.getNomEspace());
+                mEspace.setListeIndicateur(mEspaceTemp.getListeIndicateur());
+                mEspace.setDetailJour(mEspaceTemp.getDetailJour());
+                nomEspace.setText(mEspaceTemp.getNomEspace());
+                recyclerView.setAdapter(new ConsultationEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), this));
+
+            } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
+                Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
+
+                mesData.deleteEspace(mEspaceTemp);
+                mesData.ecrireFichier(mesData.getMesEspaces(), getApplicationContext());
+                finish();
+            }
 
         }
     }

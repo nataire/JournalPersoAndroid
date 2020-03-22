@@ -112,14 +112,28 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
         }
 
 
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent();
+                intent.putExtra("typeRetour", "Suppression");
+                intent.putExtra("espace", mEspace);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        });
+
         buttonAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mEspace.setNomEspace(textViewTitreEspace.getText().toString());
                 mEspace.setDetailJour(detailJour);
 
-                setResult(Activity.RESULT_OK,
-                        new Intent().putExtra("espace", mEspace));
+                Intent intent = new Intent();
+                intent.putExtra("typeRetour", "Modification");
+                intent.putExtra("espace", mEspace);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
@@ -129,7 +143,7 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(ModifyEspaceActivity.this, createIndicateurActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, test);
 
             }
         });
@@ -163,6 +177,8 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
                 if (indicateur.getIdIndicateur() == mEspace.getListeIndicateur().get(a).getIdIndicateur())
                     mEspace.getListeIndicateur().remove(a);
             }
+
+            recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
         }
 
     }
@@ -172,18 +188,18 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == test && resultCode == Activity.RESULT_OK) {
 
-            Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
 
+            if (data.getStringExtra("typeRetour").equals("Creation")) {
+                Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
 
-            for (int a = 0; a < mEspace.getListeIndicateur().size(); a++) {
-                if (mIndicateurTemp.getIdIndicateur() == mEspace.getListeIndicateur().get(a).getIdIndicateur())
-                    mEspace.getListeIndicateur().setElementAt(mIndicateurTemp, a);
+                mEspace.addIndicateur(mIndicateurTemp);
+            } else if (data.getStringExtra("typeRetour").equals("Modification")) {
+                Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
+
+                mEspace.modfifyIndicateur(mIndicateurTemp);
             }
 
-
             recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
-
-
         }
     }
 }

@@ -92,25 +92,37 @@ public class ModifierIndicateurActivity extends FragmentActivity {
                 Indicateur indicateurModifiee = null;
                 long test = spinner.getSelectedItemId();
                 if (test == 0) {
-                    boolean objectif;
-                    objectif = radioButtonObjectif[0].isChecked();
+                    if (!testUI(0)) {
+                        boolean objectif;
+                        objectif = radioButtonObjectif[0].isChecked();
 
-                    indicateurModifiee = new IndicateurCaseCochee(nomIndicateur.getText().toString(),
-                            false, objectif, mIndicateur.getIdIndicateur());
-
+                        indicateurModifiee = new IndicateurCaseCochee(nomIndicateur.getText().toString(),
+                                false, objectif, mIndicateur.getIdIndicateur());
+                    }
                 } else if (test == 1) {
-                    indicateurModifiee = new IndicateurDuree(nomIndicateur.getText().toString(),
-                            "0", objectifIndicateurDuree.getText().toString(), mIndicateur.getIdIndicateur());
+                    if (!testUI(1)) {
+                        indicateurModifiee = new IndicateurDuree(nomIndicateur.getText().toString(),
+                                "0", objectifIndicateurDuree.getText().toString(), mIndicateur.getIdIndicateur());
+                    }
+
                 } else {
-                    indicateurModifiee = new IndicateurChiffre(nomIndicateur.getText().toString(),
-                            "0", objectifIndicateurNombre.getText().toString(), mIndicateur.getIdIndicateur());
+                    if (!testUI(2)) {
+                        indicateurModifiee = new IndicateurChiffre(nomIndicateur.getText().toString(),
+                                "0", objectifIndicateurNombre.getText().toString(), mIndicateur.getIdIndicateur());
+                    }
+
                 }
 
 
                 initScreen = true;
-                setResult(Activity.RESULT_OK,
-                        new Intent().putExtra("indicateur", indicateurModifiee));
-                finish();
+                if (indicateurModifiee != null) {
+                    Intent intent = new Intent();
+                    intent.putExtra("indicateur", indicateurModifiee);
+                    intent.putExtra("typeRetour", "Modification");
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
+
 
             }
         });
@@ -175,5 +187,28 @@ public class ModifierIndicateurActivity extends FragmentActivity {
         });
 
 
+    }
+
+    boolean testUI(int choixSpinner) {
+        boolean resTest = false;
+
+        if (nomIndicateur.getText().toString().equals("")) {
+            nomIndicateur.setError("Veuillez entrer un nom pour l'indicateur");
+            resTest = true;
+        }
+
+        if (choixSpinner == 1) {
+            if (objectifIndicateurDuree.getText().toString().equals("")) {
+                objectifIndicateurDuree.setError("Veuillez entrer une durée");
+                resTest = true;
+            }
+        } else if (choixSpinner == 2) {
+            if (objectifIndicateurNombre.getText().toString().equals("")) {
+                objectifIndicateurNombre.setError("Veuillez entrer un nombre");
+                resTest = true;
+            }
+        }
+
+        return resTest;
     }
 }
