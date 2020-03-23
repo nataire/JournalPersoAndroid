@@ -1,4 +1,4 @@
-package com.example.JournalPerso.menu.espacesJour;
+package com.example.JournalPerso.menu;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +24,6 @@ import java.util.Vector;
 
 public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onClickEspace {
 
-    private EspacesJourModel espacesJourModel;
     private Button monBouton;
     private String[] nomJour = {"dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"};
     private Vector<Espace> mesEspacesActif;
@@ -38,11 +36,9 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        espacesJourModel =
-                ViewModelProviders.of(this).get(EspacesJourModel.class);
         View root = inflater.inflate(R.layout.fragment_espaces_jour, container, false);
 
-        monBouton = root.findViewById(R.id.buttonConsulttionEspace);
+        monBouton = root.findViewById(R.id.buttonConsultationEspace);
 
 
         mesDataLocal = new DataLocal();

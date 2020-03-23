@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_espacesJour"
-        android:name="com.example.JournalPerso.menu.espacesJour.EspacesJourFragment"
+        android:name="com.example.JournalPerso.menu.EspacesJourFragment"
         android:label="@string/menu_espace_jour"
         tools:layout="@layout/fragment_espaces_jour" />
 
     <fragment
         android:id="@+id/nav_calendrier"
-        android:name="com.example.JournalPerso.menu.calendrier.CalendrierFragment"
+        android:name="com.example.JournalPerso.menu.CalendrierFragment"
         android:label="@string/menu_Calendrier"
         tools:layout="@layout/fragment_calendrier" />
 
     <fragment
         android:id="@+id/nav_monProfil"
-        android:name="com.example.JournalPerso.menu.modifierProfil.ModifierProfilFragment"
+        android:name="com.example.JournalPerso.menu.ModifierProfilFragment"
         android:label="@string/menu_monProfil"
         tools:layout="@layout/fragment_modifier_profil" />
 </navigation>

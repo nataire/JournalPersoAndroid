@@ -1,4 +1,4 @@
-package com.example.JournalPerso.menu.espacesJour;
+package com.example.JournalPerso.menu;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -91,19 +91,6 @@ public class MyAdapterEspace extends RecyclerView.Adapter<MyAdapterEspace.ViewHo
                 }
             });
 
-
-            /*buttonConsulterEspace.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    Intent intent = new Intent(contextActivity, ConsultationEspacesActivity.class);
-                    intent.putExtra("espace", monEspace);
-                    intent.putExtra("positionListeEspace", position);
-                    contextActivity.startActivity(intent);
-
-                }
-            });*/
 
         }
     }
