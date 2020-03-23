@@ -130,7 +130,11 @@ public class ModifierIndicateurActivity extends FragmentActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.putExtra("indicateur", mIndicateur);
+                intent.putExtra("typeRetour", "Suppression");
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
 

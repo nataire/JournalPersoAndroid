@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -127,14 +128,29 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
         buttonAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEspace.setNomEspace(textViewTitreEspace.getText().toString());
-                mEspace.setDetailJour(detailJour);
 
-                Intent intent = new Intent();
-                intent.putExtra("typeRetour", "Modification");
-                intent.putExtra("espace", mEspace);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
+
+                if (textViewTitreEspace.getText().toString().equals("")) {
+                    textViewTitreEspace.setError("Veuillez entrer un nom pour l'espace");
+                } else if (!detailJour.containsValue(true)) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Veuillez choisir un jour", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else if (mEspace.getListeIndicateur().size() == 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Veuillez ajouter au moins un indicateur", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    mEspace.setNomEspace(textViewTitreEspace.getText().toString());
+                    mEspace.setDetailJour(detailJour);
+
+                    Intent intent = new Intent();
+                    intent.putExtra("typeRetour", "Modification");
+                    intent.putExtra("espace", mEspace);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
+
+
+
             }
         });
         buttonAjoutIndicateur.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +213,14 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
                 Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
 
                 mEspace.modfifyIndicateur(mIndicateurTemp);
+            } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
+                Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
+
+                for (int a = 0; a < mEspace.getListeIndicateur().size(); a++) {
+                    if (mIndicateurTemp.getIdIndicateur() == mEspace.getListeIndicateur().get(a).getIdIndicateur())
+                        mEspace.getListeIndicateur().remove(a);
+                }
+
             }
 
             recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));

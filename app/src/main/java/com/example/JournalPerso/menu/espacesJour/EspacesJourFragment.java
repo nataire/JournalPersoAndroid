@@ -20,13 +20,15 @@ import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
 import java.util.Vector;
 
 public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onClickEspace {
 
     private EspacesJourModel espacesJourModel;
-    Button monBouton;
-    private Vector<Espace> mesEspaces;
+    private Button monBouton;
+    private String[] nomJour = {"dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"};
+    private Vector<Espace> mesEspacesActif;
     private RecyclerView recyclerView;
     private DataLocal mesDataLocal;
 
@@ -45,7 +47,7 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
         mesDataLocal = new DataLocal();
 
-        mesEspaces = new Vector<>();
+        mesEspacesActif = new Vector<>();
 
         buttonAddEspace = root.findViewById(R.id.buttonAddEspace);
         buttonAddEspace.setOnClickListener(new View.OnClickListener() {
@@ -57,49 +59,6 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
                 startActivity(intent);
             }
         });
-
-
-
-        /*Map<String, Boolean> temp = new HashMap<>();
-        temp.put("lundi",false);
-        temp.put("mardi",false);
-        temp.put("mercredi",false);
-        temp.put("jeudi",false);
-        temp.put("vendredi",false);
-        temp.put("samedi",false);
-        temp.put("dimanche",false);
-       Espace monespace = new Espace();
-
-        monespace.setNomEspace("cocuou1");
-        IndicateurCaseCochee monIndicateur1 = new IndicateurCaseCochee("inidcateur1",
-                true, true);
-
-        IndicateurCaseCochee monIndicateur2 = new IndicateurCaseCochee("indicateur2",
-                false, false);
-
-        monespace.addIndicateur(monIndicateur1);
-        monespace.addIndicateur(monIndicateur2);
-        monespace.setDetailJour(temp);
-        mesEspaces.addElement(monespace);
-
-
-        Espace monespace2 = new Espace();
-
-        monespace2.setNomEspace("coucou2");
-        IndicateurCaseCochee monIndicateur3 = new IndicateurCaseCochee("inidcateur3",
-                false, true);
-
-        IndicateurCaseCochee monIndicateur4 = new IndicateurCaseCochee("indicateur4",
-                true, false);
-
-        monespace2.addIndicateur(monIndicateur3);
-        monespace2.addIndicateur(monIndicateur4);
-        monespace2.setDetailJour(temp);
-        mesEspaces.addElement(monespace2);
-
-
-        mesDataLocal.ecrireFichier(mesEspaces,getContext());*/
-
 
 
 
@@ -115,10 +74,19 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
         mesDataLocal.recuperationEspacesMemoire(getContext());
 
-        mesEspaces = mesDataLocal.getMesEspaces();
+        mesEspacesActif.clear();
+        Calendar cal = Calendar.getInstance();
+        // De Sunday = 1 à Saturday = 7
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+
+        for (int a = 0; a < mesDataLocal.getMesEspaces().size(); a++) {
+            if (mesDataLocal.getMesEspaces().get(a).getDetailJour().get(nomJour[dayOfWeek - 1]))
+                mesEspacesActif.add(mesDataLocal.getMesEspaces().get(a));
+        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspaces, getContext(), this));
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
 
 
     }
