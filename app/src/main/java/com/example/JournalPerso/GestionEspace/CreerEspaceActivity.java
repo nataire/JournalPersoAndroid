@@ -23,6 +23,9 @@ import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.Indicateur;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +37,7 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
     private FloatingActionButton buttonAjoutIndicateur;
     private FloatingActionButton buttonDelete;
     private FloatingActionButton buttonAccept;
-    private String[] nomJour = {"lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"};
+    private String[] nomJour = {"dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"};
     private Button[] boutonJour = new Button[7];
     private Button boutonMardi;
     private Button boutonMercredi;
@@ -75,13 +78,15 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
         }
         //boutonJour[0] = findViewById(R.id.buttonLundi); // remplie le tableau avec les valeurs de 0 à nb-1
 
-        boutonJour[0] = findViewById(R.id.buttonLundi);
-        boutonJour[1] = findViewById(R.id.buttonMardi);
-        boutonJour[2] = findViewById(R.id.buttonMercredi);
-        boutonJour[3] = findViewById(R.id.buttonJeudi);
-        boutonJour[4] = findViewById(R.id.buttonVendredi);
-        boutonJour[5] = findViewById(R.id.buttonSamedi);
-        boutonJour[6] = findViewById(R.id.buttonDimanche);
+        boutonJour[0] = findViewById(R.id.buttonDimanche);
+        boutonJour[1] = findViewById(R.id.buttonLundi);
+        boutonJour[2] = findViewById(R.id.buttonMardi);
+        boutonJour[3] = findViewById(R.id.buttonMercredi);
+        boutonJour[4] = findViewById(R.id.buttonJeudi);
+        boutonJour[5] = findViewById(R.id.buttonVendredi);
+        boutonJour[6] = findViewById(R.id.buttonSamedi);
+
+
         boutonAllDays = findViewById(R.id.buttonAllDays);
         buttonAjoutIndicateur = findViewById(R.id.buttonAjoutIndicateurCreerEspace);
 
@@ -99,10 +104,12 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
 
 
             final int index = a;
+
             boutonJour[a].setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
+
                     cliqueBoutonJour(nomJour[index], boutonJour[index]);
                 }
             });
@@ -127,8 +134,24 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                 } else {
                     mEspace.setNomEspace(titreEspace.getText().toString());
                     mEspace.setDetailJour(detailJour);
-                    mesData.ajoutListeEspace(mEspace);
-                    mesData.ecrireFichier(mesData.getMesEspaces(), getApplicationContext());
+                    mesData.getMesEspaces().add(mEspace);
+                    mesData.ecrireFichier(getApplicationContext());
+
+
+                    Calendar calendar = Calendar.getInstance();
+                    Date date = calendar.getTime();
+
+                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+                    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+                    String activeDate = format1.format(date);
+
+                    if (detailJour.get(nomJour[dayOfWeek - 1])) {
+                        mesData.getHistoriqueEspace().get(activeDate).add(mEspace);
+                        mesData.ecrireFichierHistorique(getApplicationContext());
+                    }
+
                     finish();
                 }
 

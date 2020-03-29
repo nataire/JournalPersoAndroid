@@ -1,11 +1,19 @@
 package com.example.JournalPerso.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
-public abstract class Indicateur implements Serializable {
+public abstract class Indicateur implements Serializable, Cloneable {
     protected int idIndicateur;
     protected String nomIndicateur;
     protected String typeIndicateur;
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     public String getNomIndicateur() {
         return nomIndicateur;
@@ -30,4 +38,6 @@ public abstract class Indicateur implements Serializable {
     public void setIdIndicateur(int idIndicateur) {
         this.idIndicateur = idIndicateur;
     }
+
+
 }

@@ -17,7 +17,9 @@ import com.example.JournalPerso.R;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 
 public class CalendrierFragment extends Fragment implements MyAdapterEspace.onClickEspace {
@@ -28,6 +30,11 @@ public class CalendrierFragment extends Fragment implements MyAdapterEspace.onCl
     private RecyclerView recyclerView;
     private DataLocal mesDataLocal;
     private MyAdapterEspace test;
+    private Date date;
+
+    private SimpleDateFormat format1;
+    private String activeDate;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +46,15 @@ public class CalendrierFragment extends Fragment implements MyAdapterEspace.onCl
 
         recyclerView = root.findViewById(R.id.listeEspace);
         monCalendrier = root.findViewById(R.id.calendrier);
+
+        Calendar cal = Calendar.getInstance();
+        date = cal.getTime();
+
+        format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+        activeDate = format1.format(date);
+
+
         monCalendrier.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
             @Override
@@ -49,14 +65,25 @@ public class CalendrierFragment extends Fragment implements MyAdapterEspace.onCl
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
+
+
+                Date date = calendar.getTime();
+
+                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+                activeDate = format1.format(date);
+
                 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
 
-                for (int a = 0; a < mesDataLocal.getMesEspaces().size(); a++) {
-                    if (mesDataLocal.getMesEspaces().get(a).getDetailJour().get(nomJour[dayOfWeek - 1]))
-                        mesEspacesActif.add(mesDataLocal.getMesEspaces().get(a));
+                if (mesDataLocal.getHistoriqueEspace().containsKey(activeDate)) {
+                    for (int a = 0; a < mesDataLocal.getHistoriqueEspace().get(activeDate).size(); a++) {
+                        mesEspacesActif.add(mesDataLocal.getHistoriqueEspace().get(activeDate).get(a));
+                    }
                 }
                 testListe();
+
+
             }
         });
 
@@ -79,17 +106,14 @@ public class CalendrierFragment extends Fragment implements MyAdapterEspace.onCl
         super.onStart();
 
         mesDataLocal.recuperationEspacesMemoire(getContext());
-
+        mesDataLocal.lectureFichierHistorique(getContext());
         mesEspacesActif.clear();
-        Calendar cal = Calendar.getInstance();
-        // De Sunday = 1 à Saturday = 7
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 
-        for (int a = 0; a < mesDataLocal.getMesEspaces().size(); a++) {
-            if (mesDataLocal.getMesEspaces().get(a).getDetailJour().get(nomJour[dayOfWeek - 1]))
-                mesEspacesActif.add(mesDataLocal.getMesEspaces().get(a));
+        for (int a = 0; a < mesDataLocal.getHistoriqueEspace().get(activeDate).size(); a++) {
+            mesEspacesActif.add(mesDataLocal.getHistoriqueEspace().get(activeDate).get(a));
         }
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));

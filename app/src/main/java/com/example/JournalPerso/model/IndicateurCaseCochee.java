@@ -1,8 +1,16 @@
 package com.example.JournalPerso.model;
 
-public class IndicateurCaseCochee extends Indicateur {
+import androidx.annotation.NonNull;
+
+public class IndicateurCaseCochee extends Indicateur implements Cloneable {
     private boolean etatBoutonSaisie;
     private boolean objectifCaseCochee;
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
 
     //region constructor

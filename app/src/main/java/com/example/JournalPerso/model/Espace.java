@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Vector;
 
-public class Espace implements Serializable {
+public class Espace implements Serializable, Cloneable {
     private int idEspace;
     private String nomEspace;
     private Vector<Date> datesEspace;
@@ -15,6 +15,15 @@ public class Espace implements Serializable {
     private String commentaireEspace;
 
     private Map<String, Boolean> detailJour;
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+
+        Espace cloned = (Espace) super.clone();
+
+        cloned.setListeIndicateur((Vector<Indicateur>) cloned.getListeIndicateur().clone());
+        return cloned;
+    }
 
     //region Constructeurs
     public Espace() {

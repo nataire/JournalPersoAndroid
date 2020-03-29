@@ -19,7 +19,9 @@ import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 
 public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onClickEspace {
@@ -29,8 +31,10 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
     private Vector<Espace> mesEspacesActif;
     private RecyclerView recyclerView;
     private DataLocal mesDataLocal;
-
     private FloatingActionButton buttonAddEspace;
+    private String activeDate;
+
+    private boolean firstLaunch;
 
 
     @Override
@@ -60,6 +64,19 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
         recyclerView = root.findViewById(R.id.recyclerView);
 
+        Calendar cal = Calendar.getInstance();
+
+        Date date = cal.getTime();
+
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+        activeDate = format1.format(date);
+
+        mesDataLocal.recuperationEspacesMemoire(getContext());
+        mesDataLocal.lectureFichierHistorique(getContext());
+        mesDataLocal.triEspace();
+        mesDataLocal.ecrireFichierHistorique(getContext());
+
         return root;
     }
 
@@ -67,19 +84,13 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
 
         super.onStart();
+        mesEspacesActif.clear();
+
 
         mesDataLocal.recuperationEspacesMemoire(getContext());
+        mesDataLocal.lectureFichierHistorique(getContext());
+        this.mesEspacesActif = mesDataLocal.getHistoriqueEspace().get(activeDate);
 
-        mesEspacesActif.clear();
-        Calendar cal = Calendar.getInstance();
-        // De Sunday = 1 à Saturday = 7
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-
-
-        for (int a = 0; a < mesDataLocal.getMesEspaces().size(); a++) {
-            if (mesDataLocal.getMesEspaces().get(a).getDetailJour().get(nomJour[dayOfWeek - 1]))
-                mesEspacesActif.add(mesDataLocal.getMesEspaces().get(a));
-        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
@@ -93,7 +104,7 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
         Intent intent = new Intent(getContext(), ConsultationEspacesActivity.class);
         intent.putExtra("espace", espace);
         intent.putExtra("data", mesDataLocal);
-        //intent.putExtra("positionListeEspace", position);
+        intent.putExtra("date", activeDate);
         startActivity(intent);
     }
 }

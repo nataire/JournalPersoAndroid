@@ -31,6 +31,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
     private int positionListeEspace;
     private int test = 0;
     private DataLocal mesData;
+    private String dateActive;
 
     public ConsultationEspacesActivity() {
         // Required empty public constructor
@@ -53,6 +54,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
             positionListeEspace = intent.getIntExtra("positionListeEspace", 0);
             mEspace = (Espace) intent.getSerializableExtra("espace");
             mesData = (DataLocal) intent.getSerializableExtra("data");
+            dateActive = intent.getStringExtra("date");
 
             nomEspace = findViewById(R.id.nomEspaceSelectionne);
             textCommentaire = findViewById(R.id.EditTextCommentaire);
@@ -86,7 +88,8 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
 
                 mEspace.setCommentaireEspace(textCommentaire.getText().toString());
                 mesData.modifierListeEspace(mEspace);
-                mesData.ecrireFichier(mesData.getMesEspaces(), getApplicationContext());
+                mesData.ecrireFichierHistorique(getApplicationContext());
+                mesData.ecrireFichier(getApplicationContext());
                 finish();
             }
         });
@@ -124,8 +127,9 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
             } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
                 Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
 
-                mesData.deleteEspace(mEspaceTemp);
-                mesData.ecrireFichier(mesData.getMesEspaces(), getApplicationContext());
+                mesData.deleteEspace(mEspaceTemp, dateActive);
+                mesData.ecrireFichier(getApplicationContext());
+                mesData.ecrireFichierHistorique(getApplicationContext());
                 finish();
             }
 

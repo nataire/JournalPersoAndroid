@@ -1,8 +1,17 @@
 package com.example.JournalPerso.model;
 
-public class IndicateurDuree extends Indicateur {
+import androidx.annotation.NonNull;
+
+public class IndicateurDuree extends Indicateur implements Cloneable {
     private String dureeSaisie;
     private String objectifDuree;
+
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     //region constructor
 
