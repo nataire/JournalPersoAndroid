@@ -97,7 +97,7 @@ public class CalendrierFragment extends Fragment implements MyAdapterEspace.onCl
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this, "calendrier"));
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
     }
 
     public void onStart() {
@@ -116,7 +116,7 @@ public class CalendrierFragment extends Fragment implements MyAdapterEspace.onCl
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this, "calendrier"));
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
 
 
     }
