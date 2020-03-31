@@ -93,7 +93,7 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this, "listeActive"));
 
 
     }

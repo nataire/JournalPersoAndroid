@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,13 +21,15 @@ public class MyAdapterEspace extends RecyclerView.Adapter<MyAdapterEspace.ViewHo
     Context context;
 
     private onClickEspace onClickEspace;
+    private String ecran;
 
 
     //ajouter un constructeur prenant en entrée une liste
-    public MyAdapterEspace(Vector<Espace> list, Context _context, onClickEspace callback) {
+    public MyAdapterEspace(Vector<Espace> list, Context _context, onClickEspace callback, String nomEcran) {
         context = _context;
         this.list = list;
         this.onClickEspace = callback;
+        this.ecran = nomEcran;
     }
 
     //cette fonction permet de créer les viewHolder
@@ -41,7 +44,7 @@ public class MyAdapterEspace extends RecyclerView.Adapter<MyAdapterEspace.ViewHo
     @Override
     public void onBindViewHolder(ViewHolderEspace myViewHolder, int position) {
 
-        myViewHolder.bind(this.list.get(position), context, position);
+        myViewHolder.bind(this.list.get(position), context, position, ecran);
     }
 
     @Override
@@ -61,6 +64,7 @@ public class MyAdapterEspace extends RecyclerView.Adapter<MyAdapterEspace.ViewHo
         private int position;
         private Espace monEspace;
         private Context contextActivity;
+        private Switch switchButton;
 
 
         public ViewHolderEspace(View itemView) {
@@ -69,17 +73,25 @@ public class MyAdapterEspace extends RecyclerView.Adapter<MyAdapterEspace.ViewHo
 
             textTitreEspace = itemView.findViewById(R.id.titreEspace);
             buttonConsulterEspace = itemView.findViewById(R.id.buttonConsultationEspace);
+            switchButton = itemView.findViewById(R.id.switch2);
 
         }
 
 
-        public void bind(Espace myObject, Context _context, int positionEspace) {
+        public void bind(Espace myObject, Context _context, int positionEspace, String nomEcran) {
 
             this.monEspace = myObject;
             this.contextActivity = _context;
 
             this.position = positionEspace;
             this.textTitreEspace.setText(monEspace.getNomEspace());
+
+            if (nomEcran.equals("listeEntiere")) {
+                buttonConsulterEspace.setText("Modifier l'espace");
+                switchButton.setVisibility(View.GONE);
+            } else if (nomEcran.equals("calendrier")) {
+                switchButton.setVisibility(View.GONE);
+            }
 
 
             buttonConsulterEspace.setOnClickListener(new View.OnClickListener() {
