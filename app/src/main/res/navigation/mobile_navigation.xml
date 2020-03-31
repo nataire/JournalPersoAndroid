@@ -18,8 +18,16 @@
         tools:layout="@layout/fragment_calendrier" />
 
     <fragment
+        android:id="@+id/nav_mes_espaces"
+        android:name="com.example.JournalPerso.menu.ListeEspaceFragment"
+        android:label="@string/menu_espaces"
+        tools:layout="@layout/fragment_mes_espaces" />
+
+    <fragment
         android:id="@+id/nav_monProfil"
         android:name="com.example.JournalPerso.menu.ModifierProfilFragment"
         android:label="@string/menu_monProfil"
         tools:layout="@layout/fragment_modifier_profil" />
+
+
 </navigation>

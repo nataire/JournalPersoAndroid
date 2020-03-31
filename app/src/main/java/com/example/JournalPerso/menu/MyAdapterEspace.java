@@ -75,7 +75,6 @@ public class MyAdapterEspace extends RecyclerView.Adapter<MyAdapterEspace.ViewHo
 
         public void bind(Espace myObject, Context _context, int positionEspace) {
 
-
             this.monEspace = myObject;
             this.contextActivity = _context;
 
@@ -86,7 +85,6 @@ public class MyAdapterEspace extends RecyclerView.Adapter<MyAdapterEspace.ViewHo
             buttonConsulterEspace.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //monIndicateurCaseCochee.setEtatBoutonSaisie(checkBoxIndicateur.isChecked());
                     onClickEspace.onClickTest(monEspace);
                 }
             });

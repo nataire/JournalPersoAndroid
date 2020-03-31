@@ -11,7 +11,7 @@
             android:id="@+id/nav_calendrier"
             android:title="@string/menu_Calendrier" />
         <item
-            android:id="@+id/nav_mes_espace"
+            android:id="@+id/nav_mes_espaces"
             android:title="@string/menu_espaces" />
         <item
             android:id="@+id/nav_monProfil"
