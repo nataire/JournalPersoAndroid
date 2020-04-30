@@ -52,7 +52,7 @@ public class DataApi {
                     e.printStackTrace();
                 }
 
-                Log.i("IAM", test.toString());
+                Log.i("IAM   ", test.toString());
                 parentConnexion.connexionReussi(test.toString());
             }
 
