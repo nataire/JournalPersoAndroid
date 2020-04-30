@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_espacesJour"
+            android:title="@string/menu_espace_jour" />
+        <item
+            android:id="@+id/nav_calendrier"
+            android:title="@string/menu_Calendrier" />
+        <item
+            android:id="@+id/nav_mes_espaces"
+            android:title="@string/menu_espaces" />
+        <item
+            android:id="@+id/nav_monProfil"
+            android:title="@string/menu_monProfil" />
+        <item
+            android:id="@+id/nav_deconnexion"
+            android:title="@string/menu_Deconexion" />
+    </group>
+
+</menu>

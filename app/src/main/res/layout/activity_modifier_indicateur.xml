@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GestionIndicateur.ModifierIndicateurActivity">
+
+    <TextView
+        android:id="@+id/labelObjectif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerTypeIndicateur"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="60dp"
+        android:text="Objectif de l'indicateur"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/labelTypeIndicateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nomIndicateurModifier"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="69dp"
+        android:text="Type de l'indicateur"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/titreModifierIndicateurActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="125dp"
+        android:text="Modifier un indicateur"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/LabelNomIndicateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titreModifierIndicateurActivity"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="40dp"
+        android:text="Nom de l'indicateur"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/nomIndicateurModifier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LabelNomIndicateur"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="3dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Nom de l'indicateur...." />
+
+
+    <Spinner
+        android:id="@+id/spinnerTypeIndicateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelTypeIndicateur"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="2dp"
+        android:spinnerMode="dropdown" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonSaveIndicateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/buttonDeleteIndicateur"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="267dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="61dp"
+        android:clickable="true"
+        android:src="@drawable/ic_done_all_black_24dp"
+        app:backgroundTint="@android:color/transparent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonDeleteIndicateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="27dp"
+        android:clickable="true"
+        android:src="@drawable/ic_delete_black_24dp"
+        app:backgroundTint="@android:color/transparent" />
+
+    <LinearLayout
+        android:id="@+id/layoutDyamic"
+        android:layout_width="match_parent"
+        android:layout_height="252dp"
+        android:layout_below="@+id/labelObjectif"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"></LinearLayout>
+
+
+</RelativeLayout>

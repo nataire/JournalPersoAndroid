@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GestionEspace.ModifyEspaceActivity">
+
+    <Button
+        android:id="@+id/buttonSamedi"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:text="S"
+        app:layout_constraintStart_toEndOf="@+id/buttonVendredi"
+        app:layout_constraintTop_toBottomOf="@+id/labelChoixJour" />
+
+    <Button
+        android:id="@+id/buttonDimanche"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:text="D"
+        app:layout_constraintStart_toEndOf="@+id/buttonSamedi"
+        app:layout_constraintTop_toBottomOf="@+id/labelChoixJour" />
+
+    <TextView
+        android:id="@+id/TitreModifierEspaceActivite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="92dp"
+        android:text="Modifier un espace"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTitreEspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="1dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Faire une activité sportive"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelNomEspace" />
+
+    <TextView
+        android:id="@+id/labelNomEspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="32dp"
+        android:text="Nom de l'espace"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTitreEspace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TitreModifierEspaceActivite" />
+
+    <Button
+        android:id="@+id/buttonLundi"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="5dp"
+        android:text="L"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelChoixJour" />
+
+    <Button
+        android:id="@+id/buttonMardi"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:text="M"
+        app:layout_constraintStart_toEndOf="@+id/buttonLundi"
+        app:layout_constraintTop_toBottomOf="@+id/labelChoixJour" />
+
+    <Button
+        android:id="@+id/buttonMercredi"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:text="M"
+        app:layout_constraintStart_toEndOf="@+id/buttonMardi"
+        app:layout_constraintTop_toBottomOf="@+id/labelChoixJour" />
+
+    <Button
+        android:id="@+id/buttonJeudi"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:text="J"
+        app:layout_constraintStart_toEndOf="@+id/buttonMercredi"
+        app:layout_constraintTop_toBottomOf="@+id/labelChoixJour" />
+
+    <Button
+        android:id="@+id/buttonVendredi"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:text="V"
+        app:layout_constraintStart_toEndOf="@+id/buttonJeudi"
+        app:layout_constraintTop_toBottomOf="@+id/labelChoixJour" />
+
+    <Button
+        android:id="@+id/buttonAllDays"
+        android:layout_width="315dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="55dp"
+        android:text="Tout les jours"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSamedi" />
+
+    <TextView
+        android:id="@+id/labelChoixJour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="24dp"
+        android:text="Quand réaliser l'espace"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTitreEspace" />
+
+    <TextView
+        android:id="@+id/LabelListeIndicateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="32dp"
+        android:text="Indicateurs"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAllDays" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonAjoutIndicateur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="244dp"
+        android:clickable="true"
+        android:src="@drawable/ic_add_black_24dp"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAllDays" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonSaveEspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="267dp"
+        android:layout_marginTop="11dp"
+        android:clickable="true"
+        android:src="@drawable/ic_done_all_black_24dp"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonDeleteEspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="11dp"
+        android:clickable="true"
+        android:src="@drawable/ic_delete_black_24dp"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintStart_toEndOf="@+id/buttonSaveEspace"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewListeIndicateurModifierEspace"
+        android:layout_width="292dp"
+        android:layout_height="271dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LabelListeIndicateur" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
