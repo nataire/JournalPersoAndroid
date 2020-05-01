@@ -119,6 +119,17 @@ public class DataApi {
         synchronisation.execute("saveEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, commentaireEspace);
     }
 
+    public void saveIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, String valeur)
+    {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "saveIndicateur";
+        synchronisation.execute("saveIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur);
+    }
+
+
+
+
     class JSONAsyncTask extends AsyncTask<String, Void, String> {
         // Params, Progress, Result
         String BASE_URL = "http://10.0.2.2/api_android/";
@@ -150,6 +161,9 @@ public class DataApi {
                 }
                 else if (qs[0].equals("saveEspace")) {
                     saveEspace(qs[1], qs[2], qs[3], qs[4]);
+                }
+                else if (qs[0].equals("saveIndicateur")) {
+                    saveIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -194,6 +208,20 @@ public class DataApi {
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "espace/SauvegardeEspace.php", entity, "application/json", responseHandler);
         }
+
+        private void saveIndicateur(String idIndicateur, String idEspace, String nomIndicateur, String objectif, String type, String valeur) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("idIndicateur", idIndicateur);
+            jsonParams.put("idEspace", idEspace);
+            jsonParams.put("nomIndicateur", nomIndicateur);
+            jsonParams.put("objectif", objectif);
+            jsonParams.put("type", type);
+            jsonParams.put("valeur", valeur);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "indicateur/SauvegardeIndicateur.php", entity, "application/json", responseHandler);
+        }
+
     }
 
 }

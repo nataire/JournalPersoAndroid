@@ -23,6 +23,9 @@ import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.Indicateur;
+import com.example.JournalPerso.model.IndicateurCaseCochee;
+import com.example.JournalPerso.model.IndicateurChiffre;
+import com.example.JournalPerso.model.IndicateurDuree;
 import com.example.JournalPerso.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -140,7 +143,29 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                     //sauvegarde espace locale + BDD
                     mesData.ecrireFichier(getApplicationContext());
                     dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getCommentaireEspace());
+                    for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)
+                    {
+                        String objectif = "";
+                        String valeur = "";
+                        if (mEspace.getListeIndicateur().get(a).getTypeIndicateur().equals("CaseCochee")) {
+                            valeur = Boolean.toString( ( (IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isEtatBoutonSaisie());
+                            objectif = Boolean.toString( ( (IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isObjectifCaseCochee());
+                        } else if (mEspace.getListeIndicateur().get(a).getTypeIndicateur().equals("Chiffre")) {
+                            valeur = ( (IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getChiffreSaisie();
+                            objectif =  ( (IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getObjectifChiffre();
+                        } else {
+                            valeur = ( (IndicateurDuree) mEspace.getListeIndicateur().get(a)).getDureeSaisie();
+                            objectif = ( (IndicateurDuree) mEspace.getListeIndicateur().get(a)).getObjectifDuree();
+                        }
 
+
+                        dataApi.saveIndicateur(mEspace.getListeIndicateur().get(a).getIdIndicateur(),
+                                mEspace.getIdEspace(),
+                                mEspace.getListeIndicateur().get(a).getNomIndicateur(),
+                                objectif,
+                                mEspace.getListeIndicateur().get(a).getTypeIndicateur(),
+                                valeur);
+                    }
                     //verification de la date du jour pour savoir si on doit le stocker dans l'historique
                     //sauvegarde de l'historique se fait se l'espace doit etre rempli aujourd'hui
                     Calendar calendar = Calendar.getInstance();
