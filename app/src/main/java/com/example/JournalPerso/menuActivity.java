@@ -1,6 +1,8 @@
 package com.example.JournalPerso;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,11 +12,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.JournalPerso.data.DataLocal;
+import com.example.JournalPerso.model.User;
 import com.google.android.material.navigation.NavigationView;
 
 public class menuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView textBienvenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,16 @@ public class menuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        DataLocal mesData = new DataLocal();
+
+
+        User monUser = mesData.recuperationUser(getApplicationContext());
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.textBienvenu);
+        navUsername.setText("Bienvenu " + monUser.getNomUser() + " " + monUser.getPrenomUser());
+
     }
 
 

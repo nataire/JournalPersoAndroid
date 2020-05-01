@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.JournalPerso.data.DataApi;
+import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.User;
 
 public class ConnexionActivity extends AppCompatActivity {
@@ -21,12 +22,21 @@ public class ConnexionActivity extends AppCompatActivity {
     EditText emailUser;
     EditText passwordUser;
     DataApi appelApi;
+    DataLocal mesData;
 
 
     public void connexionReussi(User monUser)
     {
         Toast toast=Toast.makeText(getApplicationContext(),"User : " + monUser.toString(),Toast.LENGTH_SHORT);
         toast.show();
+
+        mesData = new DataLocal();
+        mesData.sauvegarderUser(getApplicationContext(),monUser);
+
+        Intent espaceJour = new Intent(ConnexionActivity.this, menuActivity.class);
+        startActivity(espaceJour);
+
+
     }
 
     public void connexionEchec()
@@ -49,10 +59,6 @@ public class ConnexionActivity extends AppCompatActivity {
         buttonSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
                Intent inscription = new Intent(ConnexionActivity.this, InscriptionActivity.class);
 
                 startActivity(inscription);
@@ -67,9 +73,6 @@ public class ConnexionActivity extends AppCompatActivity {
                 appelApi.connexion(emailUser.getText().toString(),passwordUser.getText().toString() );
 
 
-               // Intent espaceJour = new Intent(ConnexionActivity.this, menuActivity.class);
-
-               // startActivity(espaceJour);
             }
         });
 

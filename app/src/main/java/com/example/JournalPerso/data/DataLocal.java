@@ -8,6 +8,7 @@ import com.example.JournalPerso.model.IndicateurCaseCochee;
 import com.example.JournalPerso.model.IndicateurChiffre;
 import com.example.JournalPerso.model.IndicateurDuree;
 import com.example.JournalPerso.model.InterfaceAdapter;
+import com.example.JournalPerso.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
@@ -31,6 +32,7 @@ public class DataLocal implements Serializable {
     private Map<String, Vector<Espace>> historiqueEspace;
     private String filename = "liste_Espace";
     private String fileHistorique = "historique_Espace";
+    private String fileUser ="User";
     private String[] nomJour = {"dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"};
     private String activeDate;
     private int dayOfWeek;
@@ -82,6 +84,60 @@ public class DataLocal implements Serializable {
     }
 
     //endregion
+
+
+    public void sauvegarderUser(Context monContext, User monUser)
+    {
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .setPrettyPrinting()
+                .create();
+
+
+        String fileContents = gson.toJson(monUser);
+        FileOutputStream monFichier;
+
+        try {
+            monFichier = monContext.openFileOutput(fileUser, Context.MODE_PRIVATE);
+            monFichier.write(fileContents.getBytes());
+            monFichier.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public User recuperationUser(Context monContext) {
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+
+        FileInputStream monFichier;
+
+        User monUser = null;
+
+        String sJsonLu = "";
+        try {
+            monFichier = monContext.openFileInput(fileUser);
+            int content;
+            while ((content = monFichier.read()) != -1) {
+                sJsonLu = sJsonLu + (char) content;
+            }
+            monFichier.close();
+
+            monUser = gson.fromJson(sJsonLu, User.class);
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return monUser;
+    }
 
     public void ecrireFichier(Context monContext) {
         Gson gson = new GsonBuilder()

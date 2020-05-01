@@ -1,10 +1,12 @@
 package com.example.JournalPerso.data;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.JournalPerso.ConnexionActivity;
+import com.example.JournalPerso.InscriptionActivity;
 import com.example.JournalPerso.model.User;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -23,12 +25,14 @@ public class DataApi {
     private JSONAsyncTask synchronisation;
     private AsyncHttpResponseHandler responseHandler;
     private Gson gson;
-    private ConnexionActivity parentConnexion;
+    private Activity parentActivity;
     private User test = null;
     private Context monContext;
+    private String typeRequete;
 
-    public DataApi(Context context, ConnexionActivity parent) {
-        parentConnexion = parent;
+    public DataApi(Context context, Activity parent) {
+        parentActivity  = parent ;
+
         client = new AsyncHttpClient();
         monContext = context;
         gson = new Gson();
@@ -45,20 +49,39 @@ public class DataApi {
 
 
                 try {
-                    JSONObject testV = new JSONObject(new String(response));
-                    test = gson.fromJson(testV.toString(), User.class);
+                    if(typeRequete.equals("connexion"))
+                    {
+                        JSONObject testV = new JSONObject(new String(response));
+                        test = gson.fromJson(testV.toString(), User.class);
+                        Log.i("IAM", test.toString());
+                        ((ConnexionActivity)parentActivity).connexionReussi(test);
+                    }
+                    else if (typeRequete.equals("inscription"))
+                    {
+                        Log.i("IAM", "inscription reussie");
+                        ((InscriptionActivity) parentActivity).inscriptionReussi();
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                Log.i("IAM", test.toString());
-                parentConnexion.connexionReussi(test);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                parentConnexion.connexionEchec();
+                if(typeRequete.equals("connexion"))
+                {
+                    ((ConnexionActivity)parentActivity).connexionEchec();
+                }
+                else if (typeRequete.equals("inscription"))
+                {
+                    Log.i("IAM", "inscription echec");
+                    ((InscriptionActivity) parentActivity).inscriptionEchec();
+                }
+
+
             }
 
             @Override
@@ -73,8 +96,17 @@ public class DataApi {
     public void connexion(String email, String password) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
+        typeRequete = "connexion";
+        synchronisation.execute("connexion", email, password);
 
-        synchronisation.execute(email, password);
+
+    }
+
+    public void inscription(String nom, String prenom, String email, String password) {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "inscription";
+        synchronisation.execute("inscription",nom, prenom, email, password);
 
     }
 
@@ -102,7 +134,11 @@ public class DataApi {
             // pas d'interaction avec l'UI Thread ici
             Log.i("IAM", "doInBackground");
             try {
-                connection(qs[0], qs[1]);
+                if (qs[0].equals("connexion")) {
+                    connection(qs[1], qs[2]);
+                } else if (qs[0].equals("inscription")) {
+                    inscription(qs[1], qs[2], qs[3], qs[4]);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -123,6 +159,17 @@ public class DataApi {
             jsonParams.put("password", password);
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "user/connection.php", entity, "application/json", responseHandler);
+        }
+
+        private void inscription(String prenom, String nom, String email, String password) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("email", email);
+            jsonParams.put("password", password);
+            jsonParams.put("nomUser", nom);
+            jsonParams.put("prenomUser", prenom);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "user/enregistrement.php", entity, "application/json", responseHandler);
         }
     }
 
