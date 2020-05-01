@@ -110,6 +110,15 @@ public class DataApi {
 
     }
 
+
+    public void saveEspace(int idUser, int idEspace, String nomEspace, String commentaireEspace)
+    {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "saveEspace";
+        synchronisation.execute("saveEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, commentaireEspace);
+    }
+
     class JSONAsyncTask extends AsyncTask<String, Void, String> {
         // Params, Progress, Result
         String BASE_URL = "http://10.0.2.2/api_android/";
@@ -138,6 +147,9 @@ public class DataApi {
                     connection(qs[1], qs[2]);
                 } else if (qs[0].equals("inscription")) {
                     inscription(qs[1], qs[2], qs[3], qs[4]);
+                }
+                else if (qs[0].equals("saveEspace")) {
+                    saveEspace(qs[1], qs[2], qs[3], qs[4]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -170,6 +182,17 @@ public class DataApi {
             jsonParams.put("prenomUser", prenom);
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "user/enregistrement.php", entity, "application/json", responseHandler);
+        }
+
+        private void saveEspace(String idUser, String idEspace, String nomEspace, String commentaireEspace) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("idUser", idUser);
+            jsonParams.put("idEspace", idEspace);
+            jsonParams.put("nomEspace", nomEspace);
+            jsonParams.put("commentaireEspace", commentaireEspace);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "espace/SauvegardeEspace.php", entity, "application/json", responseHandler);
         }
     }
 

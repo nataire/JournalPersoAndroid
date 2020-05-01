@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordUserConfirm" />
 
     <EditText
-        android:id="@+id/emailUser"
+        android:id="@+id/prenomUser"
         android:layout_width="213dp"
         android:layout_height="0dp"
         android:layout_marginStart="100dp"
@@ -115,7 +115,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="24dp"
         android:text="@string/labelNewPrenom"
-        app:layout_constraintBottom_toTopOf="@+id/emailUser"
+        app:layout_constraintBottom_toTopOf="@+id/prenomUser"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomUser" />
 
@@ -128,6 +128,6 @@
         android:text="@string/labelNewMail"
         app:layout_constraintBottom_toTopOf="@+id/mailUser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailUser" />
+        app:layout_constraintTop_toBottomOf="@+id/prenomUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

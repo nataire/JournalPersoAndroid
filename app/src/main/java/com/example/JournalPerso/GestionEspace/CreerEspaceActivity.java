@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.JournalPerso.GestionIndicateur.ModifierIndicateurActivity;
 import com.example.JournalPerso.GestionIndicateur.createIndicateurActivity;
 import com.example.JournalPerso.R;
+import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.Indicateur;
+import com.example.JournalPerso.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -39,21 +42,15 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
     private FloatingActionButton buttonAccept;
     private String[] nomJour = {"dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"};
     private Button[] boutonJour = new Button[7];
-    private Button boutonMardi;
-    private Button boutonMercredi;
-    private Button boutonJeudi;
-    private Button boutonVendredi;
-    private Button boutonSamedi;
-    private Button boutonDimanche;
     private Button boutonAllDays;
-    private int positionListeEspace;
     private Espace mEspace;
     private Map<String, Boolean> detailJour;
     private int test = 0;
     private EditText titreEspace;
     private DataLocal mesData;
     private RecyclerView recyclerView;
-
+    private DataApi dataApi;
+    private User monUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +58,7 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
         setContentView(R.layout.activity_creer_espace);
 
         detailJour = new HashMap<>();
+        dataApi = new DataApi(getApplicationContext(),this);
 
         titreChoixJour = findViewById(R.id.labelChoixJour);
         buttonAccept = findViewById(R.id.buttonSaveEspace);
@@ -71,7 +69,10 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
         if (intent != null)
             mesData = (DataLocal) intent.getSerializableExtra("data");
 
+
+        monUser = mesData.recuperationUser(getApplicationContext());
         mEspace = new Espace();
+
 
         for (int a = 0; a < nomJour.length; a++) {
             detailJour.put(nomJour[a], false);
@@ -135,9 +136,13 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                     mEspace.setNomEspace(titreEspace.getText().toString());
                     mEspace.setDetailJour(detailJour);
                     mesData.getMesEspaces().add(mEspace);
+
+                    //sauvegarde espace locale + BDD
                     mesData.ecrireFichier(getApplicationContext());
+                    dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getCommentaireEspace());
 
-
+                    //verification de la date du jour pour savoir si on doit le stocker dans l'historique
+                    //sauvegarde de l'historique se fait se l'espace doit etre rempli aujourd'hui
                     Calendar calendar = Calendar.getInstance();
                     Date date = calendar.getTime();
 
