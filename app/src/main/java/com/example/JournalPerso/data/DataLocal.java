@@ -53,6 +53,7 @@ public class DataLocal implements Serializable {
         dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
         historiqueEspace = new HashMap<>();
+        listeEspaceVide = new Vector<>();
     }
     //endregion
 
@@ -378,15 +379,18 @@ public class DataLocal implements Serializable {
         if (!historiqueEspace.containsKey(activeDate)) {
             Vector<Espace> listeEspaceActif = new Vector<>();
 
+            if(listeEspaceVide.size()!=0)
+            {
+                for (int a = 0; a < listeEspaceVide.size(); a++) {
+                    if (listeEspaceVide.get(a).getDetailJour().get(nomJour[dayOfWeek - 1])) {
+                        listeEspaceActif.add(listeEspaceVide.get(a));
 
-            for (int a = 0; a < listeEspaceVide.size(); a++) {
-                if (listeEspaceVide.get(a).getDetailJour().get(nomJour[dayOfWeek - 1])) {
-                    listeEspaceActif.add(listeEspaceVide.get(a));
-
-                    if (listeEspaceVide.get(a).getCommentaireEspace().isEmpty())
-                        listeEspaceVide.get(a).setCommentaireEspace(" ");
+                        if (listeEspaceVide.get(a).getCommentaireEspace().isEmpty())
+                            listeEspaceVide.get(a).setCommentaireEspace(" ");
+                    }
                 }
             }
+
 
 
             historiqueEspace.put(activeDate, listeEspaceActif);

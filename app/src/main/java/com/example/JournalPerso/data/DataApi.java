@@ -7,8 +7,12 @@ import android.util.Log;
 
 import com.example.JournalPerso.ConnexionActivity;
 import com.example.JournalPerso.InscriptionActivity;
+import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -16,9 +20,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+
+
 
 public class DataApi {
     private static AsyncHttpClient client;
@@ -26,7 +33,7 @@ public class DataApi {
     private AsyncHttpResponseHandler responseHandler;
     private Gson gson;
     private Activity parentActivity;
-    private User test = null;
+    private User test;
     private Context monContext;
     private String typeRequete;
 
@@ -61,6 +68,10 @@ public class DataApi {
                         Log.i("IAM", "inscription reussie");
                         ((InscriptionActivity) parentActivity).inscriptionReussi();
                     }
+                    else if (typeRequete.equals("updateEspace"))
+                    {
+                        Log.i("IAM", "updateEspace reussi");
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -80,7 +91,10 @@ public class DataApi {
                     Log.i("IAM", "inscription echec");
                     ((InscriptionActivity) parentActivity).inscriptionEchec();
                 }
-
+                else if (typeRequete.equals("updateEspace"))
+                {
+                    Log.i("IAM", "updateEspace echec");
+                }
 
             }
 
@@ -111,13 +125,25 @@ public class DataApi {
     }
 
 
-    public void saveEspace(int idUser, int idEspace, String nomEspace, String commentaireEspace)
+    public void saveEspace(int idUser, int idEspace, String nomEspace, String commentaireEspace, Map<String, Boolean> detailJour)
     {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "saveEspace";
+        synchronisation.setDetailJour(detailJour);
         synchronisation.execute("saveEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, commentaireEspace);
     }
+
+    public void updateEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour)
+    {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "updateEspace";
+        synchronisation.setDetailJour(detailJour);
+        synchronisation.execute("updateEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace);
+    }
+
+
 
     public void saveIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, String valeur)
     {
@@ -134,6 +160,16 @@ public class DataApi {
         // Params, Progress, Result
         String BASE_URL = "http://10.0.2.2/api_android/";
         Context monContext;
+        Map<String, Boolean> detailJour;
+
+
+        public Map<String, Boolean> getDetailJour() {
+            return detailJour;
+        }
+
+        public void setDetailJour(Map<String, Boolean> detailJour) {
+            this.detailJour = detailJour;
+        }
 
         public Context getMonContext() {
             return monContext;
@@ -160,10 +196,14 @@ public class DataApi {
                     inscription(qs[1], qs[2], qs[3], qs[4]);
                 }
                 else if (qs[0].equals("saveEspace")) {
-                    saveEspace(qs[1], qs[2], qs[3], qs[4]);
+                    saveEspace(qs[1], qs[2], qs[3]);
+                   // saveEspace(qs[1]);
                 }
                 else if (qs[0].equals("saveIndicateur")) {
                     saveIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6]);
+                }
+                else if (qs[0].equals("updateEspace")) {
+                    updateEspace(qs[1], qs[2], qs[3]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -198,13 +238,21 @@ public class DataApi {
             client.post(monContext, BASE_URL + "user/enregistrement.php", entity, "application/json", responseHandler);
         }
 
-        private void saveEspace(String idUser, String idEspace, String nomEspace, String commentaireEspace) throws JSONException, UnsupportedEncodingException {
+        private void saveEspace(String idUser, String idEspace, String nomEspace) throws JSONException, UnsupportedEncodingException {
+       // private void saveEspace(String contenu) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idUser", idUser);
             jsonParams.put("idEspace", idEspace);
             jsonParams.put("nomEspace", nomEspace);
-            jsonParams.put("commentaireEspace", commentaireEspace);
+
+
+            JSONObject jsonParams2 = new JSONObject();
+            for (Map.Entry<String, Boolean> entry : detailJour.entrySet()) {
+                jsonParams2.put(entry.getKey(), entry.getValue());
+            }
+
+            jsonParams.put("detailJour", jsonParams2);
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "espace/SauvegardeEspace.php", entity, "application/json", responseHandler);
         }
@@ -220,6 +268,24 @@ public class DataApi {
             jsonParams.put("valeur", valeur);
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "indicateur/SauvegardeIndicateur.php", entity, "application/json", responseHandler);
+        }
+
+        private void updateEspace(String idUser, String idEspace, String nomEspace) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("idUser", idUser);
+            jsonParams.put("idEspace", idEspace);
+            jsonParams.put("nomEspace", nomEspace);
+
+
+            JSONObject jsonParams2 = new JSONObject();
+            for (Map.Entry<String, Boolean> entry : detailJour.entrySet()) {
+                jsonParams2.put(entry.getKey(), entry.getValue());
+            }
+
+            jsonParams.put("detailJour", jsonParams2);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "espace/UpdateEspace.php", entity, "application/json", responseHandler);
         }
 
     }

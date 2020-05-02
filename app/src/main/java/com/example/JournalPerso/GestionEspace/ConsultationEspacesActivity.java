@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.JournalPerso.R;
+import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.Indicateur;
+import com.example.JournalPerso.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -32,6 +34,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
     private int test = 0;
     private DataLocal mesData;
     private String dateActive;
+    private DataApi dataApi;
 
     public ConsultationEspacesActivity() {
         // Required empty public constructor
@@ -64,6 +67,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
             textCommentaire.setText(mEspace.getCommentaireEspace());
         }
 
+        dataApi = new DataApi(getApplicationContext(), this);
 
         buttonSetting = findViewById(R.id.buttonSettingEspace);
 
@@ -90,6 +94,11 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                 mesData.modifierListeEspace(mEspace);
                 mesData.ecrireFichierHistorique(getApplicationContext());
                 mesData.ecrireFichier(getApplicationContext());
+
+                User monUser = mesData.recuperationUser(getApplicationContext());
+
+                dataApi.updateEspace(monUser.getId(),mEspace.getIdEspace(),mEspace.getNomEspace(),mEspace.getDetailJour());
+
                 finish();
             }
         });
