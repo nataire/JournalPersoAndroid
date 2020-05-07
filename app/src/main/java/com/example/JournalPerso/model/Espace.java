@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Espace implements Serializable, Cloneable {
     private int idEspace;
@@ -127,4 +129,5 @@ public class Espace implements Serializable, Cloneable {
 
 
     }
+
 }

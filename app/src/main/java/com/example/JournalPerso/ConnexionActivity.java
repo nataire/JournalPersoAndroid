@@ -2,10 +2,8 @@ package com.example.JournalPerso;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +21,7 @@ public class ConnexionActivity extends AppCompatActivity {
     EditText passwordUser;
     DataApi appelApi;
     DataLocal mesData;
+    User monUser;
 
 
     public void connexionReussi(User monUser)
@@ -30,7 +29,7 @@ public class ConnexionActivity extends AppCompatActivity {
         Toast toast=Toast.makeText(getApplicationContext(),"User : " + monUser.toString(),Toast.LENGTH_SHORT);
         toast.show();
 
-        mesData = new DataLocal();
+
         mesData.sauvegarderUser(getApplicationContext(),monUser);
 
         Intent espaceJour = new Intent(ConnexionActivity.this, menuActivity.class);
@@ -49,32 +48,46 @@ public class ConnexionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
 
-        buttonSubscribe = findViewById(R.id.buttonSubscribe);
-        buttonConnexion = findViewById(R.id.buttonConnexion);
-        emailUser = findViewById(R.id.emailUser);
-        passwordUser = findViewById(R.id.passwordUser);
+        mesData = new DataLocal();
+        monUser = mesData.recuperationUser(getApplicationContext());
+        if(monUser!=null)
+        {
+            Intent espaceJour = new Intent(ConnexionActivity.this, menuActivity.class);
+            startActivity(espaceJour);
+        }
+        else
+        {
 
-        appelApi = new DataApi(getApplicationContext(), this);
+            buttonSubscribe = findViewById(R.id.buttonSubscribe);
+            buttonConnexion = findViewById(R.id.buttonConnexion);
+            emailUser = findViewById(R.id.prenomUser);
+            passwordUser = findViewById(R.id.passwordUser);
 
-        buttonSubscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               Intent inscription = new Intent(ConnexionActivity.this, InscriptionActivity.class);
-
-                startActivity(inscription);
-            }
-        });
-
-        buttonConnexion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            appelApi = new DataApi(getApplicationContext(), this);
 
 
-                appelApi.connexion(emailUser.getText().toString(),passwordUser.getText().toString() );
+            buttonSubscribe.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent inscription = new Intent(ConnexionActivity.this, InscriptionActivity.class);
+
+                    startActivity(inscription);
+                }
+            });
+
+            buttonConnexion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
-            }
-        });
+                    appelApi.connexion(emailUser.getText().toString(),passwordUser.getText().toString() );
+
+
+                }
+            });
+        }
+
+
 
     }
 

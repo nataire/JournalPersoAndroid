@@ -44,6 +44,21 @@ public class DataApi {
         monContext = context;
         gson = new Gson();
 
+        initResponseHandler();
+
+    }
+
+    public DataApi(Context context) {
+        client = new AsyncHttpClient();
+        monContext = context;
+        gson = new Gson();
+
+        initResponseHandler();
+    }
+
+
+    private void initResponseHandler()
+    {
         responseHandler = new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -67,6 +82,11 @@ public class DataApi {
                     {
                         Log.i("IAM", "inscription reussie");
                         ((InscriptionActivity) parentActivity).inscriptionReussi();
+                    }
+                    else if (typeRequete.equals("saveEspace"))
+                    {
+                        Log.i("IAM", "saveEspace reussie");
+
                     }
                     else if (typeRequete.equals("updateEspace"))
                     {
@@ -104,9 +124,7 @@ public class DataApi {
             }
         };
 
-
     }
-
     public void connexion(String email, String password) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
@@ -153,6 +171,13 @@ public class DataApi {
         synchronisation.execute("saveIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur);
     }
 
+    public void updateIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, String valeur)
+    {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "updateIndicateur";
+        synchronisation.execute("updateIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur);
+    }
 
 
 
@@ -204,6 +229,9 @@ public class DataApi {
                 }
                 else if (qs[0].equals("updateEspace")) {
                     updateEspace(qs[1], qs[2], qs[3]);
+                }
+                else if (qs[0].equals("updateIndicateur")) {
+                    updateIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -268,6 +296,19 @@ public class DataApi {
             jsonParams.put("valeur", valeur);
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "indicateur/SauvegardeIndicateur.php", entity, "application/json", responseHandler);
+        }
+
+        private void updateIndicateur(String idIndicateur, String idEspace, String nomIndicateur, String objectif, String type, String valeur) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("idIndicateur", idIndicateur);
+            jsonParams.put("idEspace", idEspace);
+            jsonParams.put("nomIndicateur", nomIndicateur);
+            jsonParams.put("objectif", objectif);
+            jsonParams.put("type", type);
+            jsonParams.put("valeur", valeur);
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "indicateur/UpdateIndicateur.php", entity, "application/json", responseHandler);
         }
 
         private void updateEspace(String idUser, String idEspace, String nomEspace) throws JSONException, UnsupportedEncodingException {

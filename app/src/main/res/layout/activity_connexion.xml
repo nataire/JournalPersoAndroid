@@ -17,7 +17,7 @@
         app:layout_constraintTop_toBottomOf="@+id/choixConnexion" />
 
     <EditText
-        android:id="@+id/emailUser"
+        android:id="@+id/prenomUser"
         android:layout_width="213dp"
         android:layout_height="0dp"
         android:layout_marginStart="100dp"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:text="@string/labelLogin"
-        app:layout_constraintBottom_toTopOf="@+id/emailUser"
+        app:layout_constraintBottom_toTopOf="@+id/prenomUser"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -60,7 +60,7 @@
         android:text="@string/labelPassword"
         app:layout_constraintBottom_toTopOf="@+id/passwordUser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailUser" />
+        app:layout_constraintTop_toBottomOf="@+id/prenomUser" />
 
     <Button
         android:id="@+id/buttonConnexion"

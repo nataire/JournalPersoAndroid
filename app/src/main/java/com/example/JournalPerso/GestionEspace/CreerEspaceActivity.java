@@ -143,7 +143,6 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                     //sauvegarde espace locale + BDD
                     mesData.ecrireFichier(getApplicationContext());
                     dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getCommentaireEspace(), mEspace.getDetailJour());
-                    //dataApi.saveEspace(monUser.getId(), mEspace);
 
 
                     for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)

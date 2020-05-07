@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.JournalPerso.data.DataApi;
+import com.example.JournalPerso.model.User;
 
 public class InscriptionActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class InscriptionActivity extends AppCompatActivity {
      EditText passwordUser;
      EditText passwordUserConfirm;
      DataApi dataApi;
+     User monUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +37,21 @@ public class InscriptionActivity extends AppCompatActivity {
         passwordUserConfirm = findViewById(R.id.passwordUserConfirm);
 
         dataApi = new DataApi(getApplicationContext(),this);
+        monUser = new User();
+
         buttonSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(passwordUser.getText().toString().equals(passwordUserConfirm.getText().toString()))
-                    dataApi.inscription(nomUser.getText().toString(),prenomUser.getText().toString(),mailUser.getText().toString(),passwordUser.getText().toString());
-                else
-                {
+                if (!monUser.isEmailValid(mailUser.getText().toString())) {
+                    Toast toast=Toast.makeText(getApplicationContext(),"Erreur mail",Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else if (!passwordUser.getText().toString().equals(passwordUserConfirm.getText().toString())) {
                     Toast toast=Toast.makeText(getApplicationContext(),"Les mots de passes ne sont pas identiques",Toast.LENGTH_SHORT);
                     toast.show();
+                     } else {
+                    dataApi.inscription(nomUser.getText().toString(), prenomUser.getText().toString(), mailUser.getText().toString(), passwordUser.getText().toString());
                 }
 
             }
