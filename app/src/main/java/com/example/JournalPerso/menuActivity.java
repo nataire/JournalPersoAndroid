@@ -47,8 +47,8 @@ public class menuActivity extends AppCompatActivity {
 
         User monUser = mesData.recuperationUser(getApplicationContext());
         View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.textBienvenu);
-        navUsername.setText("Bienvenu " + monUser.getNomUser() + " " + monUser.getPrenomUser());
+        textBienvenu = (TextView) headerView.findViewById(R.id.textBienvenu);
+        textBienvenu.setText("Bienvenu " + monUser.getNomUser() + " " + monUser.getPrenomUser());
 
     }
 
@@ -59,6 +59,8 @@ public class menuActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 
 
 }

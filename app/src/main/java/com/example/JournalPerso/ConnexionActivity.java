@@ -48,6 +48,12 @@ public class ConnexionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
 
+
+    }
+
+    public void onStart() {
+        super.onStart();
+
         mesData = new DataLocal();
         monUser = mesData.recuperationUser(getApplicationContext());
         if(monUser!=null)
@@ -86,7 +92,6 @@ public class ConnexionActivity extends AppCompatActivity {
                 }
             });
         }
-
 
 
     }

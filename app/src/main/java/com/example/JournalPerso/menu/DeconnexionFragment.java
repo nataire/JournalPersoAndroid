@@ -19,15 +19,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DeconnexionFragment extends Fragment {
 
-
+private DataLocal mesDataLocal;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = null;
 
         //getActivity().getFragmentManager().popBackStack();
+        mesDataLocal = new DataLocal();
+        mesDataLocal.deleteUser(getContext());
         getActivity().finish();
-
         return root;
     }
 }

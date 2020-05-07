@@ -140,6 +140,22 @@ public class DataLocal implements Serializable {
         return monUser;
     }
 
+    public void deleteUser(Context monContext) {
+
+        String fileContents = "";
+        FileOutputStream monFichier;
+
+        try {
+            monFichier = monContext.openFileOutput(fileUser, Context.MODE_PRIVATE);
+            monFichier.write(fileContents.getBytes());
+            monFichier.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void ecrireFichier(Context monContext) {
         Gson gson = new GsonBuilder()
                 .serializeNulls()

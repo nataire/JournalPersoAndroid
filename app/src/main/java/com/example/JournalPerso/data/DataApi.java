@@ -179,6 +179,13 @@ public class DataApi {
         synchronisation.execute("updateIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur);
     }
 
+    public void updateUser(int idUser, String nom, String prenom, String email, String password)
+    {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "updateUser";
+        synchronisation.execute("updateUser",String.valueOf(idUser), nom, prenom, email, password);
+    }
 
 
     class JSONAsyncTask extends AsyncTask<String, Void, String> {
@@ -232,6 +239,9 @@ public class DataApi {
                 }
                 else if (qs[0].equals("updateIndicateur")) {
                     updateIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6]);
+                }
+                else if (qs[0].equals("updateUser")) {
+                    updateUser(qs[1], qs[2], qs[3], qs[4], qs[5]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -327,6 +337,20 @@ public class DataApi {
             jsonParams.put("detailJour", jsonParams2);
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "espace/UpdateEspace.php", entity, "application/json", responseHandler);
+        }
+
+        private void updateUser( String idUser, String nom, String  prenom, String email, String password) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("idUser", idUser);
+            jsonParams.put("email", email);
+            jsonParams.put("password", password);
+            jsonParams.put("nomUser", nom);
+            jsonParams.put("prenomUser", prenom);
+
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "user/updateUser.php", entity, "application/json", responseHandler);
         }
 
     }

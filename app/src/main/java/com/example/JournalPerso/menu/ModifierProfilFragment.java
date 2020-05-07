@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,8 +15,10 @@ import androidx.fragment.app.Fragment;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.data.DataLocal;
+import com.example.JournalPerso.menuActivity;
 import com.example.JournalPerso.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 public class ModifierProfilFragment extends Fragment {
 
@@ -28,6 +31,7 @@ public class ModifierProfilFragment extends Fragment {
     private DataApi dataApi;
     private DataLocal dataLocal;
     private FloatingActionButton monBouton;
+    private NavigationView navigationView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +56,8 @@ public class ModifierProfilFragment extends Fragment {
         password.setText(monUser.getPassword());
         confirmPasswword.setText(monUser.getPassword());
 
+        navigationView = root.findViewById(R.id.nav_view);
+
         monBouton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -66,8 +72,17 @@ public class ModifierProfilFragment extends Fragment {
                 }
                 else
                 {
-                    Toast toast=Toast.makeText(getContext(),"modification",Toast.LENGTH_SHORT);
+                    dataApi.updateUser(monUser.getId(),nom.getText().toString(),prenom.getText().toString(),mail.getText().toString(),password.getText().toString());
+                    Toast toast=Toast.makeText(getContext(),"Modification de l'utilisateur effectué",Toast.LENGTH_SHORT);
                     toast.show();
+
+                    monUser.setEmail(mail.getText().toString());
+                    monUser.setNomUser(nom.getText().toString());
+                    monUser.setPrenomUser(prenom.getText().toString());
+                    monUser.setPassword(password.getText().toString());
+
+                    dataLocal.sauvegarderUser(getContext(),monUser);
+
                 }
 
 
