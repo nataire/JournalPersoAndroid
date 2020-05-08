@@ -161,7 +161,13 @@ public class DataApi {
         synchronisation.execute("updateEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace);
     }
 
-
+    public void deleteEspace(int idEspace)
+    {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "deleteEspace";
+        synchronisation.execute("deleteEspace",String.valueOf(idEspace));
+    }
 
     public void saveIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, String valeur, boolean historique)
     {
@@ -177,6 +183,14 @@ public class DataApi {
         synchronisation.setMonContext(monContext);
         typeRequete = "updateIndicateur";
         synchronisation.execute("updateIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur);
+    }
+
+    public void deleteIndicateur(int idIndicateur)
+    {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "deleteIndicateur";
+        synchronisation.execute("deleteIndicateur",String.valueOf(idIndicateur));
     }
 
     public void updateUser(int idUser, String nom, String prenom, String email, String password)
@@ -241,6 +255,12 @@ public class DataApi {
                 }
                 else if (qs[0].equals("updateUser")) {
                     updateUser(qs[1], qs[2], qs[3], qs[4], qs[5]);
+                }
+                else if (qs[0].equals("deleteEspace")) {
+                    deleteEspace(qs[1]);
+                }
+                else if (qs[0].equals("deleteIndicateur")) {
+                    deleteIndicateur(qs[1]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -355,6 +375,23 @@ public class DataApi {
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "user/updateUser.php", entity, "application/json", responseHandler);
+        }
+
+        private void deleteEspace(String idEspace) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("idEspace", idEspace);
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "espace/deleteEspace.php", entity, "application/json", responseHandler);
+        }
+        private void deleteIndicateur(String idIndicateur) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("idIndicateur", idIndicateur);
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "indicateur/deleteIndicateur.php", entity, "application/json", responseHandler);
         }
 
     }

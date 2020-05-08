@@ -167,6 +167,11 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                 Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
 
                 mesData.deleteEspace(mEspaceTemp, dateActive);
+                for(int a = 0; a < mEspaceTemp.getListeIndicateur().size(); a++)
+                    dataApi.deleteIndicateur(mEspaceTemp.getListeIndicateur().get(a).getIdIndicateur());
+
+                dataApi.deleteEspace(mEspaceTemp.getIdEspace());
+
                 mesData.ecrireFichier(getApplicationContext());
                 mesData.ecrireFichierHistorique(getApplicationContext());
                 finish();

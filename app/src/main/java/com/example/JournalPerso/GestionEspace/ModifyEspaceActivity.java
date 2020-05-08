@@ -17,8 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.JournalPerso.GestionIndicateur.ModifierIndicateurActivity;
 import com.example.JournalPerso.GestionIndicateur.createIndicateurActivity;
 import com.example.JournalPerso.R;
+import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.Indicateur;
+import com.example.JournalPerso.model.IndicateurCaseCochee;
+import com.example.JournalPerso.model.IndicateurChiffre;
+import com.example.JournalPerso.model.IndicateurDuree;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
@@ -44,7 +48,7 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
     private Espace mEspace;
     private Map<String, Boolean> detailJour;
     private int test = 0;
-
+    private DataApi dataApi;
     private RecyclerView recyclerView;
 
 
@@ -58,6 +62,7 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
         textViewTitreEspace = findViewById(R.id.editTextTitreEspace);
         buttonDelete = findViewById(R.id.buttonDeleteEspace);
         buttonAccept = findViewById(R.id.buttonSaveEspace);
+        dataApi = new DataApi(getApplicationContext());
 
 
         //boutonJour[0] = findViewById(R.id.buttonLundi); // remplie le tableau avec les valeurs de 0 à nb-1
@@ -195,6 +200,9 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
             }
 
             recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
+            DataApi dataApi = new DataApi(getApplicationContext());
+            dataApi.deleteIndicateur(indicateur.getIdIndicateur());
+
         }
 
     }
@@ -203,23 +211,42 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == test && resultCode == Activity.RESULT_OK) {
+            Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
 
+            String objectif = "";
+            String valeur = "";
+            if (mIndicateurTemp.getTypeIndicateur().equals("CaseCochee")) {
+                IndicateurCaseCochee mIndicateurTemp2 = (IndicateurCaseCochee)mIndicateurTemp;
+                valeur = Boolean.toString( mIndicateurTemp2.isEtatBoutonSaisie());
+                objectif = Boolean.toString( mIndicateurTemp2.isObjectifCaseCochee());
+            } else if (mIndicateurTemp.getTypeIndicateur().equals("Chiffre")) {
+                IndicateurChiffre mIndicateurTemp2 = (IndicateurChiffre)mIndicateurTemp;
+                valeur =  mIndicateurTemp2.getChiffreSaisie();
+                objectif =  mIndicateurTemp2.getObjectifChiffre();
+            } else {
+                IndicateurDuree mIndicateurTemp2 = (IndicateurDuree)mIndicateurTemp;
+                valeur = mIndicateurTemp2.getDureeSaisie();
+                objectif = mIndicateurTemp2.getObjectifDuree();
+            }
 
             if (data.getStringExtra("typeRetour").equals("Creation")) {
-                Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
-
                 mEspace.addIndicateur(mIndicateurTemp);
+                dataApi.saveIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
+                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),valeur,false);
             } else if (data.getStringExtra("typeRetour").equals("Modification")) {
-                Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
 
                 mEspace.modfifyIndicateur(mIndicateurTemp);
+                dataApi.updateIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
+                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),valeur);
+
             } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
-                Indicateur mIndicateurTemp = (Indicateur) data.getSerializableExtra("indicateur");
+
 
                 for (int a = 0; a < mEspace.getListeIndicateur().size(); a++) {
                     if (mIndicateurTemp.getIdIndicateur() == mEspace.getListeIndicateur().get(a).getIdIndicateur())
                         mEspace.getListeIndicateur().remove(a);
                 }
+                dataApi.deleteIndicateur(mIndicateurTemp.getIdIndicateur());
 
             }
 
