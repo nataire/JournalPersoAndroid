@@ -231,8 +231,8 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
 
             if (data.getStringExtra("typeRetour").equals("Creation")) {
                 mEspace.addIndicateur(mIndicateurTemp);
-                dataApi.saveIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
-                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),valeur,false);
+                //dataApi.saveIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
+                //        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),false);
             } else if (data.getStringExtra("typeRetour").equals("Modification")) {
 
                 mEspace.modfifyIndicateur(mIndicateurTemp);

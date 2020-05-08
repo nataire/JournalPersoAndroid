@@ -122,8 +122,6 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                             mEspace.getIdEspace(),
                             mEspace.getListeIndicateur().get(a).getNomIndicateur(),
                             objectif,
-
-
                             mEspace.getListeIndicateur().get(a).getTypeIndicateur(),
                             valeur);
                 }

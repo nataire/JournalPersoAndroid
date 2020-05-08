@@ -162,7 +162,7 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                         historique = true;
                     }
 
-                    dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getDetailJour(), mEspace.getCommentaireEspace(), historique);
+                    dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getDetailJour(), mEspace.getCommentaireEspace(), historique, activeDate);
 
 
                     for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)
@@ -186,7 +186,7 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                                 mEspace.getListeIndicateur().get(a).getNomIndicateur(),
                                 objectif,
                                 mEspace.getListeIndicateur().get(a).getTypeIndicateur(),
-                                valeur, historique);
+                                historique, activeDate);
                     }
 
 
@@ -219,8 +219,6 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
         } else {
             detailJour.put(jour, true);
             test.setBackgroundResource(R.color.colorPrimary);
-            //ViewCompat.setBackgroundTintList(boutonLundi, getResources().getColorStateList(R.color.design_default_color_primary));
-            //ViewCompat.setBackgroundTintList(boutonLundi, getResources().getColorStateList(android.R.color.background_light));
         }
 
     }
