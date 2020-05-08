@@ -99,9 +99,9 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                 mesData.ecrireFichier(getApplicationContext());
 
                 User monUser = mesData.recuperationUser(getApplicationContext());
-
-
                 dataApi.updateEspace(monUser.getId(),mEspace.getIdEspace(),mEspace.getNomEspace(),mEspace.getDetailJour());
+
+
                 for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)
                 {
                     String objectif = "";
@@ -122,6 +122,8 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                             mEspace.getIdEspace(),
                             mEspace.getListeIndicateur().get(a).getNomIndicateur(),
                             objectif,
+
+
                             mEspace.getListeIndicateur().get(a).getTypeIndicateur(),
                             valeur);
                 }

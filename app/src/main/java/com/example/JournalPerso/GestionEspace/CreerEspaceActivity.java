@@ -124,6 +124,7 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
             @Override
             public void onClick(View v) {
 
+                boolean historique = false;
 
                 if (titreEspace.getText().toString().equals("")) {
                     titreEspace.setError("Veuillez entrer un nom pour l'espace");
@@ -140,9 +141,28 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                     mEspace.setDetailJour(detailJour);
                     mesData.getMesEspaces().add(mEspace);
 
+
+                    //verification de la date du jour pour savoir si on doit le stocker dans l'historique
+                    //sauvegarde de l'historique se fait se l'espace doit etre rempli aujourd'hui
+                    Calendar calendar = Calendar.getInstance();
+                    Date date = calendar.getTime();
+
+                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+                    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+                    String activeDate = format1.format(date);
+
                     //sauvegarde espace locale + BDD
                     mesData.ecrireFichier(getApplicationContext());
-                    dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getCommentaireEspace(), mEspace.getDetailJour());
+
+                    if (detailJour.get(nomJour[dayOfWeek - 1])) {
+                        mesData.getHistoriqueEspace().get(activeDate).add(mEspace);
+                        mesData.ecrireFichierHistorique(getApplicationContext());
+                        historique = true;
+                    }
+
+                    dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getDetailJour(), mEspace.getCommentaireEspace(), historique);
 
 
                     for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)
@@ -166,23 +186,9 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                                 mEspace.getListeIndicateur().get(a).getNomIndicateur(),
                                 objectif,
                                 mEspace.getListeIndicateur().get(a).getTypeIndicateur(),
-                                valeur);
+                                valeur, historique);
                     }
-                    //verification de la date du jour pour savoir si on doit le stocker dans l'historique
-                    //sauvegarde de l'historique se fait se l'espace doit etre rempli aujourd'hui
-                    Calendar calendar = Calendar.getInstance();
-                    Date date = calendar.getTime();
 
-                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-
-                    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
-                    String activeDate = format1.format(date);
-
-                    if (detailJour.get(nomJour[dayOfWeek - 1])) {
-                        mesData.getHistoriqueEspace().get(activeDate).add(mEspace);
-                        mesData.ecrireFichierHistorique(getApplicationContext());
-                    }
 
                     finish();
                 }
