@@ -173,16 +173,12 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
 
 
     public void cliqueBoutonJour(String jour, Button test) {
-
-
         if (detailJour.get(jour)) {
             detailJour.put(jour, false);
             test.setBackgroundColor(Color.argb(255, 224, 224, 224));
         } else {
             detailJour.put(jour, true);
             test.setBackgroundResource(R.color.colorPrimary);
-            //ViewCompat.setBackgroundTintList(boutonLundi, getResources().getColorStateList(R.color.design_default_color_primary));
-            //ViewCompat.setBackgroundTintList(boutonLundi, getResources().getColorStateList(android.R.color.background_light));
         }
 
     }
@@ -231,13 +227,13 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
 
             if (data.getStringExtra("typeRetour").equals("Creation")) {
                 mEspace.addIndicateur(mIndicateurTemp);
-                //dataApi.saveIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
-                //        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),false);
+                dataApi.saveIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
+                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),false);
             } else if (data.getStringExtra("typeRetour").equals("Modification")) {
 
                 mEspace.modfifyIndicateur(mIndicateurTemp);
                 dataApi.updateIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
-                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),valeur);
+                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),valeur, false);
 
             } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
 

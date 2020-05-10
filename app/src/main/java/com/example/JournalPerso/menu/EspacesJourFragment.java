@@ -34,9 +34,6 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
     private FloatingActionButton buttonAddEspace;
     private String activeDate;
 
-    private boolean firstLaunch;
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

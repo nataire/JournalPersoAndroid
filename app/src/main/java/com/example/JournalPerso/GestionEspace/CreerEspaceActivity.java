@@ -162,7 +162,7 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                         historique = true;
                     }
 
-                    dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getDetailJour(), mEspace.getCommentaireEspace(), historique, activeDate);
+                    dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getDetailJour(), mEspace.getCommentaireEspace(), historique);
 
 
                     for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)
@@ -186,7 +186,7 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                                 mEspace.getListeIndicateur().get(a).getNomIndicateur(),
                                 objectif,
                                 mEspace.getListeIndicateur().get(a).getTypeIndicateur(),
-                                historique, activeDate);
+                                historique);
                     }
 
 

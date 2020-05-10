@@ -20,6 +20,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
@@ -36,6 +39,7 @@ public class DataApi {
     private User test;
     private Context monContext;
     private String typeRequete;
+    private String dateActive;
 
     public DataApi(Context context, Activity parent) {
         parentActivity  = parent ;
@@ -43,6 +47,11 @@ public class DataApi {
         client = new AsyncHttpClient();
         monContext = context;
         gson = new Gson();
+
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        dateActive = format1.format(date);
 
         initResponseHandler();
 
@@ -143,22 +152,22 @@ public class DataApi {
     }
 
 
-    public void saveEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour, String commentaireEspace, boolean historique, String dateEspace)
+    public void saveEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour, String commentaireEspace, boolean historique)
     {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "saveEspace";
         synchronisation.setDetailJour(detailJour);
-        synchronisation.execute("saveEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, Boolean.toString(historique), dateEspace);
+        synchronisation.execute("saveEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, Boolean.toString(historique));
     }
 
-    public void updateEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour)
+    public void updateEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour, boolean historique, String commentaire)
     {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "updateEspace";
         synchronisation.setDetailJour(detailJour);
-        synchronisation.execute("updateEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace);
+        synchronisation.execute("updateEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, Boolean.toString(historique), commentaire);
     }
 
     public void deleteEspace(int idEspace)
@@ -169,20 +178,20 @@ public class DataApi {
         synchronisation.execute("deleteEspace",String.valueOf(idEspace));
     }
 
-    public void saveIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, boolean historique, String activeDate)
+    public void saveIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, boolean historique)
     {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "saveIndicateur";
-        synchronisation.execute("saveIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, Boolean.toString(historique), activeDate);
+        synchronisation.execute("saveIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, Boolean.toString(historique));
     }
 
-    public void updateIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, String valeur)
+    public void updateIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, String valeur, boolean historique)
     {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "updateIndicateur";
-        synchronisation.execute("updateIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur);
+        synchronisation.execute("updateIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur, Boolean.toString(historique));
     }
 
     public void deleteIndicateur(int idIndicateur)
@@ -242,16 +251,16 @@ public class DataApi {
                     inscription(qs[1], qs[2], qs[3], qs[4]);
                 }
                 else if (qs[0].equals("saveEspace")) {
-                    saveEspace(qs[1], qs[2], qs[3], qs[4],qs[5]);
+                    saveEspace(qs[1], qs[2], qs[3], qs[4]);
                 }
                 else if (qs[0].equals("saveIndicateur")) {
-                    saveIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6], qs[7]);
+                    saveIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6]);
                 }
                 else if (qs[0].equals("updateEspace")) {
-                    updateEspace(qs[1], qs[2], qs[3]);
+                    updateEspace(qs[1], qs[2], qs[3],qs[4], qs[5]);
                 }
                 else if (qs[0].equals("updateIndicateur")) {
-                    updateIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6]);
+                    updateIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6], qs[7]);
                 }
                 else if (qs[0].equals("updateUser")) {
                     updateUser(qs[1], qs[2], qs[3], qs[4], qs[5]);
@@ -295,7 +304,7 @@ public class DataApi {
             client.post(monContext, BASE_URL + "user/enregistrement.php", entity, "application/json", responseHandler);
         }
 
-        private void saveEspace(String idUser, String idEspace, String nomEspace, String historique, String date) throws JSONException, UnsupportedEncodingException {
+        private void saveEspace(String idUser, String idEspace, String nomEspace, String historique) throws JSONException, UnsupportedEncodingException {
        // private void saveEspace(String contenu) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
@@ -305,7 +314,7 @@ public class DataApi {
 
             if(historique.equals("true")) {
                 jsonParams.put("historique", "true");
-                jsonParams.put("dateEspace", date);
+                jsonParams.put("dateEspace", dateActive);
             }
 
 
@@ -319,7 +328,7 @@ public class DataApi {
             client.post(monContext, BASE_URL + "espace/SauvegardeEspace.php", entity, "application/json", responseHandler);
         }
 
-        private void saveIndicateur(String idIndicateur, String idEspace, String nomIndicateur, String objectif, String type, String historique, String dateActive) throws JSONException, UnsupportedEncodingException {
+        private void saveIndicateur(String idIndicateur, String idEspace, String nomIndicateur, String objectif, String type, String historique) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idIndicateur", idIndicateur);
@@ -335,7 +344,7 @@ public class DataApi {
             client.post(monContext, BASE_URL + "indicateur/SauvegardeIndicateur.php", entity, "application/json", responseHandler);
         }
 
-        private void updateIndicateur(String idIndicateur, String idEspace, String nomIndicateur, String objectif, String type, String valeur) throws JSONException, UnsupportedEncodingException {
+        private void updateIndicateur(String idIndicateur, String idEspace, String nomIndicateur, String objectif, String type, String valeur, String historique) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idIndicateur", idIndicateur);
@@ -343,12 +352,17 @@ public class DataApi {
             jsonParams.put("nomIndicateur", nomIndicateur);
             jsonParams.put("objectif", objectif);
             jsonParams.put("type", type);
-            jsonParams.put("valeur", valeur);
+
+            if(historique.equals("true")){
+                jsonParams.put("historique", "true");
+                jsonParams.put("dateActive", dateActive);
+                jsonParams.put("valeur", valeur);
+            }
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "indicateur/UpdateIndicateur.php", entity, "application/json", responseHandler);
         }
 
-        private void updateEspace(String idUser, String idEspace, String nomEspace) throws JSONException, UnsupportedEncodingException {
+        private void updateEspace(String idUser, String idEspace, String nomEspace, String historique, String commentaire) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idUser", idUser);
@@ -362,6 +376,14 @@ public class DataApi {
             }
 
             jsonParams.put("detailJour", jsonParams2);
+
+            if(historique.equals("true")){
+                jsonParams.put("historique", "true");
+                jsonParams.put("dateActive", dateActive);
+                jsonParams.put("commentaire", commentaire);
+
+            }
+
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "espace/UpdateEspace.php", entity, "application/json", responseHandler);
         }

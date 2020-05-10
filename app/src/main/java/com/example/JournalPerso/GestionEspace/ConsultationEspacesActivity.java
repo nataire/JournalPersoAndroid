@@ -99,7 +99,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                 mesData.ecrireFichier(getApplicationContext());
 
                 User monUser = mesData.recuperationUser(getApplicationContext());
-                dataApi.updateEspace(monUser.getId(),mEspace.getIdEspace(),mEspace.getNomEspace(),mEspace.getDetailJour());
+                dataApi.updateEspace(monUser.getId(),mEspace.getIdEspace(),mEspace.getNomEspace(),mEspace.getDetailJour(), true, mEspace.getCommentaireEspace());
 
 
                 for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)
@@ -123,7 +123,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                             mEspace.getListeIndicateur().get(a).getNomIndicateur(),
                             objectif,
                             mEspace.getListeIndicateur().get(a).getTypeIndicateur(),
-                            valeur);
+                            valeur, true);
                 }
 
 
