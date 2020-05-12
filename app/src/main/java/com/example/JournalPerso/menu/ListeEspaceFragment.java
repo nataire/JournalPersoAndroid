@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.JournalPerso.GestionEspace.CreerEspaceActivity;
 import com.example.JournalPerso.GestionEspace.ModifyEspaceActivity;
 import com.example.JournalPerso.R;
+import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
+import com.example.JournalPerso.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +38,9 @@ public class ListeEspaceFragment extends Fragment implements MyAdapterEspace.onC
     private String activeDate;
     private int test = 0;
     private Espace mEspace;
+    private DataApi dataApi;
 
+    private User monUser;
     private boolean firstLaunch;
 
 
@@ -51,7 +55,7 @@ public class ListeEspaceFragment extends Fragment implements MyAdapterEspace.onC
         mesDataLocal = new DataLocal();
 
         mesEspacesActif = new Vector<>();
-
+        dataApi = new DataApi(getContext());
         buttonAddEspace = root.findViewById(R.id.buttonAddEspace);
         buttonAddEspace.setOnClickListener(new View.OnClickListener() {
 
@@ -63,6 +67,7 @@ public class ListeEspaceFragment extends Fragment implements MyAdapterEspace.onC
             }
         });
 
+        monUser = mesDataLocal.recuperationUser(getContext());
 
         recyclerView = root.findViewById(R.id.recyclerView);
 
@@ -119,11 +124,19 @@ public class ListeEspaceFragment extends Fragment implements MyAdapterEspace.onC
 
                 mesDataLocal.modifierListeEspace(mEspaceTemp);
 
+                dataApi.updateEspace(monUser.getId(),mEspaceTemp.getIdEspace(),mEspaceTemp.getNomEspace(),mEspaceTemp.getDetailJour(), true, mEspaceTemp.getCommentaireEspace());
+
+
 
             } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
                 Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
 
                 mesDataLocal.deleteEspace(mEspaceTemp, activeDate);
+
+                for(int a = 0; a < mEspaceTemp.getListeIndicateur().size(); a++)
+                    dataApi.deleteIndicateur(mEspaceTemp.getListeIndicateur().get(a).getIdIndicateur(), true);
+
+                dataApi.deleteEspace(mEspaceTemp.getIdEspace(), true);
             }
 
             mesDataLocal.ecrireFichier(getContext());

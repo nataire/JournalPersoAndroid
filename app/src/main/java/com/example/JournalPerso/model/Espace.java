@@ -12,10 +12,9 @@ import java.util.regex.Pattern;
 public class Espace implements Serializable, Cloneable {
     private int idEspace;
     private String nomEspace;
-    private Vector<Date> datesEspace;
+    //private Vector<Date> datesEspace;
     private Vector<Indicateur> listeIndicateur;
     private String commentaireEspace;
-
     private Map<String, Boolean> detailJour;
 
     @Override
@@ -36,7 +35,7 @@ public class Espace implements Serializable, Cloneable {
 
     public Espace(String nomEspace, Vector<Date> datesEspace) {
         this.nomEspace = nomEspace;
-        this.datesEspace = datesEspace;
+        //this.datesEspace = datesEspace;
         this.listeIndicateur = new Vector<>();
         this.detailJour = new HashMap<>();
         this.commentaireEspace = "";
@@ -54,13 +53,7 @@ public class Espace implements Serializable, Cloneable {
         this.nomEspace = nomEspace;
     }
 
-    public Vector<Date> getDatesEspace() {
-        return datesEspace;
-    }
 
-    public void setDatesEspace(Vector<Date> datesEspace) {
-        this.datesEspace = datesEspace;
-    }
 
     public Vector<Indicateur> getListeIndicateur() {
         return listeIndicateur;
@@ -102,13 +95,12 @@ public class Espace implements Serializable, Cloneable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Espace espace = (Espace) o;
-        return Objects.equals(nomEspace, espace.nomEspace) &&
-                Objects.equals(datesEspace, espace.datesEspace);
+        return Objects.equals(nomEspace, espace.nomEspace);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nomEspace, datesEspace);
+        return Objects.hash(nomEspace);
     }
 
     //endregion

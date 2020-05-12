@@ -197,7 +197,7 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
 
             recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
             DataApi dataApi = new DataApi(getApplicationContext());
-            dataApi.deleteIndicateur(indicateur.getIdIndicateur());
+            dataApi.deleteIndicateur(indicateur.getIdIndicateur(),true);
 
         }
 
@@ -227,13 +227,14 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
 
             if (data.getStringExtra("typeRetour").equals("Creation")) {
                 mEspace.addIndicateur(mIndicateurTemp);
+
                 dataApi.saveIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
-                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),false);
+                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),true);
             } else if (data.getStringExtra("typeRetour").equals("Modification")) {
 
                 mEspace.modfifyIndicateur(mIndicateurTemp);
                 dataApi.updateIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
-                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),valeur, false);
+                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),valeur, true);
 
             } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
 
@@ -242,7 +243,7 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
                     if (mIndicateurTemp.getIdIndicateur() == mEspace.getListeIndicateur().get(a).getIdIndicateur())
                         mEspace.getListeIndicateur().remove(a);
                 }
-                dataApi.deleteIndicateur(mIndicateurTemp.getIdIndicateur());
+                dataApi.deleteIndicateur(mIndicateurTemp.getIdIndicateur(), true);
 
             }
 

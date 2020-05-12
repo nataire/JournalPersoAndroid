@@ -62,6 +62,11 @@ public class DataApi {
         monContext = context;
         gson = new Gson();
 
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        dateActive = format1.format(date);
+
         initResponseHandler();
     }
 
@@ -170,12 +175,12 @@ public class DataApi {
         synchronisation.execute("updateEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, Boolean.toString(historique), commentaire);
     }
 
-    public void deleteEspace(int idEspace)
+    public void deleteEspace(int idEspace, boolean historique)
     {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "deleteEspace";
-        synchronisation.execute("deleteEspace",String.valueOf(idEspace));
+        synchronisation.execute("deleteEspace",String.valueOf(idEspace), Boolean.toString(historique));
     }
 
     public void saveIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, boolean historique)
@@ -194,12 +199,12 @@ public class DataApi {
         synchronisation.execute("updateIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur, Boolean.toString(historique));
     }
 
-    public void deleteIndicateur(int idIndicateur)
+    public void deleteIndicateur(int idIndicateur, boolean historique)
     {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "deleteIndicateur";
-        synchronisation.execute("deleteIndicateur",String.valueOf(idIndicateur));
+        synchronisation.execute("deleteIndicateur",String.valueOf(idIndicateur), Boolean.toString(historique));
     }
 
     public void updateUser(int idUser, String nom, String prenom, String email, String password)
@@ -266,10 +271,10 @@ public class DataApi {
                     updateUser(qs[1], qs[2], qs[3], qs[4], qs[5]);
                 }
                 else if (qs[0].equals("deleteEspace")) {
-                    deleteEspace(qs[1]);
+                    deleteEspace(qs[1], qs[2]);
                 }
                 else if (qs[0].equals("deleteIndicateur")) {
-                    deleteIndicateur(qs[1]);
+                    deleteIndicateur(qs[1], qs[2]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -402,18 +407,28 @@ public class DataApi {
             client.post(monContext, BASE_URL + "user/updateUser.php", entity, "application/json", responseHandler);
         }
 
-        private void deleteEspace(String idEspace) throws JSONException, UnsupportedEncodingException {
+        private void deleteEspace(String idEspace, String historique) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idEspace", idEspace);
+            if(historique.equals("true")){
+                jsonParams.put("historique", "true");
+                jsonParams.put("dateActive", dateActive);
+
+            }
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "espace/deleteEspace.php", entity, "application/json", responseHandler);
         }
-        private void deleteIndicateur(String idIndicateur) throws JSONException, UnsupportedEncodingException {
+        private void deleteIndicateur(String idIndicateur, String historique) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idIndicateur", idIndicateur);
+            if(historique.equals("true")){
+                jsonParams.put("historique", "true");
+                jsonParams.put("dateActive", dateActive);
+
+            }
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "indicateur/deleteIndicateur.php", entity, "application/json", responseHandler);
