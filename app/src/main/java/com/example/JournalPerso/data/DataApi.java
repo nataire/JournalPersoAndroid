@@ -5,8 +5,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.JournalPerso.ConnexionActivity;
 import com.example.JournalPerso.InscriptionActivity;
+import com.example.JournalPerso.R;
+import com.example.JournalPerso.menu.EspacesJourFragment;
 import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.User;
 import com.google.gson.Gson;
@@ -16,6 +20,7 @@ import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Vector;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -36,13 +42,31 @@ public class DataApi {
     private AsyncHttpResponseHandler responseHandler;
     private Gson gson;
     private Activity parentActivity;
-    private User test;
+    private Fragment parentFragment;
+    private User monUser;
+    private Vector<Espace> mesEspaces;
     private Context monContext;
     private String typeRequete;
     private String dateActive;
 
     public DataApi(Context context, Activity parent) {
         parentActivity  = parent ;
+
+        client = new AsyncHttpClient();
+        monContext = context;
+        gson = new Gson();
+
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        dateActive = format1.format(date);
+
+        initResponseHandler();
+
+    }
+
+    public DataApi(Context context, Fragment parent) {
+        parentFragment  = parent ;
 
         client = new AsyncHttpClient();
         monContext = context;
@@ -82,15 +106,13 @@ public class DataApi {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 // called when response HTTP status is "200 OK"
-
-
                 try {
                     if(typeRequete.equals("connexion"))
                     {
                         JSONObject testV = new JSONObject(new String(response));
-                        test = gson.fromJson(testV.toString(), User.class);
-                        Log.i("IAM", test.toString());
-                        ((ConnexionActivity)parentActivity).connexionReussi(test);
+                        monUser = gson.fromJson(testV.toString(), User.class);
+                        Log.i("IAM", monUser.toString());
+                        ((ConnexionActivity)parentActivity).connexionReussi(monUser);
                     }
                     else if (typeRequete.equals("inscription"))
                     {
@@ -105,6 +127,13 @@ public class DataApi {
                     else if (typeRequete.equals("updateEspace"))
                     {
                         Log.i("IAM", "updateEspace reussi");
+                    }
+                    else if(typeRequete.equals("getEspacesUser"))
+                    {
+                        JSONArray testV = new JSONArray(new String(response));
+                        mesEspaces = gson.fromJson(testV.toString(), Vector.class);
+                        Log.i("IAM", mesEspaces.toString());
+                        EspacesJourFragment.getInstance().test(mesEspaces);
                     }
 
                 } catch (JSONException e) {
@@ -215,6 +244,13 @@ public class DataApi {
         synchronisation.execute("updateUser",String.valueOf(idUser), nom, prenom, email, password);
     }
 
+    public void getEspacesUser(int idUser, boolean historique)
+    {
+        synchronisation = new JSONAsyncTask();
+        synchronisation.setMonContext(monContext);
+        typeRequete = "getEspacesUser";
+        synchronisation.execute("getEspacesUser",String.valueOf(idUser), String.valueOf(historique));
+    }
 
     class JSONAsyncTask extends AsyncTask<String, Void, String> {
         // Params, Progress, Result
@@ -275,6 +311,9 @@ public class DataApi {
                 }
                 else if (qs[0].equals("deleteIndicateur")) {
                     deleteIndicateur(qs[1], qs[2]);
+                }
+                else if (qs[0].equals("getEspacesUser")) {
+                    getEspacesUser(qs[1]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -432,6 +471,15 @@ public class DataApi {
 
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "indicateur/deleteIndicateur.php", entity, "application/json", responseHandler);
+        }
+
+        private void getEspacesUser(String idUser) throws JSONException, UnsupportedEncodingException {
+
+            JSONObject jsonParams = new JSONObject();
+            jsonParams.put("idUser", idUser);
+
+            StringEntity entity = new StringEntity(jsonParams.toString());
+            client.post(monContext, BASE_URL + "espace/readEspace.php", entity, "application/json", responseHandler);
         }
 
     }

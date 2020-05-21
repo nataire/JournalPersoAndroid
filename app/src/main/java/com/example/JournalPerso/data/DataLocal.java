@@ -84,6 +84,8 @@ public class DataLocal implements Serializable {
         this.historiqueEspace = historiqueEspace;
     }
 
+
+
     //endregion
 
 
@@ -327,8 +329,11 @@ public class DataLocal implements Serializable {
                 String typeIndicateur = indicateur.get("typeIndicateur").toString();
                 if (typeIndicateur.equals("CaseCochee")) {
                     IndicateurCaseCochee monIndicateur = new IndicateurCaseCochee();
-                    monIndicateur.setEtatBoutonSaisie((boolean) indicateur.get("etatBoutonSaisie"));
-                    monIndicateur.setObjectifCaseCochee((boolean) indicateur.get("objectifCaseCochee"));
+                    if(indicateur.containsKey("etatBoutonSaisie"))
+                        monIndicateur.setEtatBoutonSaisie((boolean) indicateur.get("etatBoutonSaisie"));
+                    else
+                        monIndicateur.setEtatBoutonSaisie(!(boolean) indicateur.get("objectif"));
+                    monIndicateur.setObjectifCaseCochee((boolean) indicateur.get("objectif"));
 
                     monIndicateur.setNomIndicateur(indicateur.get("nomIndicateur").toString());
 
@@ -340,9 +345,12 @@ public class DataLocal implements Serializable {
 
                 } else if (typeIndicateur.equals("Chiffre")) {
                     IndicateurChiffre monIndicateur = new IndicateurChiffre();
-                    monIndicateur.setChiffreSaisie(indicateur.get("chiffreSaisie").toString());
+                    if(indicateur.containsKey("chiffreSaisie"))
+                        monIndicateur.setChiffreSaisie(indicateur.get("chiffreSaisie").toString());
+                    else
+                        monIndicateur.setChiffreSaisie("0");
 
-                    monIndicateur.setObjectifChiffre(indicateur.get("objectifChiffre").toString());
+                    monIndicateur.setObjectifChiffre(indicateur.get("objectif").toString());
 
                     monIndicateur.setNomIndicateur(indicateur.get("nomIndicateur").toString());
 
@@ -353,9 +361,12 @@ public class DataLocal implements Serializable {
                     monEspace.addIndicateur(monIndicateur);
                 } else {
                     IndicateurDuree monIndicateur = new IndicateurDuree();
-                    monIndicateur.setDureeSaisie(indicateur.get("dureeSaisie").toString());
+                    if(indicateur.containsKey("dureeSaisie"))
+                        monIndicateur.setDureeSaisie(indicateur.get("dureeSaisie").toString());
+                    else
+                        monIndicateur.setDureeSaisie("0");
 
-                    monIndicateur.setObjectifDuree(indicateur.get("objectifDuree").toString());
+                    monIndicateur.setObjectifDuree(indicateur.get("objectif").toString());
 
                     monIndicateur.setNomIndicateur(indicateur.get("nomIndicateur").toString());
 

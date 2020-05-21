@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 public class IndicateurCaseCochee extends Indicateur implements Cloneable {
     private boolean etatBoutonSaisie;
-    private boolean objectifCaseCochee;
+    private boolean objectif;
 
     @NonNull
     @Override
@@ -24,7 +24,7 @@ public class IndicateurCaseCochee extends Indicateur implements Cloneable {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "CaseCochee";
         this.etatBoutonSaisie = etatBoutonSaisie;
-        this.objectifCaseCochee = objectifCaseCochee;
+        this.objectif = objectifCaseCochee;
         this.idIndicateur = idIndicateur;
     }
 
@@ -32,7 +32,7 @@ public class IndicateurCaseCochee extends Indicateur implements Cloneable {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "CaseCochee";
         this.etatBoutonSaisie = etatBoutonSaisie;
-        this.objectifCaseCochee = objectifCaseCochee;
+        this.objectif = objectifCaseCochee;
         this.idIndicateur = java.lang.System.identityHashCode(this);
     }
 
@@ -48,11 +48,11 @@ public class IndicateurCaseCochee extends Indicateur implements Cloneable {
     }
 
     public boolean isObjectifCaseCochee() {
-        return objectifCaseCochee;
+        return objectif;
     }
 
     public void setObjectifCaseCochee(boolean objectifCaseCochee) {
-        this.objectifCaseCochee = objectifCaseCochee;
+        this.objectif = objectifCaseCochee;
     }
 
 

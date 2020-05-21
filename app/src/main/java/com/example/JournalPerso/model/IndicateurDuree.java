@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 public class IndicateurDuree extends Indicateur implements Cloneable {
     private String dureeSaisie;
-    private String objectifDuree;
+    private String objectif;
 
 
     @NonNull
@@ -24,7 +24,7 @@ public class IndicateurDuree extends Indicateur implements Cloneable {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "Duree";
         this.dureeSaisie = dureeSaisie;
-        this.objectifDuree = objectifChiffre;
+        this.objectif = objectifChiffre;
         this.idIndicateur = idIndicateur;
     }
 
@@ -32,7 +32,7 @@ public class IndicateurDuree extends Indicateur implements Cloneable {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "Duree";
         this.dureeSaisie = dureeSaisie;
-        this.objectifDuree = objectifChiffre;
+        this.objectif = objectifChiffre;
         this.idIndicateur = java.lang.System.identityHashCode(this);
     }
 
@@ -49,11 +49,11 @@ public class IndicateurDuree extends Indicateur implements Cloneable {
     }
 
     public String getObjectifDuree() {
-        return objectifDuree;
+        return objectif;
     }
 
     public void setObjectifDuree(String objectifDuree) {
-        this.objectifDuree = objectifDuree;
+        this.objectif = objectifDuree;
     }
 
     //endregion

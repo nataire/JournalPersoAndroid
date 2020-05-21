@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 public class IndicateurChiffre extends Indicateur implements Cloneable {
     private String chiffreSaisie;
-    private String objectifChiffre;
+    private String objectif;
 
 
     @NonNull
@@ -23,7 +23,7 @@ public class IndicateurChiffre extends Indicateur implements Cloneable {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "Chiffre";
         this.chiffreSaisie = chiffreSaisie;
-        this.objectifChiffre = objectifChiffre;
+        this.objectif = objectifChiffre;
         this.idIndicateur = idIndicateur;
     }
 
@@ -31,7 +31,7 @@ public class IndicateurChiffre extends Indicateur implements Cloneable {
         this.nomIndicateur = nomIndicateur;
         this.typeIndicateur = "Chiffre";
         this.chiffreSaisie = chiffreSaisie;
-        this.objectifChiffre = objectifChiffre;
+        this.objectif = objectifChiffre;
         this.idIndicateur = java.lang.System.identityHashCode(this);
     }
 
@@ -46,11 +46,11 @@ public class IndicateurChiffre extends Indicateur implements Cloneable {
     }
 
     public String getObjectifChiffre() {
-        return objectifChiffre;
+        return objectif;
     }
 
     public void setObjectifChiffre(String objectifChiffre) {
-        this.objectifChiffre = objectifChiffre;
+        this.objectif = objectifChiffre;
     }
     //endregion
 

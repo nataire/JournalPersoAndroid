@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.JournalPerso.GestionEspace.ConsultationEspacesActivity;
 import com.example.JournalPerso.GestionEspace.CreerEspaceActivity;
 import com.example.JournalPerso.R;
+import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.data.DataLocal;
 import com.example.JournalPerso.model.Espace;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,8 +32,10 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
     private Vector<Espace> mesEspacesActif;
     private RecyclerView recyclerView;
     private DataLocal mesDataLocal;
+    private DataApi mesDataApi;
     private FloatingActionButton buttonAddEspace;
     private String activeDate;
+    private static EspacesJourFragment instance;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,8 +44,10 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
         monBouton = root.findViewById(R.id.buttonConsultationEspace);
 
+        instance = this;
 
         mesDataLocal = new DataLocal();
+        mesDataApi = new DataApi(getContext(),this.getParentFragment());
 
         mesEspacesActif = new Vector<>();
 
@@ -69,8 +74,14 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
 
         activeDate = format1.format(date);
 
-        mesDataLocal.recuperationEspacesMemoire(getContext());
-        mesDataLocal.lectureFichierHistorique(getContext());
+        //si jai internet
+        mesDataApi.getEspacesUser(mesDataLocal.recuperationUser(getContext()).getId(),false);
+
+        //mesDataApi.getEspacesUser(mesDataLocal.recuperationUser(getContext()).getId(), true);
+        //mesDataLocal.recuperationEspacesMemoire(getContext());
+        //mesDataLocal.lectureFichierHistorique(getContext());
+
+
         mesDataLocal.triEspace();
         mesDataLocal.ecrireFichierHistorique(getContext());
 
@@ -103,5 +114,16 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
         intent.putExtra("data", mesDataLocal);
         intent.putExtra("date", activeDate);
         startActivity(intent);
+    }
+
+
+    public static EspacesJourFragment getInstance() {
+        return instance;
+    }
+
+    public void test(Vector<Espace> espaceRecu)
+    {
+        mesDataLocal.setMesEspaces(mesDataLocal.conversionLecture(espaceRecu)) ;
+        mesDataLocal.ecrireFichier(getContext());
     }
 }
