@@ -309,7 +309,8 @@ public class DataLocal implements Serializable {
             }
 
             monEspace.setIdEspace(((Double) espaceBrut.get("idEspace")).intValue());
-            LinkedTreeMap<Object, Object> detailJour = (LinkedTreeMap) espaceBrut.get("detailJour");
+            LinkedTreeMap detailJour = (LinkedTreeMap) espaceBrut.get("detailJour");
+            //LinkedTreeMap<Object, Object> detailJour = (LinkedTreeMap) espaceBrut.get("detailJour");
             Map<String, Boolean> temp = new HashMap<>();
             temp.put("lundi", (boolean) detailJour.get("lundi"));
             temp.put("mardi", (boolean) detailJour.get("mardi"));
@@ -464,21 +465,24 @@ public class DataLocal implements Serializable {
             monFichier.close();
 
             Map test = gson.fromJson(sJsonLu, Map.class);
-            this.historiqueEspace = test;
-
-            // using for-each loop for iteration over Map.entrySet()
-            for (Map.Entry<String, Vector<Espace>> entry : historiqueEspace.entrySet()) {
-
-                Vector<Espace> vector = new Vector<>(entry.getValue());
-
-                this.historiqueEspace.put(entry.getKey(), conversionLecture(vector));
-            }
-
+            //this.historiqueEspace = test;
+            conversionLectureHistorique(test);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public  void conversionLectureHistorique(Map<String, Vector<Espace>> maLecture)
+    {
+        // using for-each loop for iteration over Map.entrySet()
+        for (Map.Entry<String, Vector<Espace>> entry : maLecture.entrySet()) {
+
+            Vector<Espace> vector = new Vector<>(entry.getValue());
+
+            this.historiqueEspace.put(entry.getKey(), conversionLecture(vector));
         }
     }
 }

@@ -1,11 +1,14 @@
 package com.example.JournalPerso.menu;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,8 +26,40 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.Vector;
 
+
+class BasicThread1 extends Thread {
+
+    private Boolean reception;
+    private Activity monActivity;
+// This method is called when the thread runs
+public void run() {
+        // Your code here
+    while(!reception)
+    {
+        Log.i("IAM" , "wait");
+    }
+
+    monActivity.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            EspacesJourFragment.getInstance().endLoad();
+        }
+    });
+
+    }
+
+
+    public void setMonActivity(Activity activite) {
+        this.monActivity = activite;
+    }
+
+    public void setReception(Boolean reception) {
+        this.reception = reception;
+    }
+};
 public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onClickEspace {
 
     private Button monBouton;
@@ -36,6 +71,8 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
     private FloatingActionButton buttonAddEspace;
     private String activeDate;
     private static EspacesJourFragment instance;
+    private boolean reception = false;
+    Thread thread;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -75,38 +112,66 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
         activeDate = format1.format(date);
 
         //si jai internet
-        mesDataApi.getEspacesUser(mesDataLocal.recuperationUser(getContext()).getId(),false);
+        if(!mesDataApi.verifReseau())
+        {
+            reception = true;
+            mesDataLocal.recuperationEspacesMemoire(getContext());
+            mesDataLocal.lectureFichierHistorique(getContext());
 
-        //mesDataApi.getEspacesUser(mesDataLocal.recuperationUser(getContext()).getId(), true);
-        //mesDataLocal.recuperationEspacesMemoire(getContext());
-        //mesDataLocal.lectureFichierHistorique(getContext());
+            mesDataLocal.triEspace();
+            mesDataLocal.ecrireFichierHistorique(getContext());
+        }
+        else
+        {
+            reception = false;
+            mesDataApi.getEspacesUser(mesDataLocal.recuperationUser(getContext()).getId(),false);
 
+        }
 
-        mesDataLocal.triEspace();
-        mesDataLocal.ecrireFichierHistorique(getContext());
 
         return root;
     }
-
+    
     public void onStart() {
 
 
         super.onStart();
-        mesEspacesActif.clear();
+
+        thread = new BasicThread1();
+        ((BasicThread1) thread).setMonActivity(this.getActivity());
+        ((BasicThread1) thread).setReception(false);
+        thread.start();
+        // Create and start the thread
+        /*if(mesDataApi.verifReseau())
+        {
+
+        }
+        else
+        {
+            mesDataLocal.recuperationEspacesMemoire(getContext());
+            mesDataLocal.lectureFichierHistorique(getContext());
+            this.mesEspacesActif = mesDataLocal.getHistoriqueEspace().get(activeDate);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
+        }
+
+/*
+        if (reception)
+        {
+            mesDataLocal.recuperationEspacesMemoire(getContext());
+            mesDataLocal.lectureFichierHistorique(getContext());
+            this.mesEspacesActif = mesDataLocal.getHistoriqueEspace().get(activeDate);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
+        }
+*/
 
 
-        mesDataLocal.recuperationEspacesMemoire(getContext());
-        mesDataLocal.lectureFichierHistorique(getContext());
-        this.mesEspacesActif = mesDataLocal.getHistoriqueEspace().get(activeDate);
-
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
 
 
     }
-
-
     @Override
     public void onClickTest(Espace espace) {
         Intent intent = new Intent(getContext(), ConsultationEspacesActivity.class);
@@ -121,9 +186,35 @@ public class EspacesJourFragment extends Fragment implements MyAdapterEspace.onC
         return instance;
     }
 
-    public void test(Vector<Espace> espaceRecu)
+    public void receptionApi(Vector<Espace> espaceRecu)
     {
-        mesDataLocal.setMesEspaces(mesDataLocal.conversionLecture(espaceRecu)) ;
-        mesDataLocal.ecrireFichier(getContext());
+            mesDataLocal.setMesEspaces(mesDataLocal.conversionLecture(espaceRecu)) ;
+            mesDataLocal.ecrireFichier(getContext());
+
+             mesDataApi.getEspacesUser(mesDataLocal.recuperationUser(getContext()).getId(),true);
+
     }
+
+    public void receptionApiHistorique(Map<String, Vector<Espace>> espaceRecu)
+    {
+
+            mesDataLocal.lectureFichierHistorique(getContext());
+            mesDataLocal.conversionLectureHistorique(espaceRecu);
+            mesDataLocal.triEspace();
+            mesDataLocal.ecrireFichierHistorique(getContext());
+            ((BasicThread1) thread).setReception(true);
+    }
+
+
+    public void endLoad()
+    {
+        mesDataLocal.recuperationEspacesMemoire(getContext());
+        mesDataLocal.lectureFichierHistorique(getContext());
+        this.mesEspacesActif = mesDataLocal.getHistoriqueEspace().get(activeDate);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new MyAdapterEspace(this.mesEspacesActif, getContext(), this));
+    }
+
 }
+

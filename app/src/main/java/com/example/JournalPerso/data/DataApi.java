@@ -2,6 +2,8 @@ package com.example.JournalPerso.data;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,6 +18,7 @@ import com.example.JournalPerso.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -34,6 +37,7 @@ import java.util.Vector;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
+import static android.content.Context.CONNECTIVITY_SERVICE;
 
 
 public class DataApi {
@@ -44,10 +48,11 @@ public class DataApi {
     private Activity parentActivity;
     private Fragment parentFragment;
     private User monUser;
-    private Vector<Espace> mesEspaces;
+
     private Context monContext;
     private String typeRequete;
     private String dateActive;
+    private boolean historique;
 
     public DataApi(Context context, Activity parent) {
         parentActivity  = parent ;
@@ -95,6 +100,37 @@ public class DataApi {
     }
 
 
+    public boolean verifReseau()
+    {
+        // On vérifie si le réseau est disponible,
+        // si oui on change le statut du bouton de connexion
+        ConnectivityManager cnMngr = (ConnectivityManager) monContext.getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cnMngr.getActiveNetworkInfo();
+
+        String sType = "Aucun réseau détecté";
+        Boolean bStatut = false;
+        if (netInfo != null)
+        {
+
+            NetworkInfo.State netState = netInfo.getState();
+
+            if (netState.compareTo(NetworkInfo.State.CONNECTED) == 0)
+            {
+                bStatut = true;
+                int netType= netInfo.getType();
+                switch (netType)
+                {
+                    case ConnectivityManager.TYPE_MOBILE :
+                        sType = "Réseau mobile détecté"; break;
+                    case ConnectivityManager.TYPE_WIFI :
+                        sType = "Réseau wifi détecté"; break;
+                }
+
+            }
+        }
+        return bStatut;
+    }
+
     private void initResponseHandler()
     {
         responseHandler = new AsyncHttpResponseHandler() {
@@ -131,9 +167,18 @@ public class DataApi {
                     else if(typeRequete.equals("getEspacesUser"))
                     {
                         JSONArray testV = new JSONArray(new String(response));
-                        mesEspaces = gson.fromJson(testV.toString(), Vector.class);
+                        Vector<Espace> mesEspaces = gson.fromJson(testV.toString(), Vector.class);
                         Log.i("IAM", mesEspaces.toString());
-                        EspacesJourFragment.getInstance().test(mesEspaces);
+                        EspacesJourFragment.getInstance().receptionApi(mesEspaces);
+
+
+                    }
+                    else if (typeRequete.equals("getEspacesUserHistorique"))
+                    {
+                        JSONObject testV = new JSONObject(new String(response));
+                        Map<String, Vector<Espace> > mesEspaces = gson.fromJson(testV.toString(), Map.class);
+                        Log.i("IAM", mesEspaces.toString());
+                        EspacesJourFragment.getInstance().receptionApiHistorique(mesEspaces);
                     }
 
                 } catch (JSONException e) {
@@ -248,8 +293,15 @@ public class DataApi {
     {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
-        typeRequete = "getEspacesUser";
-        synchronisation.execute("getEspacesUser",String.valueOf(idUser), String.valueOf(historique));
+        if(!historique) {
+            typeRequete = "getEspacesUser";
+            synchronisation.execute("getEspacesUser",String.valueOf(idUser), String.valueOf(historique));
+        }
+        else {
+
+            typeRequete = "getEspacesUserHistorique";
+            synchronisation.execute("getEspacesUserHistorique",String.valueOf(idUser), String.valueOf(historique));
+        }
     }
 
     class JSONAsyncTask extends AsyncTask<String, Void, String> {
@@ -313,7 +365,10 @@ public class DataApi {
                     deleteIndicateur(qs[1], qs[2]);
                 }
                 else if (qs[0].equals("getEspacesUser")) {
-                    getEspacesUser(qs[1]);
+                    getEspacesUser(qs[1],qs[2]);
+                }
+                else if (qs[0].equals("getEspacesUserHistorique")) {
+                    getEspacesUser(qs[1],qs[2]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -473,13 +528,15 @@ public class DataApi {
             client.post(monContext, BASE_URL + "indicateur/deleteIndicateur.php", entity, "application/json", responseHandler);
         }
 
-        private void getEspacesUser(String idUser) throws JSONException, UnsupportedEncodingException {
+        private void getEspacesUser(String idUser, String historique) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idUser", idUser);
+            jsonParams.put("historique", historique);
+
 
             StringEntity entity = new StringEntity(jsonParams.toString());
-            client.post(monContext, BASE_URL + "espace/readEspace.php", entity, "application/json", responseHandler);
+            client.get(monContext, BASE_URL + "espace/readEspace.php", entity, "application/json", responseHandler);
         }
 
     }
