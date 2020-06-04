@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -61,7 +60,7 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
         setContentView(R.layout.activity_creer_espace);
 
         detailJour = new HashMap<>();
-        dataApi = new DataApi(getApplicationContext(),this);
+        dataApi = new DataApi(getApplicationContext(), this);
 
         titreChoixJour = findViewById(R.id.labelChoixJour);
         buttonAccept = findViewById(R.id.buttonSaveEspace);
@@ -165,19 +164,18 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
                     dataApi.saveEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getDetailJour(), mEspace.getCommentaireEspace(), historique);
 
 
-                    for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)
-                    {
+                    for (int a = 0; a < mEspace.getListeIndicateur().size(); a++) {
                         String objectif = "";
                         String valeur = "";
                         if (mEspace.getListeIndicateur().get(a).getTypeIndicateur().equals("CaseCochee")) {
-                            valeur = Boolean.toString( ( (IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isEtatBoutonSaisie());
-                            objectif = Boolean.toString( ( (IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isObjectifCaseCochee());
+                            valeur = Boolean.toString(((IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isEtatBoutonSaisie());
+                            objectif = Boolean.toString(((IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isObjectifCaseCochee());
                         } else if (mEspace.getListeIndicateur().get(a).getTypeIndicateur().equals("Chiffre")) {
-                            valeur = ( (IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getChiffreSaisie();
-                            objectif =  ( (IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getObjectifChiffre();
+                            valeur = ((IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getChiffreSaisie();
+                            objectif = ((IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getObjectifChiffre();
                         } else {
-                            valeur = ( (IndicateurDuree) mEspace.getListeIndicateur().get(a)).getDureeSaisie();
-                            objectif = ( (IndicateurDuree) mEspace.getListeIndicateur().get(a)).getObjectifDuree();
+                            valeur = ((IndicateurDuree) mEspace.getListeIndicateur().get(a)).getDureeSaisie();
+                            objectif = ((IndicateurDuree) mEspace.getListeIndicateur().get(a)).getObjectifDuree();
                         }
 
 

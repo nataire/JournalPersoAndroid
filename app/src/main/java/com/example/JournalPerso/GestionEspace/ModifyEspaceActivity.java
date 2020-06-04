@@ -114,7 +114,6 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
             }
 
 
-
         }
 
 
@@ -153,7 +152,6 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
-
 
 
             }
@@ -197,7 +195,7 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
 
             recyclerView.setAdapter(new ModifierEspaceIndicateurAdapter(this.mEspace.getListeIndicateur(), getApplicationContext(), this));
             DataApi dataApi = new DataApi(getApplicationContext());
-            dataApi.deleteIndicateur(indicateur.getIdIndicateur(),true);
+            dataApi.deleteIndicateur(indicateur.getIdIndicateur(), true);
 
         }
 
@@ -212,15 +210,15 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
             String objectif = "";
             String valeur = "";
             if (mIndicateurTemp.getTypeIndicateur().equals("CaseCochee")) {
-                IndicateurCaseCochee mIndicateurTemp2 = (IndicateurCaseCochee)mIndicateurTemp;
-                valeur = Boolean.toString( mIndicateurTemp2.isEtatBoutonSaisie());
-                objectif = Boolean.toString( mIndicateurTemp2.isObjectifCaseCochee());
+                IndicateurCaseCochee mIndicateurTemp2 = (IndicateurCaseCochee) mIndicateurTemp;
+                valeur = Boolean.toString(mIndicateurTemp2.isEtatBoutonSaisie());
+                objectif = Boolean.toString(mIndicateurTemp2.isObjectifCaseCochee());
             } else if (mIndicateurTemp.getTypeIndicateur().equals("Chiffre")) {
-                IndicateurChiffre mIndicateurTemp2 = (IndicateurChiffre)mIndicateurTemp;
-                valeur =  mIndicateurTemp2.getChiffreSaisie();
-                objectif =  mIndicateurTemp2.getObjectifChiffre();
+                IndicateurChiffre mIndicateurTemp2 = (IndicateurChiffre) mIndicateurTemp;
+                valeur = mIndicateurTemp2.getChiffreSaisie();
+                objectif = mIndicateurTemp2.getObjectifChiffre();
             } else {
-                IndicateurDuree mIndicateurTemp2 = (IndicateurDuree)mIndicateurTemp;
+                IndicateurDuree mIndicateurTemp2 = (IndicateurDuree) mIndicateurTemp;
                 valeur = mIndicateurTemp2.getDureeSaisie();
                 objectif = mIndicateurTemp2.getObjectifDuree();
             }
@@ -228,13 +226,13 @@ public class ModifyEspaceActivity extends FragmentActivity implements ModifierEs
             if (data.getStringExtra("typeRetour").equals("Creation")) {
                 mEspace.addIndicateur(mIndicateurTemp);
 
-                dataApi.saveIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
-                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),true);
+                dataApi.saveIndicateur(mIndicateurTemp.getIdIndicateur(), mEspace.getIdEspace(),
+                        mIndicateurTemp.getNomIndicateur(), objectif, mIndicateurTemp.getTypeIndicateur(), true);
             } else if (data.getStringExtra("typeRetour").equals("Modification")) {
 
                 mEspace.modfifyIndicateur(mIndicateurTemp);
-                dataApi.updateIndicateur(mIndicateurTemp.getIdIndicateur(),mEspace.getIdEspace(),
-                        mIndicateurTemp.getNomIndicateur(),objectif,mIndicateurTemp.getTypeIndicateur(),valeur, true);
+                dataApi.updateIndicateur(mIndicateurTemp.getIdIndicateur(), mEspace.getIdEspace(),
+                        mIndicateurTemp.getNomIndicateur(), objectif, mIndicateurTemp.getTypeIndicateur(), valeur, true);
 
             } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
 

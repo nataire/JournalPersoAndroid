@@ -124,8 +124,7 @@ public class ListeEspaceFragment extends Fragment implements MyAdapterEspace.onC
 
                 mesDataLocal.modifierListeEspace(mEspaceTemp);
 
-                dataApi.updateEspace(monUser.getId(),mEspaceTemp.getIdEspace(),mEspaceTemp.getNomEspace(),mEspaceTemp.getDetailJour(), true, mEspaceTemp.getCommentaireEspace());
-
+                dataApi.updateEspace(monUser.getId(), mEspaceTemp.getIdEspace(), mEspaceTemp.getNomEspace(), mEspaceTemp.getDetailJour(), true, mEspaceTemp.getCommentaireEspace());
 
 
             } else if (data.getStringExtra("typeRetour").equals("Suppression")) {
@@ -133,7 +132,7 @@ public class ListeEspaceFragment extends Fragment implements MyAdapterEspace.onC
 
                 mesDataLocal.deleteEspace(mEspaceTemp, activeDate);
 
-                for(int a = 0; a < mEspaceTemp.getListeIndicateur().size(); a++)
+                for (int a = 0; a < mEspaceTemp.getListeIndicateur().size(); a++)
                     dataApi.deleteIndicateur(mEspaceTemp.getListeIndicateur().get(a).getIdIndicateur(), true);
 
                 dataApi.deleteEspace(mEspaceTemp.getIdEspace(), true);

@@ -6,19 +6,13 @@ public class IndicateurCaseCochee extends Indicateur implements Cloneable {
     private boolean etatBoutonSaisie;
     private boolean objectif;
 
-    @NonNull
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public IndicateurCaseCochee() {
+        this.idIndicateur = java.lang.System.identityHashCode(this);
     }
 
 
     //region constructor
 
-
-    public IndicateurCaseCochee() {
-        this.idIndicateur = java.lang.System.identityHashCode(this);
-    }
 
     public IndicateurCaseCochee(String nomIndicateur, boolean etatBoutonSaisie, boolean objectifCaseCochee, int idIndicateur) {
         this.nomIndicateur = nomIndicateur;
@@ -34,6 +28,12 @@ public class IndicateurCaseCochee extends Indicateur implements Cloneable {
         this.etatBoutonSaisie = etatBoutonSaisie;
         this.objectif = objectifCaseCochee;
         this.idIndicateur = java.lang.System.identityHashCode(this);
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     //endregion

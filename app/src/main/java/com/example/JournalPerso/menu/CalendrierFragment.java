@@ -88,7 +88,6 @@ public class CalendrierFragment extends Fragment implements MyAdapterEspace.onCl
         });
 
 
-
         return root;
     }
 

@@ -99,22 +99,21 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                 mesData.ecrireFichier(getApplicationContext());
 
                 User monUser = mesData.recuperationUser(getApplicationContext());
-                dataApi.updateEspace(monUser.getId(),mEspace.getIdEspace(),mEspace.getNomEspace(),mEspace.getDetailJour(), true, mEspace.getCommentaireEspace());
+                dataApi.updateEspace(monUser.getId(), mEspace.getIdEspace(), mEspace.getNomEspace(), mEspace.getDetailJour(), true, mEspace.getCommentaireEspace());
 
 
-                for(int a = 0; a < mEspace.getListeIndicateur().size(); a ++)
-                {
+                for (int a = 0; a < mEspace.getListeIndicateur().size(); a++) {
                     String objectif = "";
                     String valeur = "";
                     if (mEspace.getListeIndicateur().get(a).getTypeIndicateur().equals("CaseCochee")) {
-                        valeur = Boolean.toString( ( (IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isEtatBoutonSaisie());
-                        objectif = Boolean.toString( ( (IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isObjectifCaseCochee());
+                        valeur = Boolean.toString(((IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isEtatBoutonSaisie());
+                        objectif = Boolean.toString(((IndicateurCaseCochee) mEspace.getListeIndicateur().get(a)).isObjectifCaseCochee());
                     } else if (mEspace.getListeIndicateur().get(a).getTypeIndicateur().equals("Chiffre")) {
-                        valeur = ( (IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getChiffreSaisie();
-                        objectif =  ( (IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getObjectifChiffre();
+                        valeur = ((IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getChiffreSaisie();
+                        objectif = ((IndicateurChiffre) mEspace.getListeIndicateur().get(a)).getObjectifChiffre();
                     } else {
-                        valeur = ( (IndicateurDuree) mEspace.getListeIndicateur().get(a)).getDureeSaisie();
-                        objectif = ( (IndicateurDuree) mEspace.getListeIndicateur().get(a)).getObjectifDuree();
+                        valeur = ((IndicateurDuree) mEspace.getListeIndicateur().get(a)).getDureeSaisie();
+                        objectif = ((IndicateurDuree) mEspace.getListeIndicateur().get(a)).getObjectifDuree();
                     }
 
 
@@ -165,7 +164,7 @@ public class ConsultationEspacesActivity extends FragmentActivity implements Con
                 Espace mEspaceTemp = (Espace) data.getSerializableExtra("espace");
 
                 mesData.deleteEspace(mEspaceTemp, dateActive);
-                for(int a = 0; a < mEspaceTemp.getListeIndicateur().size(); a++)
+                for (int a = 0; a < mEspaceTemp.getListeIndicateur().size(); a++)
                     dataApi.deleteIndicateur(mEspaceTemp.getListeIndicateur().get(a).getIdIndicateur(), true);
 
                 dataApi.deleteEspace(mEspaceTemp.getIdEspace(), true);

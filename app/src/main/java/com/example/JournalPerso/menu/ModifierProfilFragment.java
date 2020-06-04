@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import com.example.JournalPerso.R;
 import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.data.DataLocal;
-import com.example.JournalPerso.menuActivity;
 import com.example.JournalPerso.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -41,7 +38,7 @@ public class ModifierProfilFragment extends Fragment {
         dataApi = new DataApi(getContext());
         dataLocal = new DataLocal();
 
-        monUser =dataLocal.recuperationUser(getContext());
+        monUser = dataLocal.recuperationUser(getContext());
 
         nom = root.findViewById(R.id.nomUser);
         prenom = root.findViewById(R.id.prenomUser);
@@ -64,16 +61,14 @@ public class ModifierProfilFragment extends Fragment {
             public void onClick(View v) {
 
                 if (!monUser.isEmailValid(mail.getText().toString())) {
-                    Toast toast=Toast.makeText(getContext(),"Erreur mail",Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getContext(), "Erreur mail", Toast.LENGTH_SHORT);
                     toast.show();
                 } else if (!password.getText().toString().equals(confirmPasswword.getText().toString())) {
-                    Toast toast=Toast.makeText(getContext(),"erreur mot de passe ",Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getContext(), "erreur mot de passe ", Toast.LENGTH_SHORT);
                     toast.show();
-                }
-                else
-                {
-                    dataApi.updateUser(monUser.getId(),nom.getText().toString(),prenom.getText().toString(),mail.getText().toString(),password.getText().toString());
-                    Toast toast=Toast.makeText(getContext(),"Modification de l'utilisateur effectué",Toast.LENGTH_SHORT);
+                } else {
+                    dataApi.updateUser(monUser.getId(), nom.getText().toString(), prenom.getText().toString(), mail.getText().toString(), password.getText().toString());
+                    Toast toast = Toast.makeText(getContext(), "Modification de l'utilisateur effectué", Toast.LENGTH_SHORT);
                     toast.show();
 
                     monUser.setEmail(mail.getText().toString());
@@ -81,7 +76,7 @@ public class ModifierProfilFragment extends Fragment {
                     monUser.setPrenomUser(prenom.getText().toString());
                     monUser.setPassword(password.getText().toString());
 
-                    dataLocal.sauvegarderUser(getContext(),monUser);
+                    dataLocal.sauvegarderUser(getContext(), monUser);
 
                 }
 

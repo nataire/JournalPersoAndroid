@@ -43,15 +43,14 @@ public class ModifierEspaceIndicateurAdapter extends RecyclerView.Adapter<Modifi
         return new ModifierEspaceIndicateurAdapter.ViewHolderIndicateur(view);
     }
 
-    public interface onClickPopupMenuListener {
-        void onClickPopUpMenu(MenuItem item, Indicateur indicateur);
-    }
-
     @Override
     public int getItemCount() {
         return listeIndicateur.size();
     }
 
+    public interface onClickPopupMenuListener {
+        void onClickPopUpMenu(MenuItem item, Indicateur indicateur);
+    }
 
     public class ViewHolderIndicateur extends RecyclerView.ViewHolder {
 
@@ -59,7 +58,6 @@ public class ModifierEspaceIndicateurAdapter extends RecyclerView.Adapter<Modifi
         private TextView titreIndicateur;
         private Indicateur mIndicateur;
         private Context context;
-
 
 
         public ViewHolderIndicateur(View itemView) {

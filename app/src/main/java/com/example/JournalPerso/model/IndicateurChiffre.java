@@ -7,17 +7,11 @@ public class IndicateurChiffre extends Indicateur implements Cloneable {
     private String objectif;
 
 
-    @NonNull
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-    //region constructor
-
-
     public IndicateurChiffre() {
         this.idIndicateur = java.lang.System.identityHashCode(this);
     }
+    //region constructor
+
 
     public IndicateurChiffre(String nomIndicateur, String chiffreSaisie, String objectifChiffre, int idIndicateur) {
         this.nomIndicateur = nomIndicateur;
@@ -33,6 +27,12 @@ public class IndicateurChiffre extends Indicateur implements Cloneable {
         this.chiffreSaisie = chiffreSaisie;
         this.objectif = objectifChiffre;
         this.idIndicateur = java.lang.System.identityHashCode(this);
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     //endregion

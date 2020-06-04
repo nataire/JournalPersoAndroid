@@ -2,8 +2,6 @@ package com.example.JournalPerso.data;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -11,15 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.JournalPerso.ConnexionActivity;
 import com.example.JournalPerso.InscriptionActivity;
-import com.example.JournalPerso.R;
-import com.example.JournalPerso.menu.EspacesJourFragment;
-import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.User;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -37,8 +28,6 @@ import java.util.Vector;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-import static android.content.Context.CONNECTIVITY_SERVICE;
-
 
 public class DataApi {
     private static AsyncHttpClient client;
@@ -48,14 +37,14 @@ public class DataApi {
     private Activity parentActivity;
     private Fragment parentFragment;
     private User monUser;
-
+    private Vector mesEspaces;
+    private Map mesEspacesHistorique;
     private Context monContext;
     private String typeRequete;
     private String dateActive;
-    private boolean historique;
 
     public DataApi(Context context, Activity parent) {
-        parentActivity  = parent ;
+        parentActivity = parent;
 
         client = new AsyncHttpClient();
         monContext = context;
@@ -71,7 +60,7 @@ public class DataApi {
     }
 
     public DataApi(Context context, Fragment parent) {
-        parentFragment  = parent ;
+        parentFragment = parent;
 
         client = new AsyncHttpClient();
         monContext = context;
@@ -100,39 +89,7 @@ public class DataApi {
     }
 
 
-    public boolean verifReseau()
-    {
-        // On vérifie si le réseau est disponible,
-        // si oui on change le statut du bouton de connexion
-        ConnectivityManager cnMngr = (ConnectivityManager) monContext.getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cnMngr.getActiveNetworkInfo();
-
-        String sType = "Aucun réseau détecté";
-        Boolean bStatut = false;
-        if (netInfo != null)
-        {
-
-            NetworkInfo.State netState = netInfo.getState();
-
-            if (netState.compareTo(NetworkInfo.State.CONNECTED) == 0)
-            {
-                bStatut = true;
-                int netType= netInfo.getType();
-                switch (netType)
-                {
-                    case ConnectivityManager.TYPE_MOBILE :
-                        sType = "Réseau mobile détecté"; break;
-                    case ConnectivityManager.TYPE_WIFI :
-                        sType = "Réseau wifi détecté"; break;
-                }
-
-            }
-        }
-        return bStatut;
-    }
-
-    private void initResponseHandler()
-    {
+    private void initResponseHandler() {
         responseHandler = new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -143,42 +100,35 @@ public class DataApi {
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 // called when response HTTP status is "200 OK"
                 try {
-                    if(typeRequete.equals("connexion"))
-                    {
+                    if (typeRequete.equals("connexion")) {
                         JSONObject testV = new JSONObject(new String(response));
                         monUser = gson.fromJson(testV.toString(), User.class);
                         Log.i("IAM", monUser.toString());
-                        ((ConnexionActivity)parentActivity).connexionReussi(monUser);
-                    }
-                    else if (typeRequete.equals("inscription"))
-                    {
+                        ((ConnexionActivity) parentActivity).connexionReussi(monUser);
+                    } else if (typeRequete.equals("inscription")) {
                         Log.i("IAM", "inscription reussie");
                         ((InscriptionActivity) parentActivity).inscriptionReussi();
-                    }
-                    else if (typeRequete.equals("saveEspace"))
-                    {
+                    } else if (typeRequete.equals("saveEspace")) {
                         Log.i("IAM", "saveEspace reussie");
 
-                    }
-                    else if (typeRequete.equals("updateEspace"))
-                    {
+                    } else if (typeRequete.equals("updateEspace")) {
                         Log.i("IAM", "updateEspace reussi");
-                    }
-                    else if(typeRequete.equals("getEspacesUser"))
-                    {
+                    } else if (typeRequete.equals("getEspacesUser")) {
+
                         JSONArray testV = new JSONArray(new String(response));
-                        Vector<Espace> mesEspaces = gson.fromJson(testV.toString(), Vector.class);
+                        mesEspaces = gson.fromJson(testV.toString(), Vector.class);
                         Log.i("IAM", mesEspaces.toString());
-                        EspacesJourFragment.getInstance().receptionApi(mesEspaces);
 
 
-                    }
-                    else if (typeRequete.equals("getEspacesUserHistorique"))
-                    {
+
+                        ((ConnexionActivity) parentActivity).recuperationEspaces(mesEspaces);
+                    } else if (typeRequete.equals("getEspacesUserHistorique")) {
+                        String reception = new String(response);
                         JSONObject testV = new JSONObject(new String(response));
-                        Map<String, Vector<Espace> > mesEspaces = gson.fromJson(testV.toString(), Map.class);
-                        Log.i("IAM", mesEspaces.toString());
-                        EspacesJourFragment.getInstance().receptionApiHistorique(mesEspaces);
+                        mesEspacesHistorique = gson.fromJson(testV.toString(), Map.class);
+                        Log.i("IAM", mesEspacesHistorique.toString());
+
+                        ((ConnexionActivity) parentActivity).recuperationEspacesHistorique(mesEspacesHistorique);
                     }
 
                 } catch (JSONException e) {
@@ -190,18 +140,17 @@ public class DataApi {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                if(typeRequete.equals("connexion"))
-                {
-                    ((ConnexionActivity)parentActivity).connexionEchec();
-                }
-                else if (typeRequete.equals("inscription"))
-                {
+                if (typeRequete.equals("connexion")) {
+                    ((ConnexionActivity) parentActivity).connexionEchec();
+                } else if (typeRequete.equals("inscription")) {
                     Log.i("IAM", "inscription echec");
                     ((InscriptionActivity) parentActivity).inscriptionEchec();
-                }
-                else if (typeRequete.equals("updateEspace"))
-                {
+                } else if (typeRequete.equals("updateEspace")) {
                     Log.i("IAM", "updateEspace echec");
+                }
+                else if(typeRequete.equals("getEspacesUser"))
+                {
+                    ((ConnexionActivity) parentActivity).recuperationEspacesVides();
                 }
 
             }
@@ -213,6 +162,7 @@ public class DataApi {
         };
 
     }
+
     public void connexion(String email, String password) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
@@ -226,82 +176,70 @@ public class DataApi {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "inscription";
-        synchronisation.execute("inscription",nom, prenom, email, password);
+        synchronisation.execute("inscription", nom, prenom, email, password);
 
     }
 
 
-    public void saveEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour, String commentaireEspace, boolean historique)
-    {
+    public void saveEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour, String commentaireEspace, boolean historique) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "saveEspace";
         synchronisation.setDetailJour(detailJour);
-        synchronisation.execute("saveEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, Boolean.toString(historique));
+        synchronisation.execute("saveEspace", String.valueOf(idUser), String.valueOf(idEspace), nomEspace, Boolean.toString(historique));
     }
 
-    public void updateEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour, boolean historique, String commentaire)
-    {
+    public void updateEspace(int idUser, int idEspace, String nomEspace, Map<String, Boolean> detailJour, boolean historique, String commentaire) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "updateEspace";
         synchronisation.setDetailJour(detailJour);
-        synchronisation.execute("updateEspace",String.valueOf(idUser), String.valueOf(idEspace), nomEspace, Boolean.toString(historique), commentaire);
+        synchronisation.execute("updateEspace", String.valueOf(idUser), String.valueOf(idEspace), nomEspace, Boolean.toString(historique), commentaire);
     }
 
-    public void deleteEspace(int idEspace, boolean historique)
-    {
+    public void deleteEspace(int idEspace, boolean historique) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "deleteEspace";
-        synchronisation.execute("deleteEspace",String.valueOf(idEspace), Boolean.toString(historique));
+        synchronisation.execute("deleteEspace", String.valueOf(idEspace), Boolean.toString(historique));
     }
 
-    public void saveIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, boolean historique)
-    {
+    public void saveIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, boolean historique) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "saveIndicateur";
-        synchronisation.execute("saveIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, Boolean.toString(historique));
+        synchronisation.execute("saveIndicateur", String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, Boolean.toString(historique));
     }
 
-    public void updateIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, String valeur, boolean historique)
-    {
+    public void updateIndicateur(int idIndicateur, int idEspace, String nomIndicateur, String objectif, String type, String valeur, boolean historique) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "updateIndicateur";
-        synchronisation.execute("updateIndicateur",String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur, Boolean.toString(historique));
+        synchronisation.execute("updateIndicateur", String.valueOf(idIndicateur), String.valueOf(idEspace), nomIndicateur, objectif, type, valeur, Boolean.toString(historique));
     }
 
-    public void deleteIndicateur(int idIndicateur, boolean historique)
-    {
+    public void deleteIndicateur(int idIndicateur, boolean historique) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "deleteIndicateur";
-        synchronisation.execute("deleteIndicateur",String.valueOf(idIndicateur), Boolean.toString(historique));
+        synchronisation.execute("deleteIndicateur", String.valueOf(idIndicateur), Boolean.toString(historique));
     }
 
-    public void updateUser(int idUser, String nom, String prenom, String email, String password)
-    {
+    public void updateUser(int idUser, String nom, String prenom, String email, String password) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
         typeRequete = "updateUser";
-        synchronisation.execute("updateUser",String.valueOf(idUser), nom, prenom, email, password);
+        synchronisation.execute("updateUser", String.valueOf(idUser), nom, prenom, email, password);
     }
 
-    public void getEspacesUser(int idUser, boolean historique)
-    {
+    public void getEspacesUser(int idUser, boolean historique) {
         synchronisation = new JSONAsyncTask();
         synchronisation.setMonContext(monContext);
-        if(!historique) {
+        if (!historique)
             typeRequete = "getEspacesUser";
-            synchronisation.execute("getEspacesUser",String.valueOf(idUser), String.valueOf(historique));
-        }
-        else {
-
+        else
             typeRequete = "getEspacesUserHistorique";
-            synchronisation.execute("getEspacesUserHistorique",String.valueOf(idUser), String.valueOf(historique));
-        }
+        synchronisation.execute("getEspacesUser", String.valueOf(idUser), String.valueOf(historique));
     }
 
     class JSONAsyncTask extends AsyncTask<String, Void, String> {
@@ -342,33 +280,22 @@ public class DataApi {
                     connection(qs[1], qs[2]);
                 } else if (qs[0].equals("inscription")) {
                     inscription(qs[1], qs[2], qs[3], qs[4]);
-                }
-                else if (qs[0].equals("saveEspace")) {
+                } else if (qs[0].equals("saveEspace")) {
                     saveEspace(qs[1], qs[2], qs[3], qs[4]);
-                }
-                else if (qs[0].equals("saveIndicateur")) {
+                } else if (qs[0].equals("saveIndicateur")) {
                     saveIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6]);
-                }
-                else if (qs[0].equals("updateEspace")) {
-                    updateEspace(qs[1], qs[2], qs[3],qs[4], qs[5]);
-                }
-                else if (qs[0].equals("updateIndicateur")) {
+                } else if (qs[0].equals("updateEspace")) {
+                    updateEspace(qs[1], qs[2], qs[3], qs[4], qs[5]);
+                } else if (qs[0].equals("updateIndicateur")) {
                     updateIndicateur(qs[1], qs[2], qs[3], qs[4], qs[5], qs[6], qs[7]);
-                }
-                else if (qs[0].equals("updateUser")) {
+                } else if (qs[0].equals("updateUser")) {
                     updateUser(qs[1], qs[2], qs[3], qs[4], qs[5]);
-                }
-                else if (qs[0].equals("deleteEspace")) {
+                } else if (qs[0].equals("deleteEspace")) {
                     deleteEspace(qs[1], qs[2]);
-                }
-                else if (qs[0].equals("deleteIndicateur")) {
+                } else if (qs[0].equals("deleteIndicateur")) {
                     deleteIndicateur(qs[1], qs[2]);
-                }
-                else if (qs[0].equals("getEspacesUser")) {
-                    getEspacesUser(qs[1],qs[2]);
-                }
-                else if (qs[0].equals("getEspacesUserHistorique")) {
-                    getEspacesUser(qs[1],qs[2]);
+                } else if (qs[0].equals("getEspacesUser")) {
+                    getEspacesUser(qs[1], qs[2]);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -404,14 +331,14 @@ public class DataApi {
         }
 
         private void saveEspace(String idUser, String idEspace, String nomEspace, String historique) throws JSONException, UnsupportedEncodingException {
-       // private void saveEspace(String contenu) throws JSONException, UnsupportedEncodingException {
+            // private void saveEspace(String contenu) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idUser", idUser);
             jsonParams.put("idEspace", idEspace);
             jsonParams.put("nomEspace", nomEspace);
 
-            if(historique.equals("true")) {
+            if (historique.equals("true")) {
                 jsonParams.put("historique", "true");
                 jsonParams.put("dateEspace", dateActive);
             }
@@ -435,7 +362,7 @@ public class DataApi {
             jsonParams.put("nomIndicateur", nomIndicateur);
             jsonParams.put("objectif", objectif);
             jsonParams.put("type", type);
-            if(historique.equals("true")){
+            if (historique.equals("true")) {
                 jsonParams.put("historique", "true");
                 jsonParams.put("dateActive", dateActive);
             }
@@ -452,7 +379,7 @@ public class DataApi {
             jsonParams.put("objectif", objectif);
             jsonParams.put("type", type);
 
-            if(historique.equals("true")){
+            if (historique.equals("true")) {
                 jsonParams.put("historique", "true");
                 jsonParams.put("dateActive", dateActive);
                 jsonParams.put("valeur", valeur);
@@ -476,7 +403,7 @@ public class DataApi {
 
             jsonParams.put("detailJour", jsonParams2);
 
-            if(historique.equals("true")){
+            if (historique.equals("true")) {
                 jsonParams.put("historique", "true");
                 jsonParams.put("dateActive", dateActive);
                 jsonParams.put("commentaire", commentaire);
@@ -487,7 +414,7 @@ public class DataApi {
             client.post(monContext, BASE_URL + "espace/UpdateEspace.php", entity, "application/json", responseHandler);
         }
 
-        private void updateUser( String idUser, String nom, String  prenom, String email, String password) throws JSONException, UnsupportedEncodingException {
+        private void updateUser(String idUser, String nom, String prenom, String email, String password) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idUser", idUser);
@@ -505,7 +432,7 @@ public class DataApi {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idEspace", idEspace);
-            if(historique.equals("true")){
+            if (historique.equals("true")) {
                 jsonParams.put("historique", "true");
                 jsonParams.put("dateActive", dateActive);
 
@@ -514,11 +441,12 @@ public class DataApi {
             StringEntity entity = new StringEntity(jsonParams.toString());
             client.post(monContext, BASE_URL + "espace/deleteEspace.php", entity, "application/json", responseHandler);
         }
+
         private void deleteIndicateur(String idIndicateur, String historique) throws JSONException, UnsupportedEncodingException {
 
             JSONObject jsonParams = new JSONObject();
             jsonParams.put("idIndicateur", idIndicateur);
-            if(historique.equals("true")){
+            if (historique.equals("true")) {
                 jsonParams.put("historique", "true");
                 jsonParams.put("dateActive", dateActive);
 
@@ -534,9 +462,8 @@ public class DataApi {
             jsonParams.put("idUser", idUser);
             jsonParams.put("historique", historique);
 
-
             StringEntity entity = new StringEntity(jsonParams.toString());
-            client.get(monContext, BASE_URL + "espace/readEspace.php", entity, "application/json", responseHandler);
+            client.post(monContext, BASE_URL + "espace/readEspace.php", entity, "application/json", responseHandler);
         }
 
     }

@@ -33,9 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:ems="10"
-        android:text="dddddddd"
         android:importantForAutofill="no"
         android:inputType="textPassword"
+        android:text="dddddddd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelLogin" />
 
@@ -45,10 +45,10 @@
         android:layout_height="0dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="124dp"
-        android:text="Potter"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
+        android:text="Potter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,9 +80,9 @@
         android:layout_height="0dp"
         android:layout_marginStart="100dp"
         android:ems="10"
-        android:text="monMail@gmail.com"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
+        android:text="monMail@gmail.com"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelPrenom3" />
 
@@ -93,8 +93,8 @@
         android:layout_marginStart="100dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:text="dddddddd"
         android:inputType="textPassword"
+        android:text="dddddddd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelPassword" />
 

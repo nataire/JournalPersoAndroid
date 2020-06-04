@@ -1,7 +1,5 @@
 package com.example.JournalPerso;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,9 +7,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.JournalPerso.data.DataApi;
 import com.example.JournalPerso.data.DataLocal;
+import com.example.JournalPerso.model.Espace;
 import com.example.JournalPerso.model.User;
+
+import java.util.Map;
+import java.util.Vector;
 
 public class ConnexionActivity extends AppCompatActivity {
 
@@ -24,25 +28,44 @@ public class ConnexionActivity extends AppCompatActivity {
     User monUser;
 
 
-    public void connexionReussi(User monUser)
-    {
-        Toast toast=Toast.makeText(getApplicationContext(),"User : " + monUser.toString(),Toast.LENGTH_SHORT);
+    public void connexionReussi(User monUser) {
+        Toast toast = Toast.makeText(getApplicationContext(), "Chargement des espaces", Toast.LENGTH_SHORT);
         toast.show();
 
 
-        mesData.sauvegarderUser(getApplicationContext(),monUser);
+        mesData.sauvegarderUser(getApplicationContext(), monUser);
 
+
+        appelApi.getEspacesUser(mesData.recuperationUser(getApplicationContext()).getId(), false);
+
+    }
+
+    public void connexionEchec() {
+        Toast toast = Toast.makeText(getApplicationContext(), "Erreur dans les identifiants, echec de la connexion", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    public void recuperationEspaces(Vector<Espace> espaceRecu) {
+        mesData.setMesEspaces(mesData.conversionLecture(espaceRecu));
+        mesData.ecrireFichier(getApplicationContext());
+
+        appelApi.getEspacesUser(mesData.recuperationUser(getApplicationContext()).getId(), true);
+    }
+
+    public void recuperationEspacesHistorique(Map<String, Vector<Espace>> espaceRecu) {
+        mesData.conversionLectureHistorique(espaceRecu);
+
+        mesData.ecrireFichierHistorique(getApplicationContext());
         Intent espaceJour = new Intent(ConnexionActivity.this, menuActivity.class);
         startActivity(espaceJour);
-
-
     }
 
-    public void connexionEchec()
+    public void recuperationEspacesVides()
     {
-        Toast toast=Toast.makeText(getApplicationContext(),"Erreur dans les identifiants, echec de la connexion",Toast.LENGTH_SHORT);
-        toast.show();
+        Intent espaceJour = new Intent(ConnexionActivity.this, menuActivity.class);
+        startActivity(espaceJour);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +79,10 @@ public class ConnexionActivity extends AppCompatActivity {
 
         mesData = new DataLocal();
         monUser = mesData.recuperationUser(getApplicationContext());
-        if(monUser!=null)
-        {
+        if (monUser != null) {
             Intent espaceJour = new Intent(ConnexionActivity.this, menuActivity.class);
             startActivity(espaceJour);
-        }
-        else
-        {
+        } else {
 
             buttonSubscribe = findViewById(R.id.buttonSubscribe);
             buttonConnexion = findViewById(R.id.buttonConnexion);
@@ -86,7 +106,7 @@ public class ConnexionActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
 
-                    appelApi.connexion(emailUser.getText().toString(),passwordUser.getText().toString() );
+                    appelApi.connexion(emailUser.getText().toString(), passwordUser.getText().toString());
 
 
                 }
@@ -95,7 +115,6 @@ public class ConnexionActivity extends AppCompatActivity {
 
 
     }
-
 
 
 }

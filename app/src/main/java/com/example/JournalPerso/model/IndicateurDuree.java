@@ -7,18 +7,12 @@ public class IndicateurDuree extends Indicateur implements Cloneable {
     private String objectif;
 
 
-    @NonNull
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public IndicateurDuree() {
+        this.idIndicateur = java.lang.System.identityHashCode(this);
     }
 
     //region constructor
 
-
-    public IndicateurDuree() {
-        this.idIndicateur = java.lang.System.identityHashCode(this);
-    }
 
     public IndicateurDuree(String nomIndicateur, String dureeSaisie, String objectifChiffre, int idIndicateur) {
         this.nomIndicateur = nomIndicateur;
@@ -34,6 +28,12 @@ public class IndicateurDuree extends Indicateur implements Cloneable {
         this.dureeSaisie = dureeSaisie;
         this.objectif = objectifChiffre;
         this.idIndicateur = java.lang.System.identityHashCode(this);
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     //endregion

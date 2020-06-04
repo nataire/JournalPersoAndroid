@@ -32,7 +32,7 @@ public class DataLocal implements Serializable {
     private Map<String, Vector<Espace>> historiqueEspace;
     private String filename = "liste_Espace";
     private String fileHistorique = "historique_Espace";
-    private String fileUser ="User";
+    private String fileUser = "User";
     private String[] nomJour = {"dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"};
     private String activeDate;
     private int dayOfWeek;
@@ -85,12 +85,10 @@ public class DataLocal implements Serializable {
     }
 
 
-
     //endregion
 
 
-    public void sauvegarderUser(Context monContext, User monUser)
-    {
+    public void sauvegarderUser(Context monContext, User monUser) {
         Gson gson = new GsonBuilder()
                 .serializeNulls()
                 .disableHtmlEscaping()
@@ -203,7 +201,6 @@ public class DataLocal implements Serializable {
             monFichier.close();
 
             Vector<Espace> test = gson.fromJson(sJsonLu, Vector.class);
-            //this.mesEspacesLus = test;
 
             listeEspaceVide = conversionLecture(test);
 
@@ -309,8 +306,7 @@ public class DataLocal implements Serializable {
             }
 
             monEspace.setIdEspace(((Double) espaceBrut.get("idEspace")).intValue());
-            LinkedTreeMap detailJour = (LinkedTreeMap) espaceBrut.get("detailJour");
-            //LinkedTreeMap<Object, Object> detailJour = (LinkedTreeMap) espaceBrut.get("detailJour");
+            LinkedTreeMap<Object, Object> detailJour = (LinkedTreeMap) espaceBrut.get("detailJour");
             Map<String, Boolean> temp = new HashMap<>();
             temp.put("lundi", (boolean) detailJour.get("lundi"));
             temp.put("mardi", (boolean) detailJour.get("mardi"));
@@ -330,7 +326,7 @@ public class DataLocal implements Serializable {
                 String typeIndicateur = indicateur.get("typeIndicateur").toString();
                 if (typeIndicateur.equals("CaseCochee")) {
                     IndicateurCaseCochee monIndicateur = new IndicateurCaseCochee();
-                    if(indicateur.containsKey("etatBoutonSaisie"))
+                    if (indicateur.containsKey("etatBoutonSaisie"))
                         monIndicateur.setEtatBoutonSaisie((boolean) indicateur.get("etatBoutonSaisie"));
                     else
                         monIndicateur.setEtatBoutonSaisie(!(boolean) indicateur.get("objectif"));
@@ -346,7 +342,7 @@ public class DataLocal implements Serializable {
 
                 } else if (typeIndicateur.equals("Chiffre")) {
                     IndicateurChiffre monIndicateur = new IndicateurChiffre();
-                    if(indicateur.containsKey("chiffreSaisie"))
+                    if (indicateur.containsKey("chiffreSaisie"))
                         monIndicateur.setChiffreSaisie(indicateur.get("chiffreSaisie").toString());
                     else
                         monIndicateur.setChiffreSaisie("0");
@@ -362,7 +358,7 @@ public class DataLocal implements Serializable {
                     monEspace.addIndicateur(monIndicateur);
                 } else {
                     IndicateurDuree monIndicateur = new IndicateurDuree();
-                    if(indicateur.containsKey("dureeSaisie"))
+                    if (indicateur.containsKey("dureeSaisie"))
                         monIndicateur.setDureeSaisie(indicateur.get("dureeSaisie").toString());
                     else
                         monIndicateur.setDureeSaisie("0");
@@ -407,8 +403,7 @@ public class DataLocal implements Serializable {
         if (!historiqueEspace.containsKey(activeDate)) {
             Vector<Espace> listeEspaceActif = new Vector<>();
 
-            if(listeEspaceVide.size()!=0)
-            {
+            if (listeEspaceVide.size() != 0) {
                 for (int a = 0; a < listeEspaceVide.size(); a++) {
                     if (listeEspaceVide.get(a).getDetailJour().get(nomJour[dayOfWeek - 1])) {
                         listeEspaceActif.add(listeEspaceVide.get(a));
@@ -418,7 +413,6 @@ public class DataLocal implements Serializable {
                     }
                 }
             }
-
 
 
             historiqueEspace.put(activeDate, listeEspaceActif);
@@ -465,7 +459,8 @@ public class DataLocal implements Serializable {
             monFichier.close();
 
             Map test = gson.fromJson(sJsonLu, Map.class);
-            //this.historiqueEspace = test;
+
+
             conversionLectureHistorique(test);
 
         } catch (FileNotFoundException e) {
@@ -475,10 +470,9 @@ public class DataLocal implements Serializable {
         }
     }
 
-    public  void conversionLectureHistorique(Map<String, Vector<Espace>> maLecture)
-    {
+    public void conversionLectureHistorique(Map<String, Vector<Espace>> historiqueEspace) {
         // using for-each loop for iteration over Map.entrySet()
-        for (Map.Entry<String, Vector<Espace>> entry : maLecture.entrySet()) {
+        for (Map.Entry<String, Vector<Espace>> entry : historiqueEspace.entrySet()) {
 
             Vector<Espace> vector = new Vector<>(entry.getValue());
 

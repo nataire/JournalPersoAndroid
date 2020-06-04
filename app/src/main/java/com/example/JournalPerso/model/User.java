@@ -11,6 +11,9 @@ public class User {
     private String prenomUser;
 
 
+    public User() {
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -20,9 +23,6 @@ public class User {
                 ", nomUser='" + nomUser + '\'' +
                 ", prenomUser='" + prenomUser + '\'' +
                 '}';
-    }
-
-    public User() {
     }
 
     public int getId() {

@@ -48,15 +48,14 @@ public class ConsultationEspaceIndicateurAdapter extends RecyclerView.Adapter<Co
         return new ViewHolderIndicateur(view);
     }
 
-
-    public interface onButtonClickListener {
-        void onClick(Indicateur indicateurModifie, int positionIndicateur);
-    }
-
-
     @Override
     public int getItemCount() {
         return listeIndicateur.size();
+    }
+
+
+    public interface onButtonClickListener {
+        void onClick(Indicateur indicateurModifie, int positionIndicateur);
     }
 
     public class ViewHolderIndicateur extends RecyclerView.ViewHolder {

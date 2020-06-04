@@ -85,11 +85,11 @@ public class createIndicateurActivity extends FragmentActivity {
                 } else if (test == 1) {
                     if (!testUI(1))
                         indicateurCree = new IndicateurDuree(nomIndicateur.getText().toString(),
-                            "0", objectifIndicateurDuree.getText().toString());
+                                "0", objectifIndicateurDuree.getText().toString());
                 } else {
                     if (!testUI(2))
                         indicateurCree = new IndicateurChiffre(nomIndicateur.getText().toString(),
-                            "0", objectifIndicateurNombre.getText().toString());
+                                "0", objectifIndicateurNombre.getText().toString());
                 }
 
                 if (indicateurCree != null) {
