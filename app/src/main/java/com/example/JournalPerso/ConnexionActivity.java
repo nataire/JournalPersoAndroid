@@ -62,6 +62,8 @@ public class ConnexionActivity extends AppCompatActivity {
 
     public void recuperationEspacesVides()
     {
+        mesData.ecrireFichier(getApplicationContext());
+        mesData.ecrireFichierHistorique(getApplicationContext());
         Intent espaceJour = new Intent(ConnexionActivity.this, menuActivity.class);
         startActivity(espaceJour);
     }
@@ -70,7 +72,6 @@ public class ConnexionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
-
 
     }
 

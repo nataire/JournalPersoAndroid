@@ -140,13 +140,21 @@ public class DataLocal implements Serializable {
         return monUser;
     }
 
-    public void deleteUser(Context monContext) {
+    public void deconnexion(Context monContext) {
 
         String fileContents = "";
         FileOutputStream monFichier;
 
         try {
             monFichier = monContext.openFileOutput(fileUser, Context.MODE_PRIVATE);
+            monFichier.write(fileContents.getBytes());
+            monFichier.close();
+
+            monFichier = monContext.openFileOutput(filename, Context.MODE_PRIVATE);
+            monFichier.write(fileContents.getBytes());
+            monFichier.close();
+
+            monFichier = monContext.openFileOutput(fileHistorique, Context.MODE_PRIVATE);
             monFichier.write(fileContents.getBytes());
             monFichier.close();
         } catch (FileNotFoundException e) {

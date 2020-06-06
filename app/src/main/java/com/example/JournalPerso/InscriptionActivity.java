@@ -60,6 +60,8 @@ public class InscriptionActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), "User enregistré, vous pouvez vous connecter", Toast.LENGTH_SHORT);
         toast.show();
 
+        this.onBackPressed();
+
     }
 
     public void inscriptionEchec() {

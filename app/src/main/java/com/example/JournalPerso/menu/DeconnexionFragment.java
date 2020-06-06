@@ -21,7 +21,7 @@ public class DeconnexionFragment extends Fragment {
 
         //getActivity().getFragmentManager().popBackStack();
         mesDataLocal = new DataLocal();
-        mesDataLocal.deleteUser(getContext());
+        mesDataLocal.deconnexion(getContext());
         getActivity().finish();
         return root;
     }

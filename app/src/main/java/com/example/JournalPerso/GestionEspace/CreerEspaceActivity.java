@@ -118,6 +118,15 @@ public class CreerEspaceActivity extends FragmentActivity implements ModifierEsp
             });
         }
 
+        boutonAllDays.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                for (int a = 0; a < boutonJour.length; a++)
+                    cliqueBoutonJour(nomJour[a], boutonJour[a]);
+            }
+        });
+
 
         buttonAccept.setOnClickListener(new View.OnClickListener() {
             @Override
